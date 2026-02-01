@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Editar Assistente</title>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Raleway', sans-serif;
+      background: linear-gradient(135deg, #0a0420 0%, #1a1040 100%);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .topbar {
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      background: rgba(15, 6, 36, 0.85);
+      border-bottom: 1px solid rgba(165, 148, 255, 0.2);
+      backdrop-filter: blur(10px);
+    }
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      background: rgba(165, 148, 255, 0.12);
+      border: 1px solid rgba(165, 148, 255, 0.25);
+      color: #fff;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .title {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .title h1 {
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+    }
+    .title small {
+      color: rgba(255,255,255,0.6);
+      font-size: 12px;
+    }
+    .tabs {
+      display: flex;
+      gap: 8px;
+    }
+    .tab-btn {
+      padding: 10px 14px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(165, 148, 255, 0.18);
+      border-radius: 10px;
+      cursor: pointer;
+      color: rgba(255,255,255,0.85);
+      font-weight: 700;
+    }
+    .tab-btn.active {
+      background: linear-gradient(135deg, rgba(165, 148, 255, 0.8), rgba(102, 126, 234, 0.8));
+      border-color: rgba(165, 148, 255, 0.9);
+      color: #fff;
+    }
+    .content {
+      flex: 1;
+      display: flex;
+      min-height: 0;
+    }
+    .panel {
+      flex: 1;
+      display: none;
+      min-height: 0;
+    }
+    .panel.active { display: flex; }
+    .panel iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: transparent;
+    }
+    .placeholder {
+      padding: 24px;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .card {
+      background: rgba(15, 6, 36, 0.7);
+      border: 1px solid rgba(165, 148, 255, 0.2);
+      border-radius: 16px;
+      padding: 20px;
+      backdrop-filter: blur(10px);
+    }
+    .card h2 { font-size: 16px; margin-bottom: 10px; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .field { display: flex; flex-direction: column; gap: 6px; margin-top: 12px; }
+    .field label { color: rgba(255,255,255,0.7); font-weight: 700; font-size: 13px; }
+    .field input, .field textarea {
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(165, 148, 255, 0.25);
+      background: rgba(0,0,0,0.25);
+      color: #fff;
+      outline: none;
+      font-family: 'Raleway', sans-serif;
+    }
+    .field textarea { min-height: 120px; resize: vertical; }
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .primary {
+      padding: 12px 16px;
+      border-radius: 10px;
+      border: 1px solid rgba(165, 148, 255, 0.6);
+      background: linear-gradient(135deg, #A594FF, #667eea);
+      color: #fff;
+      cursor: pointer;
+      font-weight: 800;
+    }
+    .secondary {
+      padding: 12px 16px;
+      border-radius: 10px;
+      border: 1px solid rgba(165, 148, 255, 0.25);
+      background: rgba(165, 148, 255, 0.12);
+      color: #fff;
+      cursor: pointer;
+      font-weight: 800;
+    }
+    @media (max-width: 900px) {
+      .row { grid-template-columns: 1fr; }
+      .tabs { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-left">
+      <button class="back-btn" onclick="goBack()">
+        <span>←</span>
+        <span>Voltar</span>
+      </button>
+      <div class="title">
+        <h1 id="pageTitle">Editar Assistente</h1>
+        <small id="pageSubtitle">ID: -</small>
+      </div>
+    </div>
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="config" onclick="setTab('config')">Configuração</button>
+      <button class="tab-btn" data-tab="globais" onclick="setTab('globais')">Globais</button>
+      <button class="tab-btn" data-tab="import" onclick="setTab('import')">Importar</button>
+      <button class="tab-btn" data-tab="flow" onclick="setTab('flow')">Flow Editor</button>
+      <button class="tab-btn" data-tab="tools" onclick="setTab('tools')">Tools</button>
+    </div>
+  </div>
+
+  <div class="content">
+    <!-- CONFIG (placeholder simples — pode reaproveitar o formulário atual depois) -->
+    <div class="panel active" id="panel-config">
+      <div class="placeholder">
+        <div class="card">
+          <h2>Configuração do Assistente</h2>
+          <div class="row">
+            <div class="field">
+              <label>Nome</label>
+              <input id="cfgName" placeholder="Nome do assistente" />
+            </div>
+            <div class="field">
+              <label>Status</label>
+              <input id="cfgStatus" placeholder="active / inactive" />
+            </div>
+          </div>
+          <div class="field">
+            <label>Primeira Mensagem</label>
+            <textarea id="cfgFirstMessage" placeholder="Primeira mensagem..."></textarea>
+          </div>
+          <div class="actions">
+            <button class="secondary" onclick="setTab('flow')">Ir para Flow</button>
+            <button class="primary" onclick="saveConfig()">Salvar Configuração</button>
+          </div>
+          <div style="margin-top:12px; color: rgba(255,255,255,0.55); font-size: 12px;">
+            Obs: aqui é o container da página grande. Você pode plugar o mesmo submit/webhook do modal depois.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GLOBAIS (configurações do Prompt Master no SaaS) -->
+    <div class="panel" id="panel-globais">
+      <iframe id="globalsIframe" title="Configurações Globais"></iframe>
+    </div>
+
+    <!-- IMPORTADOR (colar prompt e gerar flow) -->
+    <div class="panel" id="panel-import">
+      <iframe id="importIframe" title="Importador de Prompt"></iframe>
+    </div>
+
+    <!-- FLOW EDITOR (FRONT ORIGINAL via servidor Vite do projeto que você mandou) -->
+    <div class="panel" id="panel-flow">
+      <iframe id="flowIframe" title="Flow Editor"></iframe>
+    </div>
+
+    <!-- TOOLS MANAGER (FRONT+BACK ORIGINAL do vapi-tools-manager) -->
+    <div class="panel" id="panel-tools">
+      <iframe id="toolsIframe" title="Tools Manager"></iframe>
+    </div>
+  </div>
+
+  <script>
+    function getQueryParam(name) {
+      const url = new URL(window.location.href);
+      return url.searchParams.get(name);
+    }
+
+    function goBack() {
+      window.location.href = './assistente.html';
+    }
+
+    function setTab(tab) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      const btn = document.querySelector(`.tab-btn[data-tab="${tab}"]`);
+      if (btn) btn.classList.add('active');
+
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      const panel = document.getElementById(`panel-${tab}`);
+      if (panel) panel.classList.add('active');
+
+      if (tab === 'flow') {
+        // Flow Editor: passa assistente_id e tenant_id para o app em /flow (GET /api/flows/by-assistant/{id})
+        const flowUrl = localStorage.getItem('flow_editor_url') || '/flow';
+        const assistente = loadSelectedAssistente();
+        const assistenteId = getQueryParam('assistente_id') || getQueryParam('assistant_id') || (assistente?.assistente_id) || (assistente?.id) || '';
+        const tenantId = localStorage.getItem('tenant_id') || (assistente?.tenant_id) || '';
+        const iframe = document.getElementById('flowIframe');
+        iframe.src = `${flowUrl}?assistente_id=${encodeURIComponent(assistenteId)}&tenant_id=${encodeURIComponent(tenantId)}`;
+      }
+
+      if (tab === 'globais') {
+        const assistenteId = getQueryParam('assistente_id') || '';
+        const iframe = document.getElementById('globalsIframe');
+        iframe.src = `./configuracoes-globais.html?assistente_id=${encodeURIComponent(assistenteId)}`;
+      }
+
+      if (tab === 'import') {
+        const assistenteId = getQueryParam('assistente_id') || '';
+        const iframe = document.getElementById('importIframe');
+        iframe.src = `./importador-prompt.html?assistente_id=${encodeURIComponent(assistenteId)}`;
+      }
+
+      if (tab === 'tools') {
+        // Tools Manager dentro do SaaS (mesmo domínio)
+        const toolsUrl = localStorage.getItem('vapi_tools_url') || '/tools/gerenciar-tools';
+        const iframe = document.getElementById('toolsIframe');
+        iframe.src = toolsUrl;
+      }
+    }
+
+    function hydrateHeader(assistente) {
+      const name = assistente?.name || assistente?.nome || 'Assistente';
+      const id = assistente?.assistente_id || assistente?.id || '-';
+      document.getElementById('pageTitle').textContent = `Editar: ${name}`;
+      document.getElementById('pageSubtitle').textContent = `ID: ${id}`;
+      document.getElementById('cfgName').value = assistente?.name || '';
+      document.getElementById('cfgStatus').value = assistente?.status || '';
+      document.getElementById('cfgFirstMessage').value = assistente?.first_message || '';
+    }
+
+    function loadSelectedAssistente() {
+      const raw = localStorage.getItem('sd_selected_assistente');
+      if (raw) {
+        try { return JSON.parse(raw); } catch (e) { return null; }
+      }
+      return null;
+    }
+
+    async function saveConfig() {
+      // Placeholder: manteremos sua lógica atual do modal depois.
+      // Por enquanto só atualiza o cache local para você validar UI.
+      const assistente = loadSelectedAssistente() || {};
+      assistente.name = document.getElementById('cfgName').value.trim();
+      assistente.status = document.getElementById('cfgStatus').value.trim();
+      assistente.first_message = document.getElementById('cfgFirstMessage').value;
+      localStorage.setItem('sd_selected_assistente', JSON.stringify(assistente));
+      alert('Configuração salva localmente (placeholder).');
+    }
+
+    // Boot
+    (function init() {
+      const assistente = loadSelectedAssistente();
+      hydrateHeader(assistente);
+
+      // garantir assistente_id no header mesmo sem localStorage
+      const qpId = getQueryParam('assistente_id');
+      if (qpId && (!assistente || (!assistente.id && !assistente.assistente_id))) {
+        document.getElementById('pageSubtitle').textContent = `ID: ${qpId}`;
+      }
+    })();
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="https://imagens-zipline.hgabnb.easypanel.host/u/2FsJTY.png">
+    <link rel="shortcut icon" type="image/png" href="https://imagens-zipline.hgabnb.easypanel.host/u/2FsJTY.png">
+    <link rel="apple-touch-icon" href="https://imagens-zipline.hgabnb.easypanel.host/u/2FsJTY.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajuda - Salesdever</title>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        body {
+            background: #0a0420;
+            min-height: 100vh;
+            color: #ffffff;
+            padding: 2rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 50%, rgba(165, 148, 255, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(102, 126, 234, 0.06) 0%, transparent 50%);
+            animation: backgroundFloat 20s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes backgroundFloat {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(3%, 3%); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 0.6s ease;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+            background: linear-gradient(135deg, #ffffff, #A594FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 400;
+        }
+
+        .search-section {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(165, 148, 255, 0.15),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            animation: fadeInUp 0.6s ease 0.1s both;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .search-section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(165, 148, 255, 0.25);
+        }
+
+        .search-input {
+            width: 100%;
+            max-width: 600px;
+            padding: 1rem 1.5rem;
+            background: rgba(10, 5, 30, 0.95);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(165, 148, 255, 0.5);
+            border-radius: 1rem;
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #A594FF;
+            background: rgba(5, 2, 20, 1);
+            box-shadow: 0 0 0 4px rgba(165, 148, 255, 0.3);
+        }
+
+        .search-hint {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        .search-results-info {
+            color: #A594FF;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            font-weight: 600;
+            display: none;
+        }
+
+        .main-content {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            box-shadow: 0 8px 32px rgba(165, 148, 255, 0.15),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            animation: fadeInUp 0.6s ease 0.2s both;
+        }
+
+        .faq-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #A594FF, #764ba2);
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(165, 148, 255, 0.3);
+        }
+
+        .faq-item {
+            background: rgba(10, 5, 30, 0.8);
+            border: 2px solid rgba(165, 148, 255, 0.3);
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .faq-item:hover {
+            border-color: rgba(165, 148, 255, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(165, 148, 255, 0.3);
+        }
+
+        .faq-item:active {
+            transform: scale(0.99);
+        }
+
+        .faq-question {
+            padding: 1.25rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: #ffffff;
+            font-size: 1.05rem;
+            line-height: 1.5;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: rgba(165, 148, 255, 0.1);
+        }
+
+        .faq-arrow {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+            margin-left: 1rem;
+            stroke: rgba(255, 255, 255, 0.7);
+        }
+
+        .faq-item.active {
+            border-color: #A594FF;
+            box-shadow: 0 4px 20px rgba(165, 148, 255, 0.4);
+        }
+
+        .faq-item.active .faq-arrow {
+            transform: rotate(180deg);
+            stroke: #A594FF;
+        }
+
+        .faq-item.active .faq-question {
+            background: rgba(165, 148, 255, 0.15);
+            color: #ffffff;
+        }
+
+        .faq-answer {
+            display: none;
+            padding: 0 1.5rem 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.7;
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(165, 148, 255, 0.2);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .faq-answer p {
+            margin-bottom: 0.5rem;
+        }
+
+        .faq-answer strong {
+            color: #A594FF;
+            font-weight: 700;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, rgba(165, 148, 255, 0.6), rgba(118, 75, 162, 0.6));
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: rgba(255, 255, 255, 0.6);
+            display: none;
+        }
+
+        .no-results svg {
+            margin-bottom: 1.5rem;
+            opacity: 0.6;
+            stroke: #A594FF;
+        }
+
+        .no-results h3 {
+            font-size: 1.5rem;
+            color: #ffffff;
+            margin-bottom: 0.75rem;
+        }
+
+        .contact-section {
+            background: linear-gradient(135deg, rgba(165, 148, 255, 0.2), rgba(118, 75, 162, 0.15));
+            border: 1px solid rgba(165, 148, 255, 0.4);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            text-align: center;
+            margin-top: 3rem;
+            animation: fadeInUp 0.6s ease 0.4s both;
+        }
+
+        .contact-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.75rem;
+        }
+
+        .contact-desc {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .contact-btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 1rem;
+            font-family: 'Raleway', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .contact-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .contact-btn:hover::before {
+            transform: translateX(100%);
+        }
+
+        .contact-btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #A594FF, #764ba2);
+            color: white;
+            box-shadow: 0 4px 20px rgba(165, 148, 255, 0.5);
+            border: 1px solid rgba(165, 148, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 35px rgba(165, 148, 255, 0.7);
+        }
+
+        .btn-secondary {
+            background: rgba(10, 5, 30, 0.95);
+            color: #ffffff;
+            border: 2px solid rgba(165, 148, 255, 0.5);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(5, 2, 20, 1);
+            border-color: rgba(165, 148, 255, 0.7);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(165, 148, 255, 0.4);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .container {
+                padding: 0;
+            }
+
+            .header {
+                margin-bottom: 2rem;
+            }
+
+            .title {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .search-section {
+                padding: 1.75rem 1.5rem;
+                margin-bottom: 2rem;
+            }
+
+            .main-content {
+                padding: 1.75rem 1.5rem;
+            }
+
+            .faq-section {
+                margin-bottom: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.3rem;
+            }
+
+            .faq-question {
+                padding: 1rem;
+                font-size: 1rem;
+            }
+
+            .faq-answer {
+                padding: 0 1rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .contact-section {
+                padding: 2rem 1.5rem;
+            }
+
+            .contact-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .contact-btn {
+                justify-content: center;
+            }
+
+            .no-results {
+                padding: 3rem 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .title {
+                font-size: 1.75rem;
+            }
+
+            .section-icon {
+                width: 32px;
+                height: 32px;
+            }
+
+            .section-icon svg {
+                width: 18px;
+                height: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">Central de Ajuda</h1>
+            <p class="subtitle">Encontre respostas rápidas para suas dúvidas sobre a Salesdever</p>
+        </div>
+
+        <div class="search-section">
+            <input type="text" class="search-input" placeholder="Digite sua pergunta ou palavra-chave..." id="searchInput">
+            <p class="search-hint">Ex: "como criar assistente", "configurar follow-up", "importar contatos"</p>
+            <div id="searchResultsInfo" class="search-results-info"></div>
+        </div>
+
+        <div class="main-content">
+            <!-- Mensagem quando não há resultados -->
+            <div id="noResults" class="no-results">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="m21 21-4.35-4.35"/>
+                    <line x1="11" y1="8" x2="11" y2="14"/>
+                    <line x1="8" y1="11" x2="14" y2="11"/>
+                </svg>
+                <h3>Nenhum resultado encontrado</h3>
+                <p>Tente usar palavras-chave diferentes ou entre em contato conosco</p>
+            </div>
+
+            <!-- Primeiros Passos -->
+            <div class="faq-section" id="primeiros-passos">
+                <h2 class="section-title">
+                    <div class="section-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                    </div>
+                    Primeiros Passos
+                </h2>
+
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        Como faço para começar a usar a Salesdever?
+                        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Para começar na Salesdever, siga estes passos:</p>
+                        <br>
+                        <p><strong>1. Login:</strong> Acesse com suas credenciais fornecidas</p>
+                        <p><strong>2. Configure um Assistente:</strong> Vá em "Assistentes" e crie seu primeiro assistente de IA</p>
+                        <p><strong>3. Configure Follow-ups:</strong> Crie sequências de follow-up na aba correspondente</p>
+                        <p><strong>4. Importe Contatos:</strong> Use "Campanhas" para fazer upload da sua lista de leads</p>
+                        <p><strong>5. Inicie Campanha:</strong> Conecte assistente + follow-up + lista e inicie sua prospecção!</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        Qual o formato ideal para importar minha lista de contatos?
+                        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Aceitamos arquivos <strong>CSV</strong> e <strong>Excel</strong> (.xlsx, .xls) com as seguintes colunas obrigatórias:</p>
+                        <br>
+                        <p><strong>• Nome:</strong> Nome completo do lead</p>
+                        <p><strong>• Telefone:</strong> Número com DDD (formato: 11999887766)</p>
+                        <br>
+                        <p><strong>Colunas opcionais:</strong> Email, Empresa, Cargo, Observações</p>
+                        <p><strong>Dica:</strong> Nossa plataforma detecta automaticamente as colunas corretas!</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        Como funciona o sistema de follow-up?
+                        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>O sistema de follow-up automatiza o relacionamento com seus leads:</p>
+                        <br>
+                        <p><strong>• Cadência programada:</strong> Define dias e horários específicos (D1, D3, D5, D7, D10)</p>
+                        <p><strong>• Múltiplos canais:</strong> WhatsApp, ligações e áudios</p>
+                        <p><strong>• Mensagens personalizadas:</strong> IA adapta mensagens para cada lead</p>
+                        <p><strong>• Parada automática:</strong> Para quando o lead responde ou se qualifica</p>
+                        <br>
+                        <p>Exemplo: D1 (WhatsApp) → D3 (Ligação) → D5 (Áudio) → D7 (WhatsApp) → D10 (Break-up)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Assistentes -->
+            <div class="faq-section" id="assistentes">
+                <h2 class="section-title">
+                    <div class="section-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                    </div>
+                    Assistentes de IA
+                </h2>
+
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        Como criar um assistente personalizado?
+                        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Para criar um assistente que converta mais:</p>
+                        <br>
+                        <p><strong>1. Nome:</strong> Escolha um nome humano e profissional</p>
+                        <p><strong>2. Primeira mensagem:</strong> Crie uma abertura natural e não robótica</p>
+                        <p><strong>3. Prompt do sistema:</strong> Defina personalidade, objetivo e tom de voz</p>
+                        <p><strong>4. Teste sempre:</strong> Faça ligações de teste antes de usar em campanhas</p>
+                        <br>
+                        <p><strong>Dica importante:</strong> Assistentes mais humanos e consultivos convertem 3x mais que os vendedores diretos!</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        Meu assistente está muito robótico, como melhorar?
+                        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Para tornar seu assistente mais natural:</p>
+                        <br>
+                        <p><strong>• Use "né", "aí", "então":</strong> Palavras coloquiais humanizam</p>
+                        <p><strong>• Adicione pausas:</strong> "Ahh...", "Olha...", "Vamos ver..."</p>
+                        <p><strong>• Seja curioso, não vendedor:</strong> Faça perguntas sobre o negócio deles</p>
+                        <p><strong>• Conte histórias:</strong> "Tive um cliente parecido que..."</p>
+                        <p><strong>• Admita limitações:</strong> "Não sei te dizer isso agora, mas..."</p>
+                        <br>
+                        <p>Lembre-se: pessoas compram de pessoas, não de robôs!</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        Quantos assistentes posso ter ativos?
+                        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Não há limite de assistentes, mas recomendamos:</p>
+                        <br>
+                        <p><strong>• Para começar:</strong> 1-2 assistentes bem configurados</p>
+                        <p><strong>• Por segmento:</strong> 1 assistente específico (B2B, B2C, etc.)</p>
+                        <p><strong>• Por produto:</strong> 1 assistente especializado por solução</p>
+                        <br>
+                        <p><strong>Dica:</strong> É melhor ter 2 assistentes excelentes do que 10 medianos. Foque na qualidade!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Campanhas -->
+            <div class="faq-section" id="campanhas">
+                <h2 class="section-title">
+                    <div class="section-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/>
+                            <path d="M13 13l6 6"/>
+                        </svg>
+                    </div>
+                    Campanhas
+                </h2>
+
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        Quantos leads posso processar por dia?
+                        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>O volume depende do seu plano:</p>
+                        <br>
+                        <p><strong>• Plano Starter:</strong> Até 500 contatos/mês</p>
+                        <p><strong>• Plano Professional:</strong> Até 2.000 contatos/mês</p>
+                        <p><strong>• Plano Enterprise:</strong> Volume customizado</p>
+                        <br>
+                        <p><strong>Importante:</strong> Recomendamos começar com 50-100 leads para otimizar primeiro, depois escalar!</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        Como acompanho os resultados da campanha?
+                        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Você pode acompanhar em tempo real:</p>
+                        <br>
+                        <p><strong>• Dashboard:</strong> Métricas gerais de performance</p>
+                        <p><strong>• Conversas:</strong> Histórico completo de cada lead</p>
+                        <p><strong>• Relatórios:</strong> Análises detalhadas de conversão</p>
+                        <br>
+                        <p><strong>Métricas principais:</strong> Taxa de resposta, agendamentos, qualificados e pipeline gerado</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        Posso pausar ou parar uma campanha?
+                        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Sim! Você tem controle total:</p>
+                        <br>
+                        <p><strong>• Pausar campanha:</strong> Para todos os contatos não processados</p>
+                        <p><strong>• Parar lead específico:</strong> Remove da sequência</p>
+                        <p><strong>• Reativar:</strong> Retoma de onde parou</p>
+                        <br>
+                        <p><strong>Quando pausar:</strong> Feriados, ajustes no script, análise de resultados ou sobrecarga de leads qualificados</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-section">
+                <h3 class="contact-title">Ainda tem dúvidas?</h3>
+                <p class="contact-desc">Nossa equipe está pronta para te ajudar a acelerar suas vendas</p>
+                <div class="contact-buttons">
+                    <a href="https://wa.me/5511999999999" target="_blank" class="contact-btn btn-primary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.064 3.488"/>
+                        </svg>
+                        WhatsApp Suporte
+                    </a>
+                    <a href="mailto:suporte@salesdever.io" class="contact-btn btn-secondary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                            <polyline points="22,6 12,13 2,6"/>
+                        </svg>
+                        Enviar Email
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variáveis globais
+        let originalContent = {};
+        
+        // Salvar conteúdo original na inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            saveOriginalContent();
+        });
+
+        function saveOriginalContent() {
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach((item, index) => {
+                const question = item.querySelector('.faq-question');
+                const questionText = question.firstChild.textContent.trim();
+                originalContent[index] = questionText;
+            });
+        }
+
+        function toggleFAQ(item) {
+            const isActive = item.classList.contains('active');
+            
+            // Fechar todos os itens
+            document.querySelectorAll('.faq-item').forEach(faq => {
+                faq.classList.remove('active');
+            });
+            
+            // Abrir o clicado se não estava ativo
+            if (!isActive) {
+                item.classList.add('active');
+            }
+        }
+
+        function searchFAQ() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+            const faqItems = document.querySelectorAll('.faq-item');
+            const sections = document.querySelectorAll('.faq-section');
+            const noResults = document.getElementById('noResults');
+            const searchResultsInfo = document.getElementById('searchResultsInfo');
+            
+            let totalVisible = 0;
+            
+            // Se busca estiver vazia, mostrar tudo
+            if (searchTerm.length === 0) {
+                faqItems.forEach((item, index) => {
+                    item.style.display = 'block';
+                    restoreOriginalContent(item, index);
+                    totalVisible++;
+                });
+                
+                sections.forEach(section => {
+                    section.style.display = 'block';
+                });
+                
+                noResults.style.display = 'none';
+                searchResultsInfo.style.display = 'none';
+                return;
+            }
+
+            // Realizar busca
+            faqItems.forEach((item, index) => {
+                const questionElement = item.querySelector('.faq-question');
+                const answerElement = item.querySelector('.faq-answer');
+                
+                // Obter texto original
+                const questionText = originalContent[index] || questionElement.firstChild.textContent.trim();
+                const answerText = answerElement.textContent || answerElement.innerText || '';
+                
+                const searchInQuestion = questionText.toLowerCase().includes(searchTerm);
+                const searchInAnswer = answerText.toLowerCase().includes(searchTerm);
+                
+                if (searchInQuestion || searchInAnswer) {
+                    item.style.display = 'block';
+                    totalVisible++;
+                    
+                    // Destacar termo na pergunta se encontrado
+                    if (searchInQuestion) {
+                        highlightTermInQuestion(questionElement, questionText, searchTerm);
+                    } else {
+                        restoreOriginalContent(item, index);
+                    }
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            // Mostrar/ocultar seções baseado nos resultados
+            sections.forEach(section => {
+                const visibleItems = section.querySelectorAll('.faq-item[style*="block"]:not([style*="none"])');
+                section.style.display = visibleItems.length > 0 ? 'block' : 'none';
+            });
+
+            // Mostrar mensagem de "sem resultados" ou info dos resultados
+            if (totalVisible === 0) {
+                noResults.style.display = 'block';
+                searchResultsInfo.style.display = 'none';
+            } else {
+                noResults.style.display = 'none';
+                searchResultsInfo.style.display = 'block';
+                searchResultsInfo.textContent = totalVisible === 1 ? 
+                    `1 resultado encontrado` : 
+                    `${totalVisible} resultados encontrados`;
+            }
+        }
+
+        function highlightTermInQuestion(questionElement, originalText, searchTerm) {
+            // Salvar o ícone SVG
+            const arrow = questionElement.querySelector('.faq-arrow');
+            const arrowHTML = arrow ? arrow.outerHTML : `
+                <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 9l-7 7-7-7"/>
+                </svg>
+            `;
+            
+            // Aplicar highlight no texto original
+            const regex = new RegExp(`(${escapeRegExp(searchTerm)})`, 'gi');
+            const highlightedText = originalText.replace(regex, '<span class="highlight">$1</span>');
+            
+            // Atualizar HTML com texto destacado + ícone
+            questionElement.innerHTML = highlightedText + arrowHTML;
+        }
+
+        function restoreOriginalContent(item, index) {
+            const questionElement = item.querySelector('.faq-question');
+            const originalText = originalContent[index];
+            
+            if (originalText) {
+                const arrowHTML = `
+                    <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 9l-7 7-7-7"/>
+                    </svg>
+                `;
+                questionElement.innerHTML = originalText + arrowHTML;
+            }
+        }
+
+        function escapeRegExp(string) {
+            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+
+        // Event listeners
+        document.getElementById('searchInput').addEventListener('input', searchFAQ);
+        document.getElementById('searchInput').addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') {
+                searchFAQ();
+            }
+        });
+    </script>
+</body>
+</html>

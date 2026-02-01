@@ -1,0 +1,1195 @@
+ mensage<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="https://imagens-zipline.hgabnb.easypanel.host/u/2FsJTY.png">
+    <link rel="shortcut icon" type="image/png" href="https://imagens-zipline.hgabnb.easypanel.host/u/2FsJTY.png">
+    <link rel="apple-touch-icon" href="https://imagens-zipline.hgabnb.easypanel.host/u/2FsJTY.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selecione seus Assistentes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Botão de Tutorial -->
+    <link rel="stylesheet" href="../css/tutorial-button.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        body {
+            background: #0a0420;
+            min-height: 100vh;
+            color: #ffffff;
+            padding: 0;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 50%, rgba(165, 148, 255, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(102, 126, 234, 0.06) 0%, transparent 50%);
+            animation: backgroundFloat 20s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes backgroundFloat {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(3%, 3%); }
+        }
+
+        .container {
+            max-width: 100%;
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .user-info {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 1rem;
+            padding: 0.75rem 1.25rem;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            animation: fadeIn 0.6s ease;
+        }
+
+        .campaign-type-badge {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 1rem;
+            padding: 0.75rem 1.25rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            animation: fadeIn 0.6s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .campaign-type-badge.outbound {
+            border-color: rgba(139, 92, 246, 0.4);
+            color: #A594FF;
+        }
+
+        .campaign-type-badge.inbound {
+            border-color: rgba(34, 197, 94, 0.4);
+            color: #22C55E;
+        }
+
+        .campaign-type-badge .badge-icon {
+            font-size: 1.1rem;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin-top: 2rem;
+            padding: 0 1rem;
+        }
+
+        .nav-btn {
+            padding: 0.875rem 1.5rem;
+            border: none;
+            border-radius: 0.875rem;
+            font-family: 'Raleway', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn-secondary {
+            background: rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .nav-btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-top: 1rem;
+            animation: fadeInDown 0.6s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #ffffff, #A594FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 400;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 4rem;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(165, 148, 255, 0.2);
+            border-top-color: #A594FF;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 400;
+        }
+
+        .error {
+            text-align: center;
+            padding: 3rem;
+            color: #EF4444;
+            font-size: 1.1rem;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .error-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .retry-button {
+            padding: 0.75rem 1.75rem;
+            background: linear-gradient(135deg, #A594FF, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 1rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            box-shadow: 0 4px 16px rgba(165, 148, 255, 0.3);
+        }
+
+        .retry-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(165, 148, 255, 0.4);
+        }
+
+        .summary-info {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            text-align: center;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            animation: fadeInUp 0.6s ease 0.1s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .summary-grid {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3rem;
+        }
+
+        .summary-item {
+            text-align: center;
+        }
+
+        .summary-divider {
+            width: 1px;
+            height: 60px;
+            background: rgba(165, 148, 255, 0.3);
+        }
+
+        .summary-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #A594FF, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.25rem;
+            text-shadow: 0 2px 10px rgba(165, 148, 255, 0.3);
+        }
+
+        .summary-label {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 500;
+        }
+
+        .selection-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 5rem;
+        }
+
+        .selection-section {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 1.5rem;
+            padding: 1.75rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fadeInUp 0.6s ease both;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        .selection-section:nth-child(1) { animation-delay: 0.2s; }
+        .selection-section:nth-child(2) { animation-delay: 0.3s; }
+
+        .selection-section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(165, 148, 255, 0.2);
+        }
+
+        .section-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(165, 148, 255, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.35rem;
+        }
+
+        .section-subtitle {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.55);
+        }
+
+        .items-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-height: 550px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-right: 0.5rem;
+            position: relative;
+            z-index: 1;
+            flex: 1;
+        }
+
+        .items-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .items-list::-webkit-scrollbar-track {
+            background: rgba(165, 148, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        .items-list::-webkit-scrollbar-thumb {
+            background: rgba(165, 148, 255, 0.4);
+            border-radius: 3px;
+        }
+
+        .items-list::-webkit-scrollbar-thumb:hover {
+            background: rgba(165, 148, 255, 0.6);
+        }
+
+        .item-card {
+            background: rgba(30, 25, 60, 0.8);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(165, 148, 255, 0.25);
+            border-radius: 1rem;
+            padding: 1.25rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            min-height: 90px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .item-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #A594FF, transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .item-card:hover {
+            border-color: rgba(165, 148, 255, 0.5);
+            background: rgba(40, 32, 75, 0.85);
+        }
+
+        .item-card:hover::before {
+            opacity: 1;
+        }
+
+        .item-card.selected {
+            border-color: #A594FF;
+            background: rgba(50, 40, 90, 0.9);
+        }
+
+        .item-card.selected::before {
+            opacity: 1;
+        }
+
+        .item-card.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .item-card.disabled:hover {
+            transform: none;
+            border-color: rgba(165, 148, 255, 0.3);
+            box-shadow: none;
+        }
+
+        .item-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 1;
+        }
+
+        .item-name {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .item-number {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.85);
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            margin-top: 0.35rem;
+            letter-spacing: 0.8px;
+            font-weight: 500;
+        }
+
+        .status-badge {
+            padding: 0.4rem 0.9rem;
+            border-radius: 1.5rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .status-badge span:first-child {
+            font-size: 0.5rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .status-active {
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid rgba(34, 197, 94, 0.4);
+            color: #22C55E;
+        }
+
+        .status-active span:first-child {
+            color: #22C55E;
+        }
+
+        .status-busy {
+            background: rgba(251, 191, 36, 0.15);
+            border: 1px solid rgba(251, 191, 36, 0.4);
+            color: #FBBF24;
+        }
+
+        .status-busy span:first-child {
+            color: #FBBF24;
+        }
+
+        .status-offline {
+            background: rgba(107, 114, 128, 0.15);
+            border: 1px solid rgba(107, 114, 128, 0.4);
+            color: #9CA3AF;
+        }
+
+        .status-offline span:first-child {
+            color: #9CA3AF;
+            animation: none;
+        }
+
+        .checkmark {
+            display: none !important;
+        }
+
+        .continue-button {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #A594FF, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 1rem;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 16px rgba(165, 148, 255, 0.4);
+            display: none;
+            z-index: 1000;
+            letter-spacing: -0.01em;
+        }
+
+        .continue-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(165, 148, 255, 0.5);
+            background: linear-gradient(135deg, #B5A4FF, #8B6BC2);
+        }
+
+        .continue-button:active {
+            transform: translateY(0);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .empty-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+            filter: drop-shadow(0 4px 15px rgba(165, 148, 255, 0.3));
+        }
+
+        @media (max-width: 1024px) {
+            .selection-container {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-grid {
+                gap: 2rem;
+            }
+
+            .summary-value {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 0;
+            }
+
+            .container {
+                padding: 1.5rem 1rem;
+            }
+
+            .title {
+                font-size: 1.8rem;
+            }
+
+            .subtitle {
+                font-size: 0.95rem;
+            }
+
+            .user-info {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-bottom: 1.5rem;
+                display: inline-block;
+            }
+
+            .campaign-type-badge {
+                position: relative;
+                top: 0;
+                left: 0;
+                margin-bottom: 1rem;
+            }
+
+            .navigation-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-btn {
+                width: 100%;
+            }
+
+            .continue-button {
+                bottom: 1rem;
+                right: 1rem;
+                left: 1rem;
+                width: calc(100% - 2rem);
+            }
+
+            .selection-section {
+                padding: 1.5rem;
+            }
+
+            .items-list {
+                max-height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="user-info" id="userInfo" style="display: none;"></div>
+        <div class="campaign-type-badge" id="campaignTypeBadge" style="display: none;">
+            <span class="badge-icon">📤</span>
+            <span class="badge-text">Campanha Outbound</span>
+        </div>
+
+        <div class="header">
+            <h1 class="title">Selecione seus Assistentes</h1>
+            <p class="subtitle">Escolha os assistentes e números que deseja utilizar para suas campanhas</p>
+        </div>
+
+        <div id="summaryInfo" class="summary-info" style="display: none;"></div>
+
+        <div id="loadingState" class="loading">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Carregando seus dados...</div>
+        </div>
+
+        <div id="errorState" class="error" style="display: none;">
+            <div class="error-icon">⚠️</div>
+            <div class="error-text">Erro ao carregar dados</div>
+            <button class="retry-button" onclick="location.reload()">Tentar Novamente</button>
+        </div>
+
+        <div id="selectionContainer" class="selection-container" style="display: none;">
+            <div class="selection-section">
+                <div class="section-header">
+                    <div class="section-title">Assistentes Disponíveis</div>
+                    <div class="section-subtitle">Selecione um assistente para sua campanha</div>
+                </div>
+                <div id="assistantsList" class="items-list"></div>
+            </div>
+
+            <div class="selection-section">
+                <div class="section-header">
+                    <div class="section-title">Números Disponíveis</div>
+                    <div class="section-subtitle">Selecione um número para utilizar</div>
+                </div>
+                <div id="numbersList" class="items-list"></div>
+            </div>
+        </div>
+
+        <div class="navigation-buttons">
+            <button class="nav-btn nav-btn-secondary" onclick="window.location.href='criar-campanhas.html'">
+                ← Voltar
+            </button>
+        </div>
+
+        <button class="continue-button" id="continueButton" onclick="continueToFollowups()">
+            Continuar para Follow-ups →
+        </button>
+    </div>
+
+    <script>
+        let selectedAssistant = null;
+        let selectedNumber = null;
+        let userData = null;
+
+        async function loadUserData() {
+            console.log('[INIT] Iniciando carregamento de dados...');
+            
+            try {
+                const userEmail = localStorage.getItem('userEmail');
+                const tenantId = localStorage.getItem('tenant_id');
+                const isLoggedIn = localStorage.getItem('isLoggedIn');
+                
+                console.log('[DEBUG] Dados do localStorage:', {
+                    userEmail,
+                    tenantId,
+                    isLoggedIn
+                });
+                
+                if (!userEmail || isLoggedIn !== 'true') {
+                    throw new Error('Usuário não está logado');
+                }
+
+                if (!tenantId) {
+                    throw new Error('Tenant ID não encontrado');
+                }
+
+                const webhookPayload = {
+                    tenant_id: tenantId
+                };
+
+                console.log('[API] Buscando assistentes e números em paralelo...', webhookPayload);
+
+                // Buscar assistentes e números em paralelo
+                let assistantesResponse, numerosResponse;
+
+                try {
+                    console.log('[DEBUG] Iniciando Promise.all...');
+                    const responses = await Promise.all([
+                        fetch('https://sdr.salesdever.io/webhook/procura_assistentes', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(webhookPayload)
+                        }),
+                        fetch('https://sdr.salesdever.io/webhook/procura_numeros', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(webhookPayload)
+                        })
+                    ]);
+
+                    assistantesResponse = responses[0];
+                    numerosResponse = responses[1];
+                    console.log('[DEBUG] Responses recebidas:', { assistantesResponse, numerosResponse });
+                } catch (fetchError) {
+                    console.error('[ERROR] Erro no Promise.all:', fetchError);
+                    throw new Error(`Erro ao buscar dados: ${fetchError.message}`);
+                }
+
+                if (!assistantesResponse.ok) {
+                    throw new Error(`Erro ao buscar assistentes: ${assistantesResponse.status}`);
+                }
+
+                if (!numerosResponse.ok) {
+                    throw new Error(`Erro ao buscar números: ${numerosResponse.status}`);
+                }
+
+                const assistentesData = await assistantesResponse.json();
+                const numerosData = await numerosResponse.json();
+
+                console.log('[API] Assistentes recebidos:', assistentesData);
+                console.log('[API] Números recebidos:', numerosData);
+
+                // Processar assistentes (usar apenas name do retorno)
+                const assistants = Array.isArray(assistentesData) ? assistentesData.map(item => ({
+                    id: item.assistente_id,
+                    name: item.name || 'Assistente sem nome',
+                    status: item.status || 'active'
+                })) : [];
+
+                // Processar números (usar number_id, number_name e phone_number)
+                const numbers = Array.isArray(numerosData) ? numerosData.map(item => ({
+                    id: item.number_id,
+                    name: item.number_name || 'Número sem nome',
+                    number: item.phone_number,
+                    status: item.status || 'active'
+                })) : [];
+
+                console.log('[DEBUG] Assistentes processados:', assistants);
+                console.log('[DEBUG] Números processados:', numbers);
+
+                if (assistants.length === 0 && numbers.length === 0) {
+                    throw new Error('Nenhum assistente ou número encontrado');
+                }
+
+                userData = {
+                    assistants: assistants,
+                    numbers: numbers,
+                    summary: {
+                        total_assistants: assistants.length,
+                        total_numbers: numbers.length
+                    },
+                    user: {
+                        email: userEmail,
+                        tenant_id: tenantId
+                    }
+                };
+
+                console.log('[SUCCESS] Dados processados:', userData);
+                return true;
+
+            } catch (error) {
+                console.error('[ERROR] Erro ao carregar dados:', error);
+                showError(error.message);
+                return false;
+            }
+        }
+
+        function showUserInfo() {
+            const userInfoElement = document.getElementById('userInfo');
+            if (userData && userData.user) {
+                userInfoElement.textContent = userData.user.email;
+                userInfoElement.style.display = 'block';
+            }
+        }
+
+        function showSummary() {
+            const summaryElement = document.getElementById('summaryInfo');
+            if (userData && userData.summary) {
+                const summary = userData.summary;
+                summaryElement.innerHTML = `
+                    <div class="summary-grid">
+                        <div class="summary-item">
+                            <div class="summary-value">${summary.total_assistants}</div>
+                            <div class="summary-label">Total de Assistentes</div>
+                        </div>
+                        <div class="summary-divider"></div>
+                        <div class="summary-item">
+                            <div class="summary-value">${summary.total_numbers}</div>
+                            <div class="summary-label">Total de Números</div>
+                        </div>
+                    </div>
+                `;
+                summaryElement.style.display = 'block';
+            }
+        }
+
+        function renderAssistants() {
+            console.log('[RENDER] Renderizando assistentes...', userData);
+            
+            const container = document.getElementById('selectionContainer');
+            const loading = document.getElementById('loadingState');
+            const assistantsList = document.getElementById('assistantsList');
+            
+            if (!userData) {
+                console.error('[RENDER] userData não existe');
+                showError('Erro ao processar dados dos assistentes.');
+                return;
+            }
+
+            if (!userData.assistants || userData.assistants.length === 0) {
+                assistantsList.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div><div>Nenhum assistente disponível</div></div>';
+            } else {
+                assistantsList.innerHTML = '';
+                userData.assistants.forEach(assistant => {
+                    const card = createAssistantCard(assistant);
+                    assistantsList.appendChild(card);
+                });
+            }
+
+            renderNumbers();
+            
+            loading.style.display = 'none';
+            container.style.display = 'grid';
+            
+            // Disparar evento para iniciar onboarding após renderização
+            setTimeout(() => {
+                console.log('[Seleciona Assistente] Disparando evento de renderização completa');
+                console.log('[Seleciona Assistente] Verificando se scripts estão carregados...');
+                console.log('[Seleciona Assistente] initOnboarding disponível?', typeof initOnboarding);
+                console.log('[Seleciona Assistente] ONBOARDING_TOOLTIPS disponível?', typeof ONBOARDING_TOOLTIPS);
+                console.log('[Seleciona Assistente] OnboardingTooltip disponível?', typeof OnboardingTooltip);
+                
+                const event = new CustomEvent('assistentsRendered', { 
+                    detail: { 
+                        hasAssistants: userData.assistants && userData.assistants.length > 0,
+                        hasNumbers: userData.numbers && userData.numbers.length > 0
+                    } 
+                });
+                document.dispatchEvent(event);
+                console.log('[Seleciona Assistente] Evento assistentsRendered disparado!');
+            }, 500);
+        }
+
+        function renderNumbers() {
+            console.log('[RENDER] Renderizando números...', userData);
+            
+            const numbersList = document.getElementById('numbersList');
+            
+            if (!userData) {
+                console.error('[RENDER] userData não existe para números');
+                return;
+            }
+
+            if (!userData.numbers || userData.numbers.length === 0) {
+                numbersList.innerHTML = '<div class="empty-state"><div class="empty-icon">📵</div><div>Nenhum número disponível</div></div>';
+            } else {
+                numbersList.innerHTML = '';
+                userData.numbers.forEach(number => {
+                    const card = createNumberCard(number);
+                    numbersList.appendChild(card);
+                });
+            }
+        }
+
+        function createAssistantCard(assistant) {
+            const card = document.createElement('div');
+            card.className = 'item-card';
+            card.setAttribute('data-assistant', assistant.id);
+
+            const statusInfo = getStatusInfo(assistant.status);
+            const isDisabled = assistant.status === 'offline' || assistant.status === 'inactive';
+
+            if (isDisabled) {
+                card.classList.add('disabled');
+            }
+
+            card.innerHTML = `
+                <div class="item-header">
+                    <div>
+                        <div class="item-name">${assistant.name}</div>
+                    </div>
+                    <div class="status-badge ${statusInfo.class}">
+                        <span>${statusInfo.icon}</span>
+                        <span>${statusInfo.text}</span>
+                    </div>
+                </div>
+                <div class="checkmark">✓</div>
+            `;
+
+            if (!isDisabled) {
+                card.addEventListener('click', () => selectAssistant(assistant.id));
+            }
+
+            return card;
+        }
+
+        function createNumberCard(number) {
+            const card = document.createElement('div');
+            card.className = 'item-card';
+            card.setAttribute('data-number', number.id);
+
+            const statusInfo = getStatusInfo(number.status);
+            const isDisabled = number.status === 'offline' || number.status === 'inactive';
+
+            if (isDisabled) {
+                card.classList.add('disabled');
+            }
+
+            card.innerHTML = `
+                <div class="item-header">
+                    <div>
+                        <div class="item-name">${number.name}</div>
+                        <div class="item-number">${number.number}</div>
+                    </div>
+                    <div class="status-badge ${statusInfo.class}">
+                        <span>${statusInfo.icon}</span>
+                        <span>${statusInfo.text}</span>
+                    </div>
+                </div>
+                <div class="checkmark">✓</div>
+            `;
+
+            if (!isDisabled) {
+                card.addEventListener('click', () => selectNumber(number.id));
+            }
+
+            return card;
+        }
+
+        function getStatusInfo(status) {
+            const statusMap = {
+                'active': { class: 'status-active', text: 'Ativo', icon: '●' },
+                'busy': { class: 'status-busy', text: 'Em Uso', icon: '●' },
+                'offline': { class: 'status-offline', text: 'Offline', icon: '●' },
+                'inactive': { class: 'status-offline', text: 'Inativo', icon: '●' }
+            };
+
+            return statusMap[status] || { class: 'status-active', text: 'Ativo', icon: '●' };
+        }
+
+        function selectAssistant(assistantId) {
+            if (selectedAssistant) {
+                const previousCard = document.querySelector(`[data-assistant="${selectedAssistant}"]`);
+                if (previousCard) {
+                    previousCard.classList.remove('selected');
+                }
+            }
+
+            const card = document.querySelector(`[data-assistant="${assistantId}"]`);
+            
+            if (selectedAssistant === assistantId) {
+                selectedAssistant = null;
+                card.classList.remove('selected');
+            } else {
+                selectedAssistant = assistantId;
+                card.classList.add('selected');
+            }
+
+            updateContinueButton();
+            saveSelections();
+        }
+
+        function selectNumber(numberId) {
+            if (selectedNumber) {
+                const previousCard = document.querySelector(`[data-number="${selectedNumber}"]`);
+                if (previousCard) {
+                    previousCard.classList.remove('selected');
+                }
+            }
+
+            const card = document.querySelector(`[data-number="${numberId}"]`);
+            
+            if (selectedNumber === numberId) {
+                selectedNumber = null;
+                card.classList.remove('selected');
+            } else {
+                selectedNumber = numberId;
+                card.classList.add('selected');
+            }
+
+            updateContinueButton();
+            saveSelections();
+        }
+
+        function updateContinueButton() {
+            const continueButton = document.getElementById('continueButton');
+            if (selectedAssistant && selectedNumber) {
+                continueButton.style.display = 'block';
+            } else {
+                continueButton.style.display = 'none';
+            }
+        }
+
+        function saveSelections() {
+            const selections = {
+                assistant: selectedAssistant,
+                number: selectedNumber
+            };
+            localStorage.setItem('selectedItems', JSON.stringify(selections));
+        }
+
+        function loadSavedSelections() {
+            try {
+                const saved = localStorage.getItem('selectedItems');
+                if (saved) {
+                    const selections = JSON.parse(saved);
+                    
+                    if (selections.assistant) {
+                        const card = document.querySelector(`[data-assistant="${selections.assistant}"]`);
+                        if (card && !card.classList.contains('disabled')) {
+                            selectedAssistant = selections.assistant;
+                            card.classList.add('selected');
+                        }
+                    }
+
+                    if (selections.number) {
+                        const card = document.querySelector(`[data-number="${selections.number}"]`);
+                        if (card && !card.classList.contains('disabled')) {
+                            selectedNumber = selections.number;
+                            card.classList.add('selected');
+                        }
+                    }
+                    
+                    updateContinueButton();
+                }
+            } catch (error) {
+                console.error('[ERROR] Erro ao carregar seleções:', error);
+            }
+        }
+
+        function showError(message) {
+            document.getElementById('loadingState').style.display = 'none';
+            document.getElementById('selectionContainer').style.display = 'none';
+            const errorElement = document.getElementById('errorState');
+            errorElement.querySelector('.error-text').textContent = message;
+            errorElement.style.display = 'block';
+        }
+
+        function continueToFollowups() {
+            if (!selectedAssistant) {
+                alert('Selecione um assistente para continuar');
+                return;
+            }
+
+            if (!selectedNumber) {
+                alert('Selecione um número para continuar');
+                return;
+            }
+
+            const selectedAssistantData = userData.assistants.find(a => a.id === selectedAssistant);
+            const selectedNumberData = userData.numbers.find(n => n.id === selectedNumber);
+            
+            const finalSelections = {
+                assistant: selectedAssistantData,
+                number: selectedNumberData,
+                userData: {
+                    user: {
+                        email: userData.user.email,
+                        tenant_id: userData.user.tenant_id
+                    }
+                }
+            };
+            
+            localStorage.setItem('finalSelections', JSON.stringify(finalSelections));
+            console.log('[NAVIGATION] Dados salvos:', finalSelections);
+
+            window.location.href = 'planilha.html';
+        }
+
+        function showCampaignTypeBadge() {
+            const campaignType = localStorage.getItem('campaign_type');
+            const badgeElement = document.getElementById('campaignTypeBadge');
+            const iconElement = badgeElement.querySelector('.badge-icon');
+            const textElement = badgeElement.querySelector('.badge-text');
+
+            if (campaignType) {
+                if (campaignType === 'outbound') {
+                    badgeElement.classList.add('outbound');
+                    badgeElement.classList.remove('inbound');
+                    iconElement.textContent = '📤';
+                    textElement.textContent = 'Campanha Outbound';
+                } else if (campaignType === 'inbound') {
+                    badgeElement.classList.add('inbound');
+                    badgeElement.classList.remove('outbound');
+                    iconElement.textContent = '📥';
+                    textElement.textContent = 'Campanha Inbound';
+                }
+                badgeElement.style.display = 'flex';
+                console.log('[BADGE] Tipo de campanha:', campaignType);
+            }
+        }
+
+        window.addEventListener('load', async () => {
+            console.log('[LOAD] Página carregada, iniciando fluxo...');
+
+            const success = await loadUserData();
+
+            if (success) {
+                console.log('[LOAD] Dados carregados com sucesso');
+                showUserInfo();
+                showCampaignTypeBadge();
+                showSummary();
+                renderAssistants();
+                
+                const hasAssistants = userData.assistants && userData.assistants.length > 0;
+                const hasNumbers = userData.numbers && userData.numbers.length > 0;
+                
+                if (!hasAssistants && !hasNumbers) {
+                    console.error('[LOAD] Nenhum assistente ou número disponível');
+                    showError('Nenhum assistente ou número disponível para este usuário.');
+                    return;
+                }
+                
+                setTimeout(() => {
+                    loadSavedSelections();
+                    
+                    // Aguardar evento de renderização completa para iniciar onboarding
+                    console.log('[Seleciona Assistente] Aguardando renderização completa...');
+                    
+                    // Scripts de onboarding removidos - agora só na página de demo
+                    // const initializeOnboarding = () => { ... };
+                    // document.addEventListener('assistentsRendered', initializeOnboarding, { once: true });
+                    
+                    // Scripts de onboarding removidos - agora só na página de demo
+                }, 100);
+            } else {
+                console.error('[LOAD] Falha ao carregar dados');
+            }
+        });
+        
+        // Garantir inicialização do onboarding após 3 segundos (fallback)
+        // Isso garante que mesmo se o carregamento de dados falhar, o onboarding ainda será inicializado
+        setTimeout(() => {
+            console.log('[Seleciona Assistente] Fallback: Verificando inicialização do onboarding após 3 segundos...');
+            if (typeof initOnboarding === 'function') {
+                const container = document.getElementById('selectionContainer');
+                const isVisible = container && container.style.display !== 'none';
+                const hasTooltip = document.getElementById('onboarding-tooltip');
+                const hasOnboardingInstance = window.currentOnboarding;
+                
+                if (hasTooltip || (hasOnboardingInstance && hasOnboardingInstance.isActive)) {
+                    // Já foi inicializado e está ativo
+                    console.log('[Seleciona Assistente] Onboarding já inicializado e ativo.');
+                } else {
+                    console.log('[Seleciona Assistente] Inicializando onboarding via fallback...');
+                    // Forçar reativação se necessário
+                    if (!hasOnboardingInstance || !hasOnboardingInstance.isActive) {
+                        localStorage.setItem('onboarding_reactivated', 'true');
+                        localStorage.removeItem('onboarding_auto_show_disabled');
+                    }
+                    initOnboarding();
+                }
+            } else {
+                console.error('[Seleciona Assistente] initOnboarding não encontrado após 3 segundos!');
+            }
+        }, 3000);
+        
+        // Scripts de onboarding removidos - agora só na página de demo
+        // FORÇAR REATIVAÇÃO ao carregar a página - REMOVIDO
+    </script>
+</body>
+</html>

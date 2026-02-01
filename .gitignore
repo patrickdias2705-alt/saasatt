@@ -1,0 +1,59 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+env/
+*.egg-info/
+dist/
+build/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Documentation desnecessária (manter apenas README.md e docs importantes)
+BUG_*.md
+DEBUG_*.md
+COMO_RESTAURAR_*.md
+RESTAURAR_*.md
+VERIFICAR_*.md
+REMOVER_*.md
+INICIAR_*.md
+INSTRUCOES_*.md
+STATUS_*.md
+
+# Manter apenas documentação essencial
+# README.md
+# PLANO_IMPLEMENTACAO_PROMPT_CANONICO.md
+# ESTRUTURA_PROJETO.md

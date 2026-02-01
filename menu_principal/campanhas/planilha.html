@@ -1,0 +1,3022 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="https://imagens-zipline.hgabnb.easypanel.host/u/2FsJTY.png">
+   <link rel="shortcut icon" type="image/png" href="https://imagens-zipline.hgabnb.easypanel.host/u/2FsJTY.png">
+   <link rel="apple-touch-icon" href="https://imagens-zipline.hgabnb.easypanel.host/u/2FsJTY.png">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload de Lista</title>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Timeline Styles -->
+    <link rel="stylesheet" href="styles/campaign-timeline.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        body {
+            background: #0a0420;
+            min-height: 100vh;
+            color: #ffffff;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 50%, rgba(165, 148, 255, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(102, 126, 234, 0.06) 0%, transparent 50%);
+            animation: backgroundFloat 20s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes backgroundFloat {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(3%, 3%); }
+        }
+
+        .container {
+            max-width: 100%;
+            width: 100%;
+            padding: 2rem 3rem;
+            animation: fadeIn 0.6s ease-out;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .selection-info {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .selection-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .selection-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .selection-item {
+            text-align: center;
+        }
+
+        .selection-label {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .selection-value {
+            font-size: 0.9rem;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .glass-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .tabs {
+            display: flex;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 0.75rem;
+            padding: 0.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            text-align: center;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #ffffff;
+            background: rgba(139, 122, 255, 0.3);
+        }
+
+        .subtitle {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 2rem;
+        }
+
+        .upload-area {
+            border: 2px dashed rgba(165, 148, 255, 0.3);
+            border-radius: 1rem;
+            padding: 3rem 2rem;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.03);
+            cursor: pointer;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .upload-area:hover {
+            border-color: rgba(165, 148, 255, 0.5);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .upload-text {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .upload-subtext {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .header {
+            margin-bottom: 2rem;
+        }
+
+        .mapping-section {
+            display: none;
+        }
+
+        .mapping-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 1rem;
+        }
+
+        .mapping-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-select, .form-input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            background: rgba(30, 25, 60, 0.8);
+            border: 1px solid rgba(165, 148, 255, 0.3);
+            border-radius: 0.75rem;
+            color: #ffffff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-select:focus, .form-input:focus {
+            outline: none;
+            border-color: #A594FF;
+            background: rgba(40, 32, 75, 0.85);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: space-between;
+        }
+
+        .btn {
+            padding: 0.875rem 1.5rem;
+            border: none;
+            border-radius: 0.875rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #A594FF, #764ba2);
+            color: white;
+            box-shadow: 0 4px 16px rgba(165, 148, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(165, 148, 255, 0.4);
+            background: linear-gradient(135deg, #B5A4FF, #8B6BC2);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .error-message, .success-message {
+            padding: 0.875rem 1rem;
+            border-radius: 0.75rem;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .error-message {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ffffff;
+        }
+
+        .success-message {
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #ffffff;
+        }
+
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 4, 32, 0.85);
+            backdrop-filter: blur(12px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .popup-modal {
+            background: linear-gradient(135deg, rgba(25, 20, 50, 0.95), rgba(20, 15, 45, 0.95));
+            backdrop-filter: blur(30px);
+            border: 1.5px solid rgba(165, 148, 255, 0.25);
+            border-radius: 1.25rem;
+            padding: 2.5rem 2rem;
+            max-width: 440px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+            animation: slideUp 0.3s ease;
+        }
+
+        .popup-icon-container {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, rgba(165, 148, 255, 0.15), rgba(165, 148, 255, 0.08));
+            border: 1.5px solid rgba(165, 148, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #A594FF;
+        }
+
+        .popup-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 1rem;
+        }
+
+        .popup-description {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .contact-highlight {
+            color: #A594FF;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .popup-buttons {
+            display: flex;
+            gap: 0.875rem;
+            justify-content: center;
+        }
+
+        .btn-cancel {
+            padding: 0.875rem 1.5rem;
+            background: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 0.75rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-cancel:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        .btn-start-campaign {
+            padding: 0.875rem 1.75rem;
+            background: linear-gradient(135deg, rgba(165, 148, 255, 0.9), rgba(145, 128, 235, 0.9));
+            color: white;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 16px rgba(165, 148, 255, 0.25);
+        }
+
+        .btn-start-campaign:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(165, 148, 255, 0.35);
+            background: linear-gradient(135deg, rgba(175, 158, 255, 0.95), rgba(155, 138, 245, 0.95));
+        }
+
+        .btn-start-campaign:active {
+            transform: translateY(0);
+        }
+
+        /* ==================== CAPACITY CARD ==================== */
+
+        .capacity-card {
+            background: linear-gradient(135deg, rgba(30, 25, 60, 0.6), rgba(25, 20, 55, 0.6));
+            border: 1.5px solid rgba(165, 148, 255, 0.25);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .capacity-card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .capacity-card-icon {
+            color: #A594FF;
+        }
+
+        .capacity-card-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .capacity-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .capacity-item {
+            background: rgba(10, 5, 30, 0.4);
+            border: 1px solid rgba(165, 148, 255, 0.2);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .capacity-label {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .capacity-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .capacity-value.highlight {
+            color: #A594FF;
+        }
+
+        .capacity-progress {
+            margin-top: 1.5rem;
+        }
+
+        .capacity-progress-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            font-size: 0.875rem;
+        }
+
+        .capacity-progress-label > span:first-child {
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 500;
+        }
+
+        .capacity-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .capacity-status svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .capacity-status.status-ok {
+            color: #22C55E;
+        }
+
+        .capacity-status.status-warning {
+            color: #F59E0B;
+        }
+
+        .capacity-status.status-danger {
+            color: #EF4444;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 8px;
+            background: rgba(165, 148, 255, 0.1);
+            border-radius: 1rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #A594FF, #8B7AE5);
+            border-radius: 1rem;
+            transition: width 0.6s ease, background 0.3s ease;
+            box-shadow: 0 0 10px rgba(165, 148, 255, 0.5);
+        }
+
+        .progress-bar-fill.warning {
+            background: linear-gradient(90deg, #F59E0B, #D97706);
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+        }
+
+        .progress-bar-fill.danger {
+            background: linear-gradient(90deg, #EF4444, #DC2626);
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+        }
+
+        .validation-errors-section {
+            display: none;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .validation-errors-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .validation-errors-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ff6b6b;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .validation-summary {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+
+        .validation-summary-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .validation-summary-label {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .validation-summary-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .validation-summary-value.correct {
+            color: #4ade80;
+        }
+
+        .validation-summary-value.incorrect {
+            color: #ff6b6b;
+        }
+
+        .validation-errors-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .validation-errors-table thead {
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .validation-errors-table th {
+            padding: 0.875rem;
+            text-align: left;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            border-bottom: 2px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .validation-errors-table td {
+            padding: 0.875rem;
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .validation-errors-table tbody tr:hover {
+            background: rgba(239, 68, 68, 0.05);
+        }
+
+        .validation-errors-table .error-phone {
+            color: #ff6b6b;
+            font-weight: 600;
+        }
+
+        .validation-errors-table .error-line {
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 500;
+        }
+
+        .validation-errors-table .error-name {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .validation-message {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-top: 1rem;
+            color: #ffffff;
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        .validation-message strong {
+            color: #ff6b6b;
+        }
+
+        @media (max-width: 768px) {
+            .mapping-grid, .selection-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .popup-buttons {
+                flex-direction: column;
+            }
+
+            .capacity-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="selection-info" id="selectionInfo" style="display: none;">
+            <div class="selection-title">Configuração da Campanha</div>
+            <div class="selection-grid">
+                <div class="selection-item">
+                    <div class="selection-label">Assistente</div>
+                    <div class="selection-value" id="selectedAssistant">-</div>
+                </div>
+                <div class="selection-item">
+                    <div class="selection-label">Número</div>
+                    <div class="selection-value" id="selectedNumber">-</div>
+                </div>
+                <div class="selection-item">
+                    <div class="selection-label">Instância WhatsApp</div>
+                    <div class="selection-value" id="selectedInstance">Não selecionada</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <div class="header">
+                <h1 class="title">Upload de Lista</h1>
+            </div>
+
+            <div class="tabs">
+                <div class="tab">Lista com Leads</div>
+            </div>
+
+            <p class="subtitle">
+                Envie sua planilha com os leads que deseja contatar
+            </p>
+
+            <div id="errorMessage" class="error-message"></div>
+            <div id="successMessage" class="success-message"></div>
+
+            <div id="uploadSection">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-text">📊 Selecionar Arquivo</div>
+                    <div class="upload-subtext">Clique ou arraste um arquivo CSV ou Excel</div>
+                </div>
+                <input type="file" id="fileInput" class="file-input" accept=".csv,.xlsx,.xls">
+            </div>
+
+            <!-- Card de Capacidade do Plano -->
+            <div id="capacitySection" class="capacity-card" style="display: none;">
+                <div class="capacity-card-header">
+                    <svg class="capacity-card-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="20" x2="12" y2="10"></line>
+                        <line x1="18" y1="20" x2="18" y2="4"></line>
+                        <line x1="6" y1="20" x2="6" y2="16"></line>
+                    </svg>
+                    <h3 class="capacity-card-title">Capacidade do Seu Plano</h3>
+                </div>
+
+                <div class="capacity-grid">
+                    <div class="capacity-item">
+                        <div class="capacity-label">Ligações/Hora</div>
+                        <div class="capacity-value" id="planHourlyCapacity">-</div>
+                    </div>
+                    <div class="capacity-item">
+                        <div class="capacity-label">Limite Diário</div>
+                        <div class="capacity-value highlight" id="planDailyCapacity">-</div>
+                    </div>
+                    <div class="capacity-item">
+                        <div class="capacity-label">Leads no Arquivo</div>
+                        <div class="capacity-value highlight" id="uploadedLeadsCount">-</div>
+                    </div>
+                </div>
+
+                <div class="capacity-progress">
+                    <div class="capacity-progress-label">
+                        <span>Uso da Capacidade</span>
+                        <span class="capacity-status" id="capacityStatus">-</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="capacityProgressBar" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção de Erros de Validação de Telefones -->
+            <div id="validationErrorsSection" class="validation-errors-section">
+                <div class="validation-errors-header">
+                    <h2 class="validation-errors-title">
+                        <span>⚠️</span>
+                        Erros de Validação de Telefones
+                    </h2>
+                </div>
+
+                <div class="validation-summary">
+                    <div class="validation-summary-item">
+                        <div class="validation-summary-label">Total de Leads</div>
+                        <div class="validation-summary-value" id="validationTotalLeads">0</div>
+                    </div>
+                    <div class="validation-summary-item">
+                        <div class="validation-summary-label">Telefones Corretos</div>
+                        <div class="validation-summary-value correct" id="validationCorrectCount">0</div>
+                    </div>
+                    <div class="validation-summary-item">
+                        <div class="validation-summary-label">Telefones Incorretos</div>
+                        <div class="validation-summary-value incorrect" id="validationIncorrectCount">0</div>
+                    </div>
+                </div>
+
+                <div class="validation-message">
+                    <strong>⚠️ Atenção:</strong> Os números de telefone devem ter <strong>11 dígitos</strong> (sem código do país) ou <strong>13 dígitos</strong> (com código do país 55). 
+                    Exemplos válidos: <strong>11965043806</strong> (11 dígitos) ou <strong>5511965043806</strong> (13 dígitos). 
+                    Por favor, corrija os números destacados em vermelho na tabela abaixo e faça o upload novamente.
+                </div>
+                
+                <div style="margin-top: 1.5rem; text-align: center;">
+                    <button type="button" id="retryUploadBtn" class="btn btn-primary" onclick="retryUpload()">
+                        ← Voltar e Corrigir Arquivo
+                    </button>
+                </div>
+
+                <div style="overflow-x: auto; max-height: 400px; overflow-y: auto; margin-top: 1rem;">
+                    <table class="validation-errors-table">
+                        <thead>
+                            <tr>
+                                <th>Linha</th>
+                                <th>Nome</th>
+                                <th>Telefone (com erro)</th>
+                                <th>Dígitos</th>
+                            </tr>
+                        </thead>
+                        <tbody id="validationErrorsTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="mappingSection" class="mapping-section">
+                <h2 class="mapping-title">Mapear Colunas</h2>
+
+                <div class="mapping-grid">
+                    <div class="form-group">
+                        <label for="nameColumn" class="form-label">Coluna de Nome</label>
+                        <select id="nameColumn" class="form-select">
+                            <option value="">Selecionar...</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phoneColumn" class="form-label">Coluna de Telefone</label>
+                        <select id="phoneColumn" class="form-select">
+                            <option value="">Selecionar...</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="campaignName" class="form-label">Nome da Campanha</label>
+                    <input
+                        type="text"
+                        id="campaignName"
+                        class="form-input"
+                        placeholder="Ex: Prospecção Imóveis - Setembro 2024"
+                    />
+                </div>
+            </div>
+
+            <!-- Seletor de Data -->
+            <div id="schedulingSection" class="scheduling-section" style="display: none;">
+                <h3>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 0.5rem;">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    Configurar Data da Campanha
+                </h3>
+
+                <div class="date-time-selector">
+                    <div class="campaign-date-selector">
+                        <!-- Display da data selecionada -->
+                        <div class="current-date-display">
+                            <div class="current-date-info">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A594FF" stroke-width="2">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                                    <line x1="16" y1="2" x2="16" y2="6"/>
+                                    <line x1="8" y1="2" x2="8" y2="6"/>
+                                    <line x1="3" y1="10" x2="21" y2="10"/>
+                                </svg>
+                                <span class="current-date-label" id="currentDateLabel">Selecione uma data</span>
+                            </div>
+                            <button type="button" class="choose-date-btn" onclick="toggleCampaignCalendar()">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                                    <line x1="16" y1="2" x2="16" y2="6"/>
+                                    <line x1="8" y1="2" x2="8" y2="6"/>
+                                    <line x1="3" y1="10" x2="21" y2="10"/>
+                                </svg>
+                                Escolher data
+                            </button>
+                        </div>
+
+                        <!-- Calendário (escondido por padrão) -->
+                        <div id="campaignCalendarWrapper" class="campaign-calendar-wrapper">
+                            <div class="calendar-month-nav">
+                                <button type="button" class="calendar-nav-btn" onclick="changeCampaignMonth(-1)">◀</button>
+                                <span class="calendar-month-label" id="campaignMonthLabel">Novembro 2025</span>
+                                <button type="button" class="calendar-nav-btn" onclick="changeCampaignMonth(1)">▶</button>
+                            </div>
+                            <div id="campaignCalendarContainer">
+                                <div class="date-loading">Carregando calendário...</div>
+                            </div>
+                        </div>
+
+                        <!-- Input hidden para manter compatibilidade -->
+                        <input type="hidden" id="campaignDate" class="form-input">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visualização da Timeline Interativa -->
+            <div id="campaignTimeline" class="campaign-timeline" style="display: none;">
+                <div class="timeline-header-actions">
+                    <div>
+                        <h3>
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align: middle; margin-right: 0.5rem;">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            Escolha o Horário da Campanha
+                        </h3>
+                        <p class="timeline-instruction">
+                            <span class="pulse-dot"></span>
+                            Arraste o bloco para o horário desejado
+                        </p>
+                    </div>
+                    <button type="button" id="resetCampaignBtn" class="btn-reset" onclick="resetCampaignPosition()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                            <path d="M21 3v5h-5"></path>
+                            <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+                            <path d="M3 21v-5h5"></path>
+                        </svg>
+                        Reiniciar
+                    </button>
+                </div>
+
+                <div class="timeline-summary">
+                    <div class="summary-card">
+                        <div class="summary-icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="20" x2="12" y2="10"></line>
+                                <line x1="18" y1="20" x2="18" y2="4"></line>
+                                <line x1="6" y1="20" x2="6" y2="16"></line>
+                            </svg>
+                        </div>
+                        <div class="summary-content">
+                            <div class="summary-label">Duração</div>
+                            <div class="summary-value" id="selectedHoursCount">0h</div>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                            </svg>
+                        </div>
+                        <div class="summary-content">
+                            <div class="summary-label">Total de Ligações</div>
+                            <div class="summary-value" id="totalCallsScheduled">0</div>
+                        </div>
+                    </div>
+                    <div class="summary-card highlight">
+                        <div class="summary-icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                        </div>
+                        <div class="summary-content">
+                            <div class="summary-label">Horário</div>
+                            <div class="summary-value">
+                                <span id="startTime">-</span>
+                                <span class="separator">até</span>
+                                <span id="endTime">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="calendar-timeline">
+                    <div class="timeline-hours-column" id="hoursColumn">
+                        <!-- Horários do dia -->
+                    </div>
+
+                    <div class="campaign-block-container" id="campaignBlockContainer">
+                        <div class="drop-zone-hint">
+                            <div class="hint-animation">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <path d="M19 12H5M5 12l7-7M5 12l7 7"/>
+                                </svg>
+                            </div>
+                            <p>Arraste o bloco da sua campanha para um dos horários ao lado para definir o início</p>
+                        </div>
+
+                        <div id="campaignBlock" class="campaign-block" draggable="true">
+                            <div class="campaign-block-header">
+                                <div class="block-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12 6 12 12 16 14"></polyline>
+                                    </svg>
+                                </div>
+                                <span>Sua Campanha</span>
+                            </div>
+                            <div class="campaign-block-stats">
+                                <div class="stat-badge">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                    </svg>
+                                    <span id="campaignBlockLeads">0 leads</span>
+                                </div>
+                                <div class="stat-badge">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12 6 12 12 16 14"></polyline>
+                                    </svg>
+                                    <span id="campaignBlockDuration">0h</span>
+                                </div>
+                            </div>
+                            <div class="campaign-drag-hint">
+                                Arraste para o horário desejado
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button type="button" id="previousBtn" class="btn btn-secondary">
+                    ← <span id="previousBtnText">Voltar</span>
+                </button>
+                <button type="button" id="nextBtn" class="btn btn-primary">
+                    <span id="nextBtnText">Próximo →</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="campaignPopup" class="popup-overlay">
+        <div class="popup-modal">
+            <div class="popup-icon-container">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+            </div>
+            <h2 class="popup-title">Confirmar Campanha</h2>
+            <p class="popup-description">
+                Sua campanha está pronta para iniciar com <span id="contactCount" class="contact-highlight">0</span> leads
+            </p>
+            <div class="popup-buttons">
+                <button type="button" id="cancelCampaign" class="btn-cancel">
+                    Cancelar
+                </button>
+                <button type="button" id="startCampaign" class="btn-start-campaign">
+                    <span id="campaignBtnText">Iniciar Campanha</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+
+    <script>
+        // ==================== FUNÇÕES DE CÁLCULO DE CAPACIDADE ====================
+
+        const CALLS_PER_HOUR_PER_LINE = 75;
+        const COMMERCIAL_HOURS = 8;
+        const CALLS_PER_DAY_PER_LINE = 600;
+        const COMMERCIAL_START = "08:00";
+        const COMMERCIAL_END = "18:00";
+        const INTERVAL_MINUTES = 30;
+
+        function calculateHourlyCapacity(numeroLinhas) {
+            return numeroLinhas * CALLS_PER_HOUR_PER_LINE;
+        }
+
+        function calculateDailyCapacity(numeroLinhas) {
+            return numeroLinhas * CALLS_PER_DAY_PER_LINE;
+        }
+
+        function calculateCampaignDuration(numLeads, numeroLinhas) {
+            const hourlyCapacity = calculateHourlyCapacity(numeroLinhas);
+            const horasCompletas = Math.floor(numLeads / hourlyCapacity);
+            const leadsRestantes = numLeads % hourlyCapacity;
+            const minutosRestantes = leadsRestantes > 0
+                ? Math.ceil((leadsRestantes / hourlyCapacity) * 60 / INTERVAL_MINUTES) * INTERVAL_MINUTES
+                : 0;
+            return (horasCompletas * 60) + minutosRestantes;
+        }
+
+        function addMinutes(time, minutes) {
+            const [hours, mins] = time.split(':').map(Number);
+            const date = new Date();
+            date.setHours(hours, mins + minutes, 0, 0);
+            const newHours = String(date.getHours()).padStart(2, '0');
+            const newMins = String(date.getMinutes()).padStart(2, '0');
+            return `${newHours}:${newMins}`;
+        }
+
+        function calculateEndTime(startTime, durationMinutes) {
+            return addMinutes(startTime, durationMinutes);
+        }
+
+        function isCommercialTime(time) {
+            const [hours, minutes] = time.split(':').map(Number);
+            const timeInMinutes = hours * 60 + minutes;
+            const [startHours, startMins] = COMMERCIAL_START.split(':').map(Number);
+            const startInMinutes = startHours * 60 + startMins;
+            const [endHours, endMins] = COMMERCIAL_END.split(':').map(Number);
+            const endInMinutes = endHours * 60 + endMins;
+            return timeInMinutes >= startInMinutes && timeInMinutes <= endInMinutes;
+        }
+
+        function generateTimeline(numLeads, startTime, numeroLinhas) {
+            const hourlyCapacity = calculateHourlyCapacity(numeroLinhas);
+            const halfHourCapacity = Math.floor(hourlyCapacity / 2);
+            const intervalos = [];
+            let leadsRestantes = numLeads;
+            let currentTime = startTime;
+
+            while (leadsRestantes > 0) {
+                const ligacoesIntervalo = Math.min(leadsRestantes, halfHourCapacity);
+                const endTime = addMinutes(currentTime, INTERVAL_MINUTES);
+                intervalos.push({
+                    inicio: currentTime,
+                    fim: endTime,
+                    ligacoes: ligacoesIntervalo,
+                    isPartial: ligacoesIntervalo < halfHourCapacity,
+                    isFull: ligacoesIntervalo === halfHourCapacity
+                });
+                leadsRestantes -= ligacoesIntervalo;
+                currentTime = endTime;
+            }
+            return intervalos;
+        }
+
+        function groupIntervalsToHours(intervalos) {
+            const hoursBlocks = [];
+            for (let i = 0; i < intervalos.length; i += 2) {
+                const first = intervalos[i];
+                const second = intervalos[i + 1];
+                if (second) {
+                    hoursBlocks.push({
+                        inicio: first.inicio,
+                        fim: second.fim,
+                        ligacoes: first.ligacoes + second.ligacoes,
+                        isFull: first.isFull && second.isFull
+                    });
+                } else {
+                    hoursBlocks.push({
+                        inicio: first.inicio,
+                        fim: first.fim,
+                        ligacoes: first.ligacoes,
+                        isFull: false,
+                        isPartial: true
+                    });
+                }
+            }
+            return hoursBlocks;
+        }
+
+        function validateCampaign(numLeads, startTime, numeroLinhas) {
+            const dailyCapacity = calculateDailyCapacity(numeroLinhas);
+            if (numLeads > dailyCapacity) {
+                return {
+                    valid: false,
+                    error: `LIMIT_EXCEEDED`,
+                    maxLeads: dailyCapacity,
+                    attemptedLeads: numLeads
+                };
+            }
+            if (!isCommercialTime(startTime)) {
+                return {
+                    valid: false,
+                    error: `INVALID_START_TIME`,
+                    commercialStart: COMMERCIAL_START,
+                    commercialEnd: COMMERCIAL_END
+                };
+            }
+            const duration = calculateCampaignDuration(numLeads, numeroLinhas);
+            const endTime = calculateEndTime(startTime, duration);
+            if (!isCommercialTime(endTime) || endTime > COMMERCIAL_END) {
+                return {
+                    valid: false,
+                    error: `INVALID_TIMEFRAME`,
+                    endTime: endTime,
+                    commercialEnd: COMMERCIAL_END
+                };
+            }
+            return { valid: true };
+        }
+
+        async function getUserPlanData() {
+            let numeroLinhas = parseInt(localStorage.getItem('numero_linhas') || '0');
+
+            // Se numero_linhas for 0, tenta buscar do servidor
+            if (numeroLinhas === 0) {
+                console.warn('⚠️ [PLANILHA] numero_linhas está zerado, buscando do servidor...');
+                try {
+                    const tenantId = localStorage.getItem('tenant_id');
+                    const orgPrivateKey = localStorage.getItem('org_private_key');
+                    const userEmail = localStorage.getItem('userEmail') || localStorage.getItem('login');
+
+                    if (tenantId && orgPrivateKey && userEmail) {
+                        const response = await fetch('https://sdr.salesdever.io/webhook/ver-minutos-saas', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                tenant_id: tenantId,
+                                org_private_key: orgPrivateKey,
+                                login: userEmail
+                            })
+                        });
+
+                        if (response.ok) {
+                            const data = await response.json();
+                            const planData = Array.isArray(data) ? data[0] : data;
+
+                            // Tenta diferentes nomes de campos
+                            numeroLinhas = parseInt(planData.numero_linhas || planData.number_lines || planData.num_linhas || planData.lines || '0');
+
+                            console.log('📊 [PLANILHA] numero_linhas carregado do servidor:', numeroLinhas);
+
+                            if (numeroLinhas > 0) {
+                                // Salva no localStorage para próximas vezes
+                                localStorage.setItem('numero_linhas', String(numeroLinhas));
+                            }
+                        }
+                    }
+                } catch (error) {
+                    console.error('❌ [PLANILHA] Erro ao buscar numero_linhas do servidor:', error);
+                }
+            }
+
+            const ligacoesPorHora = calculateHourlyCapacity(numeroLinhas);
+            const ligacoesDiarias = calculateDailyCapacity(numeroLinhas);
+            return { numeroLinhas, ligacoesPorHora, ligacoesDiarias };
+        }
+
+        function getAvailableStartTimes() {
+            const times = [];
+            const [startHour] = COMMERCIAL_START.split(':').map(Number);
+            const [endHour] = COMMERCIAL_END.split(':').map(Number);
+            for (let hour = startHour; hour < endHour; hour++) {
+                times.push(`${String(hour).padStart(2, '0')}:00`);
+                times.push(`${String(hour).padStart(2, '0')}:30`);
+            }
+            return times;
+        }
+
+        function getMinScheduleDate() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        // ==================== FUNÇÕES DE TIMEZONE E VALIDAÇÃO DE HORÁRIO ====================
+
+        function getBrasiliaDateTime() {
+            // Retorna objeto Date no timezone de Brasília
+            const brazilTime = new Date().toLocaleString("en-US", {
+                timeZone: "America/Sao_Paulo"
+            });
+            return new Date(brazilTime);
+        }
+
+        function getBrasiliaTime() {
+            // Retorna horário atual de Brasília no formato HH:mm
+            const brasiliaDate = getBrasiliaDateTime();
+            const hours = String(brasiliaDate.getHours()).padStart(2, '0');
+            const minutes = String(brasiliaDate.getMinutes()).padStart(2, '0');
+            return `${hours}:${minutes}`;
+        }
+
+        function getNextAvailableHour() {
+            // Arredonda para a próxima hora cheia (ex: 13h32 -> 14h00)
+            const brasiliaDate = getBrasiliaDateTime();
+            let nextHour = brasiliaDate.getHours();
+
+            // Se tem minutos, vai para próxima hora
+            if (brasiliaDate.getMinutes() > 0) {
+                nextHour += 1;
+            }
+
+            return `${String(nextHour).padStart(2, '0')}:00`;
+        }
+
+        function canScheduleToday(campaignDurationHours) {
+            // Verifica se a campanha cabe no horário comercial de hoje
+            const brasiliaDate = getBrasiliaDateTime();
+            const currentHour = brasiliaDate.getHours();
+            const currentMinutes = brasiliaDate.getMinutes();
+
+            // Próximo horário disponível (arredondado para hora cheia)
+            let nextAvailableHour = currentHour;
+            if (currentMinutes > 0) {
+                nextAvailableHour += 1;
+            }
+
+            // Horário de término da campanha
+            const endHour = nextAvailableHour + campaignDurationHours;
+
+            // Extrai hora do COMMERCIAL_END (18:00)
+            const [commercialEndHour] = COMMERCIAL_END.split(':').map(Number);
+
+            // Verifica se a campanha terminaria antes do fim do expediente
+            return endHour <= commercialEndHour;
+        }
+
+        function isHourInPast(hourString) {
+            // Verifica se um horário (HH:mm) já passou hoje
+            const brasiliaTime = getBrasiliaTime();
+            const [currentHour, currentMinutes] = brasiliaTime.split(':').map(Number);
+            const [checkHour, checkMinutes] = hourString.split(':').map(Number);
+
+            const currentInMinutes = currentHour * 60 + currentMinutes;
+            const checkInMinutes = checkHour * 60 + checkMinutes;
+
+            return checkInMinutes < currentInMinutes;
+        }
+
+        function isDateToday(dateString) {
+            // Verifica se a data selecionada é hoje
+            const brasiliaDate = getBrasiliaDateTime();
+            const todayString = `${brasiliaDate.getFullYear()}-${String(brasiliaDate.getMonth() + 1).padStart(2, '0')}-${String(brasiliaDate.getDate()).padStart(2, '0')}`;
+            return dateString === todayString;
+        }
+
+        // ==================== CALENDÁRIO PERSONALIZADO ====================
+
+        let calendarCurrentMonth = null;
+        let calendarCurrentYear = null;
+        let todayUnavailable = false; // Se true, hoje será tratado como passado no calendário
+
+        function initializeCampaignCalendar() {
+            const brasiliaDate = getBrasiliaDateTime();
+            calendarCurrentMonth = brasiliaDate.getMonth();
+            calendarCurrentYear = brasiliaDate.getFullYear();
+
+            // Define a data de hoje como padrão
+            const todayString = `${calendarCurrentYear}-${String(calendarCurrentMonth + 1).padStart(2, '0')}-${String(brasiliaDate.getDate()).padStart(2, '0')}`;
+            selectCampaignDate(todayString);
+
+            renderCampaignCalendar();
+        }
+
+        function checkTodayAvailability() {
+            // Verifica se a campanha cabe hoje e atualiza o calendário
+            if (campaignDuration > 0 && !canScheduleToday(campaignDuration)) {
+                todayUnavailable = true;
+
+                // Seleciona amanhã automaticamente
+                const brasiliaDate = getBrasiliaDateTime();
+                const tomorrow = new Date(brasiliaDate);
+                tomorrow.setDate(tomorrow.getDate() + 1);
+
+                const tomorrowString = `${tomorrow.getFullYear()}-${String(tomorrow.getMonth() + 1).padStart(2, '0')}-${String(tomorrow.getDate()).padStart(2, '0')}`;
+                selectCampaignDate(tomorrowString);
+
+                // Re-renderiza o calendário para marcar hoje como passado
+                renderCampaignCalendar();
+
+                // Mostra o aviso
+                showError(`⚠️ Campanha de ${campaignDuration}h não cabe hoje (horário atual: ${getBrasiliaTime()}). Selecionamos automaticamente amanhã.`);
+
+                return false;
+            }
+
+            todayUnavailable = false;
+            return true;
+        }
+
+        function renderCampaignCalendar() {
+            const container = document.getElementById('campaignCalendarContainer');
+            const monthLabel = document.getElementById('campaignMonthLabel');
+
+            // Nome do mês
+            const monthNames = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+                'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+            monthLabel.textContent = `${monthNames[calendarCurrentMonth]} ${calendarCurrentYear}`;
+
+            // Grid do calendário
+            let html = '<div class="calendar-grid">';
+
+            // Dias da semana
+            const weekdays = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+            weekdays.forEach(day => {
+                html += `<div class="calendar-weekday">${day}</div>`;
+            });
+
+            // Primeiro dia do mês e total de dias
+            const firstDay = new Date(calendarCurrentYear, calendarCurrentMonth, 1).getDay();
+            const daysInMonth = new Date(calendarCurrentYear, calendarCurrentMonth + 1, 0).getDate();
+
+            // Data atual (Brasília)
+            const brasiliaDate = getBrasiliaDateTime();
+            const todayYear = brasiliaDate.getFullYear();
+            const todayMonth = brasiliaDate.getMonth();
+            const todayDay = brasiliaDate.getDate();
+
+            // Data selecionada atual
+            const selectedDate = document.getElementById('campaignDate').value;
+
+            // Espaços vazios antes do primeiro dia
+            for (let i = 0; i < firstDay; i++) {
+                html += '<div class="calendar-day empty"></div>';
+            }
+
+            // Dias do mês
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateStr = `${calendarCurrentYear}-${String(calendarCurrentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+
+                // Verifica se é passado
+                let isPast = false;
+                if (calendarCurrentYear < todayYear) {
+                    isPast = true;
+                } else if (calendarCurrentYear === todayYear && calendarCurrentMonth < todayMonth) {
+                    isPast = true;
+                } else if (calendarCurrentYear === todayYear && calendarCurrentMonth === todayMonth && day < todayDay) {
+                    isPast = true;
+                }
+
+                const isToday = calendarCurrentYear === todayYear && calendarCurrentMonth === todayMonth && day === todayDay;
+
+                // Se hoje está indisponível (campanha não cabe), trata hoje como passado
+                if (isToday && todayUnavailable) {
+                    isPast = true;
+                }
+
+                const isSelected = dateStr === selectedDate;
+
+                let classes = 'calendar-day';
+                if (isPast) {
+                    classes += ' past';
+                } else {
+                    classes += ' available';
+                }
+                if (isToday && !todayUnavailable) classes += ' today';
+                if (isSelected) classes += ' active';
+
+                const onclick = !isPast ? `onclick="selectCampaignDate('${dateStr}')"` : '';
+
+                html += `<div class="${classes}" ${onclick}>${day}</div>`;
+            }
+
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        function changeCampaignMonth(delta) {
+            calendarCurrentMonth += delta;
+            if (calendarCurrentMonth > 11) {
+                calendarCurrentMonth = 0;
+                calendarCurrentYear++;
+            } else if (calendarCurrentMonth < 0) {
+                calendarCurrentMonth = 11;
+                calendarCurrentYear--;
+            }
+            renderCampaignCalendar();
+        }
+
+        function selectCampaignDate(dateStr) {
+            // Atualiza o input hidden
+            document.getElementById('campaignDate').value = dateStr;
+
+            // Atualiza o display da data
+            const parts = dateStr.split('-');
+            const day = parseInt(parts[2]);
+            const month = parseInt(parts[1]);
+            const year = parseInt(parts[0]);
+
+            const monthNames = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+                'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+
+            const brasiliaDate = getBrasiliaDateTime();
+            const todayYear = brasiliaDate.getFullYear();
+            const todayMonth = brasiliaDate.getMonth();
+            const todayDay = brasiliaDate.getDate();
+
+            let displayText = '';
+            if (year === todayYear && month - 1 === todayMonth && day === todayDay) {
+                displayText = 'Hoje';
+            } else if (year === todayYear && month - 1 === todayMonth && day === todayDay + 1) {
+                displayText = 'Amanhã';
+            } else {
+                displayText = `${day} de ${monthNames[month - 1]}`;
+                if (year !== todayYear) {
+                    displayText += ` de ${year}`;
+                }
+            }
+
+            document.getElementById('currentDateLabel').textContent = displayText;
+
+            // Re-renderiza o calendário para atualizar o active
+            renderCampaignCalendar();
+
+            // Fecha o calendário
+            document.getElementById('campaignCalendarWrapper').classList.remove('show');
+
+            // Dispara evento de mudança para atualizar a timeline
+            const event = new Event('change');
+            document.getElementById('campaignDate').dispatchEvent(event);
+
+            console.log('[CALENDAR] Data selecionada:', dateStr);
+        }
+
+        function toggleCampaignCalendar() {
+            const wrapper = document.getElementById('campaignCalendarWrapper');
+            wrapper.classList.toggle('show');
+        }
+
+        // Fechar calendário ao clicar fora
+        document.addEventListener('click', function(e) {
+            const wrapper = document.getElementById('campaignCalendarWrapper');
+            const selector = document.querySelector('.campaign-date-selector');
+
+            if (wrapper && selector && !selector.contains(e.target)) {
+                wrapper.classList.remove('show');
+            }
+        });
+
+        // ==================== RENDERIZAÇÃO DE CALENDÁRIO COM DRAG AND DROP ====================
+
+        let campaignStartHour = null;
+        let campaignDuration = 0; // em horas
+        let allHours = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00'];
+        let draggedBlock = null;
+
+        function renderInteractiveTimeline() {
+            const hoursColumn = document.getElementById('hoursColumn');
+            if (!hoursColumn) {
+                console.error('Elemento hoursColumn não encontrado');
+                return;
+            }
+
+            hoursColumn.innerHTML = '';
+
+            // Calcula duração necessária da campanha
+            const numLeads = processedLeads.length;
+            const hourlyCapacity = calculateHourlyCapacity(planData.numeroLinhas);
+            campaignDuration = Math.ceil(numLeads / hourlyCapacity);
+
+            // Verifica se a data selecionada é hoje
+            const dateInput = document.getElementById('campaignDate');
+            const selectedDate = dateInput ? dateInput.value : '';
+            const isToday = isDateToday(selectedDate);
+
+            // Renderiza cada hora do dia
+            allHours.forEach((hour, index) => {
+                const hourRow = document.createElement('div');
+                hourRow.className = 'hour-row';
+                hourRow.dataset.hour = hour;
+                hourRow.dataset.index = index;
+
+                // Verifica se o horário está no passado (apenas se for hoje)
+                const isPast = isToday && isHourInPast(hour);
+
+                // Verifica se a campanha cabe começando neste horário
+                const [hourNum] = hour.split(':').map(Number);
+                const endHour = hourNum + campaignDuration;
+                const [commercialEndHour] = COMMERCIAL_END.split(':').map(Number);
+                const isUnavailable = endHour > commercialEndHour;
+
+                // Adiciona classes CSS apropriadas (sem badges visuais)
+                if (isPast) {
+                    hourRow.classList.add('past-hour');
+                    hourRow.dataset.disabled = 'true';
+                    hourRow.dataset.reason = 'Horário já passou';
+                } else if (isUnavailable) {
+                    hourRow.classList.add('unavailable');
+                    hourRow.dataset.disabled = 'true';
+                    hourRow.dataset.reason = `Campanha de ${campaignDuration}h terminaria após ${COMMERCIAL_END}`;
+                }
+
+                hourRow.innerHTML = `
+                    <div>
+                        <div class="hour-row-time">${formatTimeForDisplay(hour)}</div>
+                        <div class="hour-row-capacity">Cap: ${formatNumber(hourlyCapacity)}/h</div>
+                    </div>
+                `;
+
+                // Eventos de drop e click (só adiciona se não estiver desabilitado)
+                if (!isPast && !isUnavailable) {
+                    hourRow.addEventListener('dragover', handleDragOver);
+                    hourRow.addEventListener('dragleave', handleDragLeave);
+                    hourRow.addEventListener('drop', handleDrop);
+                    hourRow.addEventListener('click', handleHourClick);
+                    hourRow.style.cursor = 'pointer';
+                }
+
+                hoursColumn.appendChild(hourRow);
+            });
+
+            setupCampaignBlock();
+            suggestInitialPosition();
+
+            console.log('✅ Calendário interativo renderizado');
+        }
+
+        function setupCampaignBlock() {
+            const block = document.getElementById('campaignBlock');
+            const numLeads = processedLeads.length;
+
+            document.getElementById('campaignBlockLeads').textContent = `${formatNumber(numLeads)} leads`;
+            document.getElementById('campaignBlockDuration').textContent = `${campaignDuration}h necessárias`;
+
+            block.addEventListener('dragstart', handleDragStart);
+            block.addEventListener('dragend', handleDragEnd);
+        }
+
+        function suggestInitialPosition() {
+            // Encontra o primeiro horário disponível (não passado e não indisponível)
+            const hoursColumn = document.getElementById('hoursColumn');
+            const hourRows = hoursColumn.querySelectorAll('.hour-row');
+
+            for (let i = 0; i < hourRows.length; i++) {
+                const row = hourRows[i];
+                const isDisabled = row.dataset.disabled === 'true';
+
+                if (!isDisabled && i + campaignDuration <= allHours.length) {
+                    placeCampaignBlock(i);
+                    return;
+                }
+            }
+
+            // Se não encontrou horário disponível, não posiciona
+            console.warn('⚠️ Não há horário disponível para a campanha');
+        }
+
+        // ==================== DRAG AND DROP HANDLERS ====================
+
+        function handleDragStart(e) {
+            const block = e.target;
+            block.classList.add('dragging');
+            draggedBlock = block;
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', block.innerHTML);
+        }
+
+        function handleDragEnd(e) {
+            e.target.classList.remove('dragging');
+            draggedBlock = null;
+            document.querySelectorAll('.hour-row').forEach(row => {
+                row.classList.remove('drop-target');
+            });
+        }
+
+        function handleDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+
+            const hourRow = e.currentTarget;
+
+            // Bloqueia hover em horários desabilitados
+            if (hourRow.dataset.disabled === 'true') {
+                e.dataTransfer.dropEffect = 'none';
+                return false;
+            }
+
+            e.dataTransfer.dropEffect = 'move';
+            hourRow.classList.add('drop-target');
+            return false;
+        }
+
+        function handleDragLeave(e) {
+            e.currentTarget.classList.remove('drop-target');
+        }
+
+        function handleDrop(e) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+            e.preventDefault();
+
+            const hourRow = e.currentTarget;
+            let startIndex = parseInt(hourRow.dataset.index);
+
+            // Se o horário está desabilitado, encontra o próximo disponível
+            if (hourRow.dataset.disabled === 'true') {
+                const reason = hourRow.dataset.reason || 'Horário indisponível';
+                const nextAvailable = findNextAvailableSlot(startIndex);
+
+                if (nextAvailable === -1) {
+                    showError('Não há horários disponíveis para esta campanha hoje. Tente selecionar outra data.');
+                    hourRow.classList.remove('drop-target');
+                    return false;
+                }
+
+                // Mostra mensagem e move automaticamente para próximo horário
+                showError(`${reason}. Movendo para ${formatTimeForDisplay(allHours[nextAvailable])}`);
+                startIndex = nextAvailable;
+            }
+
+            // Verifica se cabe no período
+            if (startIndex + campaignDuration > allHours.length) {
+                showError(`Campanha de ${campaignDuration}h não cabe começando às ${formatTimeForDisplay(allHours[startIndex])}`);
+                hourRow.classList.remove('drop-target');
+                return false;
+            }
+
+            placeCampaignBlock(startIndex);
+            hourRow.classList.remove('drop-target');
+            return false;
+        }
+
+        function handleHourClick(e) {
+            const hourRow = e.currentTarget;
+            let startIndex = parseInt(hourRow.dataset.index);
+
+            // Se o horário está desabilitado, não faz nada
+            if (hourRow.dataset.disabled === 'true') {
+                return;
+            }
+
+            // Verifica se cabe no período
+            if (startIndex + campaignDuration > allHours.length) {
+                showError(`Campanha de ${campaignDuration}h não cabe começando às ${formatTimeForDisplay(allHours[startIndex])}`);
+                return;
+            }
+
+            placeCampaignBlock(startIndex);
+        }
+
+        function findNextAvailableSlot(fromIndex) {
+            // Encontra o próximo horário disponível a partir de um índice
+            const hoursColumn = document.getElementById('hoursColumn');
+            const hourRows = hoursColumn.querySelectorAll('.hour-row');
+
+            for (let i = fromIndex; i < hourRows.length; i++) {
+                const row = hourRows[i];
+                const isDisabled = row.dataset.disabled === 'true';
+
+                // Verifica se está disponível e se a campanha cabe
+                if (!isDisabled && i + campaignDuration <= allHours.length) {
+                    return i;
+                }
+            }
+
+            return -1; // Nenhum horário disponível
+        }
+
+        function placeCampaignBlock(startIndex) {
+            campaignStartHour = allHours[startIndex];
+
+            const block = document.getElementById('campaignBlock');
+            const hoursColumn = document.getElementById('hoursColumn');
+            const hourRows = hoursColumn.querySelectorAll('.hour-row');
+            const startRow = hourRows[startIndex];
+
+            if (!startRow) return;
+
+            // Posiciona o bloco
+            const rowHeight = 70;
+            const topPosition = startIndex * rowHeight;
+            const blockHeight = campaignDuration * rowHeight;
+
+            block.style.position = 'absolute';
+            block.style.top = `${topPosition}px`;
+            block.style.height = `${blockHeight}px`;
+            block.style.left = '2rem';
+            block.style.right = '2rem';
+            block.style.width = 'auto';
+            block.style.minWidth = 'auto';
+
+            // Marca hora rows como ocupadas (remove unavailable para sobressair o visual)
+            document.querySelectorAll('.hour-row').forEach(row => row.classList.remove('occupied'));
+            for (let i = startIndex; i < startIndex + campaignDuration && i < allHours.length; i++) {
+                hourRows[i].classList.remove('unavailable', 'past-hour'); // Remove bloqueio visual
+                hourRows[i].classList.add('occupied');
+                hourRows[i].style.opacity = '1'; // Garante visibilidade total
+            }
+
+            updateDragSummary();
+            console.log(`✅ Campanha posicionada: ${campaignStartHour} (${campaignDuration}h)`);
+        }
+
+        function resetCampaignPosition() {
+            const block = document.getElementById('campaignBlock');
+            block.style.position = 'relative';
+            block.style.top = 'auto';
+            block.style.height = 'auto';
+            block.style.left = 'auto';
+            block.style.right = 'auto';
+            block.style.width = 'auto';
+
+            campaignStartHour = null;
+            document.querySelectorAll('.hour-row').forEach(row => row.classList.remove('occupied'));
+            updateDragSummary();
+            suggestInitialPosition();
+        }
+
+        function updateDragSummary() {
+            if (campaignStartHour) {
+                const startIndex = allHours.indexOf(campaignStartHour);
+                const endHour = allHours[startIndex + campaignDuration - 1];
+                const endTime = addMinutes(endHour, 60);
+
+                document.getElementById('selectedHoursCount').textContent = `${campaignDuration}h`;
+                document.getElementById('totalCallsScheduled').textContent = formatNumber(processedLeads.length);
+                document.getElementById('startTime').textContent = formatTimeForDisplay(campaignStartHour);
+                document.getElementById('endTime').textContent = formatTimeForDisplay(endTime);
+            } else {
+                document.getElementById('selectedHoursCount').textContent = '0';
+                document.getElementById('totalCallsScheduled').textContent = '0';
+                document.getElementById('startTime').textContent = '-';
+                document.getElementById('endTime').textContent = '-';
+            }
+        }
+
+        function formatTimeForDisplay(time) {
+            const [hour, minute] = time.split(':');
+            return `${parseInt(hour)}h${minute}`;
+        }
+
+        function renderTimeline(intervalos, containerId) {
+            // Redireciona para a nova interface interativa
+            renderInteractiveTimeline();
+        }
+
+        function renderMergedTimelineGrid(intervalos, tbody) {
+            const allHours = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'];
+
+            // Usa intervalos diretamente (já agrupados por hora)
+            const blocos = intervalos;
+            const startTime = blocos.length > 0 ? blocos[0].inicio : '08:00';
+            const endTime = blocos.length > 0 ? blocos[blocos.length - 1].fim : '08:00';
+
+            const ocupacaoMap = {};
+            blocos.forEach(bloco => {
+                ocupacaoMap[bloco.inicio] = bloco;
+            });
+
+            let skipRows = 0;
+            let isFirstOccupiedCell = true;
+
+            allHours.forEach((hora) => {
+                if (skipRows > 0) {
+                    skipRows--;
+                    return;
+                }
+
+                const tr = document.createElement('tr');
+                tr.className = 'schedule-row';
+
+                const tdTime = document.createElement('td');
+                tdTime.className = 'time-cell-grid';
+                tdTime.textContent = formatTimeForDisplay(hora);
+                tr.appendChild(tdTime);
+
+                const tdContent = document.createElement('td');
+                tdContent.className = 'content-cell';
+
+                const blocoOcupado = ocupacaoMap[hora];
+
+                if (blocoOcupado && isFirstOccupiedCell) {
+                    tdContent.rowSpan = blocos.length;
+                    tdContent.className = 'content-cell occupied-cell';
+                    const occupiedBlock = createOccupiedBlock(blocos, startTime, endTime);
+                    tdContent.appendChild(occupiedBlock);
+                    skipRows = blocos.length - 1;
+                    isFirstOccupiedCell = false;
+                } else if (!blocoOcupado) {
+                    tdContent.className = 'content-cell empty-cell';
+                    tdContent.innerHTML = '<span class="empty-label">Sem atividade</span>';
+                }
+
+                tr.appendChild(tdContent);
+                tbody.appendChild(tr);
+            });
+        }
+
+        function createOccupiedBlock(blocos, startTime, endTime) {
+            const container = document.createElement('div');
+            container.className = 'occupied-block-container';
+
+            const header = document.createElement('div');
+            header.className = 'occupied-block-header';
+            header.innerHTML = `
+                <div class="block-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    Campanha Programada
+                </div>
+                <div class="block-time">${formatTimeForDisplay(startTime)} - ${formatTimeForDisplay(endTime)}</div>
+            `;
+            container.appendChild(header);
+
+            const hoursList = document.createElement('div');
+            hoursList.className = 'hours-list';
+
+            blocos.forEach((bloco, index) => {
+                const hourItem = document.createElement('div');
+                hourItem.className = 'hour-item';
+
+                hourItem.innerHTML = `
+                    <div class="hour-time">${formatTimeForDisplay(bloco.inicio)} - ${formatTimeForDisplay(bloco.fim)}</div>
+                    <div class="hour-calls">
+                        ${formatNumber(bloco.ligacoes)} ligações
+                    </div>
+                `;
+                hoursList.appendChild(hourItem);
+            });
+
+            container.appendChild(hoursList);
+
+            const totalCalls = blocos.reduce((sum, b) => sum + b.ligacoes, 0);
+            const totalHours = blocos.length;
+            const footer = document.createElement('div');
+            footer.className = 'occupied-block-footer';
+            footer.innerHTML = `
+                <div class="footer-stat">
+                    <span class="stat-label">Total:</span>
+                    <span class="stat-value">${formatNumber(totalCalls)} lig.</span>
+                </div>
+                <div class="footer-stat">
+                    <span class="stat-label">Duração:</span>
+                    <span class="stat-value">${totalHours}h</span>
+                </div>
+            `;
+            container.appendChild(footer);
+
+            return container;
+        }
+
+        console.log('✅ Funções de capacidade e timeline carregadas');
+    </script>
+
+    <script>
+        let uploadedData = null;
+        let processedLeads = [];
+        let finalSelections = null;
+        let planData = null;
+        let selectedDate = null;
+        let selectedStartTime = null;
+
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const uploadSection = document.getElementById('uploadSection');
+        const mappingSection = document.getElementById('mappingSection');
+        const nameColumn = document.getElementById('nameColumn');
+        const phoneColumn = document.getElementById('phoneColumn');
+        const nextBtn = document.getElementById('nextBtn');
+        const nextBtnText = document.getElementById('nextBtnText');
+        const previousBtn = document.getElementById('previousBtn');
+        const previousBtnText = document.getElementById('previousBtnText');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+        const campaignPopup = document.getElementById('campaignPopup');
+        const cancelCampaign = document.getElementById('cancelCampaign');
+        const startCampaign = document.getElementById('startCampaign');
+        const contactCount = document.getElementById('contactCount');
+        const campaignBtnText = document.getElementById('campaignBtnText');
+
+        function loadFinalSelections() {
+            console.log('[UPLOAD] Carregando seleções...');
+            
+            try {
+                const stored = localStorage.getItem('finalSelections');
+                if (!stored) {
+                    showError('Dados não encontrados. Retorne à página anterior.');
+                    return false;
+                }
+
+                finalSelections = JSON.parse(stored);
+                console.log('[UPLOAD] Dados carregados:', finalSelections);
+
+                if (!finalSelections?.userData?.user?.tenant_id) {
+                    console.error('[UPLOAD] tenant_id não encontrado');
+                    showError('Dados incompletos. Faça login novamente.');
+                    return false;
+                }
+
+                if (finalSelections.assistant && finalSelections.number) {
+                    document.getElementById('selectedAssistant').textContent = finalSelections.assistant.name;
+                    document.getElementById('selectedNumber').textContent = finalSelections.number.number;
+
+                    if (finalSelections.instance) {
+                        document.getElementById('selectedInstance').textContent = finalSelections.instance.instance_name || 'Não selecionada';
+                    }
+
+                    document.getElementById('selectionInfo').style.display = 'block';
+                }
+                
+                return true;
+            } catch (error) {
+                console.error('[UPLOAD] Erro:', error);
+                showError('Erro ao carregar dados.');
+                return false;
+            }
+        }
+
+        async function loadPlanData() {
+            console.log('[PLAN] Carregando dados do plano...');
+
+            planData = await getUserPlanData();
+
+            console.log('[PLAN] Dados do plano:', planData);
+
+            if (planData.numeroLinhas === 0) {
+                showError('Número de linhas não encontrado. Faça login novamente.');
+                return false;
+            }
+
+            // Inicializa seletor de horários
+            initializeTimeSelector();
+
+            // Inicializa o calendário personalizado
+            initializeCampaignCalendar();
+
+            return true;
+        }
+
+        function initializeTimeSelector() {
+            const startSelector = document.getElementById('campaignStartTime');
+            const endSelector = document.getElementById('campaignEndTime');
+
+            if (!startSelector || !endSelector) return;
+
+            const times = getAvailableStartTimes();
+
+            // Inicializa seletor de início
+            startSelector.innerHTML = '<option value="">Selecionar...</option>';
+            times.forEach(time => {
+                const option = document.createElement('option');
+                option.value = time;
+                option.textContent = time;
+                startSelector.appendChild(option);
+            });
+
+            // Inicializa seletor de término
+            endSelector.innerHTML = '<option value="">Selecionar...</option>';
+            times.forEach(time => {
+                const option = document.createElement('option');
+                option.value = time;
+                option.textContent = time;
+                endSelector.appendChild(option);
+            });
+
+            console.log('[PLAN] Seletores de horários inicializados');
+        }
+
+        // ==================== FUNÇÕES DE VALIDAÇÃO DE TELEFONES ====================
+
+        // Função para limpar caracteres não numéricos de um telefone
+        function cleanPhoneNumber(phone) {
+            if (!phone) return '';
+            return String(phone).replace(/\D/g, '');
+        }
+
+        // Função para validar se um telefone tem 11 ou 13 dígitos (com ou sem código do país)
+        function isValidPhoneFormat(phone) {
+            const cleaned = cleanPhoneNumber(phone);
+            return cleaned.length === 11 || cleaned.length === 13;
+        }
+
+        // Função para detectar automaticamente a coluna de telefone
+        function detectPhoneColumn(headers, rows) {
+            let bestColumn = null;
+            let maxPhoneLikeCount = 0;
+
+            headers.forEach((header, index) => {
+                const headerLower = String(header).toLowerCase();
+                // Verifica se o nome da coluna sugere que é telefone
+                const isPhoneLikeHeader = /telefone|phone|celular|whatsapp|contato|numero|number/i.test(headerLower);
+                
+                if (isPhoneLikeHeader) {
+                    let phoneLikeCount = 0;
+                    rows.forEach(row => {
+                        const value = row[header];
+                        if (value) {
+                            const cleaned = cleanPhoneNumber(value);
+                            // Conta como telefone-like se tiver 11 ou 13 dígitos (aceita ambos os formatos)
+                            if (cleaned.length === 11 || cleaned.length === 13) {
+                                phoneLikeCount++;
+                            }
+                        }
+                    });
+                    
+                    if (phoneLikeCount > maxPhoneLikeCount) {
+                        maxPhoneLikeCount = phoneLikeCount;
+                        bestColumn = index;
+                    }
+                }
+            });
+
+            // Se não encontrou por nome, tenta encontrar por conteúdo
+            if (bestColumn === null) {
+                headers.forEach((header, index) => {
+                    let phoneLikeCount = 0;
+                    rows.forEach(row => {
+                        const value = row[header];
+                        if (value) {
+                            const cleaned = cleanPhoneNumber(value);
+                            // Conta como telefone-like se tiver 11 ou 13 dígitos (aceita ambos os formatos)
+                            if (cleaned.length === 11 || cleaned.length === 13) {
+                                phoneLikeCount++;
+                            }
+                        }
+                    });
+                    
+                    // Se mais de 50% dos valores parecem telefone, considera essa coluna
+                    if (phoneLikeCount > rows.length * 0.5 && phoneLikeCount > maxPhoneLikeCount) {
+                        maxPhoneLikeCount = phoneLikeCount;
+                        bestColumn = index;
+                    }
+                });
+            }
+
+            return bestColumn;
+        }
+
+        // Função para validar todos os telefones da planilha
+        function validatePhoneNumbers(headers, rows) {
+            const phoneColumnIndex = detectPhoneColumn(headers, rows);
+            
+            if (phoneColumnIndex === null) {
+                // Se não conseguiu detectar, retorna null (não bloqueia)
+                console.log('[VALIDATION] Não foi possível detectar coluna de telefone automaticamente');
+                return { hasErrors: false, errors: [], correctCount: 0, incorrectCount: 0, totalCount: 0 };
+            }
+
+            const phoneHeader = headers[phoneColumnIndex];
+            const errors = [];
+            let correctCount = 0;
+            let incorrectCount = 0;
+
+            // Detecta coluna de nome
+            let nameColumnIndex = 0;
+            headers.forEach((header, index) => {
+                const headerLower = String(header).toLowerCase();
+                if (/nome|name|contato|contact|lead|pessoa|cliente/i.test(headerLower)) {
+                    nameColumnIndex = index;
+                }
+            });
+
+            rows.forEach((row, rowIndex) => {
+                const phoneValue = row[phoneHeader];
+                const name = row[headers[nameColumnIndex]] || (nameColumnIndex !== 0 ? row[headers[0]] : null) || `Linha ${rowIndex + 2}`;
+
+                if (phoneValue) {
+                    const cleaned = cleanPhoneNumber(phoneValue);
+                    // Aceita 11 dígitos (sem código do país) ou 13 dígitos (com código do país 55)
+                    const isValid = cleaned.length === 11 || cleaned.length === 13;
+                    
+                    if (isValid) {
+                        correctCount++;
+                    } else {
+                        incorrectCount++;
+                        errors.push({
+                            line: rowIndex + 2, // +2 porque linha 1 é header e começa do 0
+                            name: name || 'Sem nome',
+                            phone: String(phoneValue),
+                            digits: cleaned.length
+                        });
+                    }
+                } else {
+                    incorrectCount++;
+                    errors.push({
+                        line: rowIndex + 2,
+                        name: name || 'Sem nome',
+                        phone: '(vazio)',
+                        digits: 0
+                    });
+                }
+            });
+
+            return {
+                hasErrors: errors.length > 0,
+                errors: errors,
+                correctCount: correctCount,
+                incorrectCount: incorrectCount,
+                totalCount: rows.length,
+                phoneColumnIndex: phoneColumnIndex
+            };
+        }
+
+        // Função para exibir erros de validação
+        function displayValidationErrors(validationResult) {
+            const errorsSection = document.getElementById('validationErrorsSection');
+            const tableBody = document.getElementById('validationErrorsTableBody');
+            const totalLeadsEl = document.getElementById('validationTotalLeads');
+            const correctCountEl = document.getElementById('validationCorrectCount');
+            const incorrectCountEl = document.getElementById('validationIncorrectCount');
+
+            if (validationResult.hasErrors) {
+                // Atualiza contadores
+                totalLeadsEl.textContent = validationResult.totalCount;
+                correctCountEl.textContent = validationResult.correctCount;
+                incorrectCountEl.textContent = validationResult.incorrectCount;
+
+                // Limpa tabela
+                tableBody.innerHTML = '';
+
+                // Preenche tabela com erros
+                validationResult.errors.forEach(error => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td class="error-line">${error.line}</td>
+                        <td class="error-name">${error.name}</td>
+                        <td class="error-phone">${error.phone}</td>
+                        <td class="error-phone">${error.digits} dígitos</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+
+                // Mostra seção de erros
+                errorsSection.style.display = 'block';
+                
+                // Scroll para a seção de erros
+                setTimeout(() => {
+                    errorsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 100);
+            } else {
+                errorsSection.style.display = 'none';
+            }
+        }
+
+        // Função para voltar e permitir novo upload
+        function retryUpload() {
+            console.log('[RETRY] Voltando para área de upload...');
+            
+            // Limpa dados do upload anterior
+            uploadedData = null;
+            processedLeads = [];
+            fileInput.value = '';
+            
+            // Oculta seções
+            document.getElementById('validationErrorsSection').style.display = 'none';
+            document.getElementById('capacitySection').style.display = 'none';
+            document.getElementById('mappingSection').style.display = 'none';
+            document.getElementById('schedulingSection').style.display = 'none';
+            document.getElementById('campaignTimeline').style.display = 'none';
+            
+            // Mostra área de upload
+            document.getElementById('uploadSection').style.display = 'block';
+            
+            // Esconde botões
+            document.getElementById('nextBtn').style.display = 'none';
+            document.getElementById('previousBtn').style.display = 'none';
+            
+            // Scroll para o topo
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Limpa mensagens de erro
+            hideMessages();
+        }
+
+        uploadArea.addEventListener('click', () => fileInput.click());
+        
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) processFile(file);
+        });
+
+        async function processFile(file) {
+            if (!file.name.match(/\.(csv|xlsx|xls)$/i)) {
+                showError('Por favor, envie um arquivo CSV ou Excel.');
+                return;
+            }
+
+            hideMessages();
+            
+            try {
+                if (file.name.match(/\.csv$/i)) {
+                    await processCSV(file);
+                } else {
+                    await processExcel(file);
+                }
+                
+                if (uploadedData && uploadedData.headers.length > 0) {
+                    // Calcula limite diário de ligações
+                    const numeroLinhas = parseInt(localStorage.getItem('numero_linhas') || '0');
+                    const ligacoesPorHora = calculateHourlyCapacity(numeroLinhas);
+                    const limiteLeads = numeroLinhas * 600;
+                    const totalLeads = uploadedData.rows.length;
+
+                    console.log('[UPLOAD] Total de leads:', totalLeads);
+                    console.log('[UPLOAD] Limite diário:', limiteLeads);
+
+                    // Verifica se excede o limite
+                    if (totalLeads > limiteLeads) {
+                        showError(`❌ Sua planilha contém ${formatNumber(totalLeads)} leads, mas seu plano permite apenas ${formatNumber(limiteLeads)} ligações diárias. Por favor, reduza o número de leads ou entre em contato para upgrade do plano.`);
+                        uploadedData = null;
+                        fileInput.value = '';
+                        document.getElementById('validationErrorsSection').style.display = 'none';
+                        return;
+                    }
+
+                    // VALIDAÇÃO DE TELEFONES - Logo após o upload
+                    console.log('[VALIDATION] Iniciando validação de telefones...');
+                    const validationResult = validatePhoneNumbers(uploadedData.headers, uploadedData.rows);
+                    
+                    if (validationResult.hasErrors) {
+                        console.log('[VALIDATION] ❌ Erros encontrados:', validationResult.errors.length);
+                        displayValidationErrors(validationResult);
+                        
+                        // Mostra mensagem de erro
+                        showError(`❌ Foram encontrados ${validationResult.incorrectCount} telefone(s) com formato incorreto. Os números devem ter 11 dígitos (sem código do país) ou 13 dígitos (com código do país 55). Por favor, corrija os erros destacados abaixo e faça o upload novamente.`);
+                        
+                        // Bloqueia o avanço - não mostra seções de mapeamento
+                        populateColumnSelectors(); // Ainda preenche os seletores, mas não mostra
+                        
+                        // Mostra card de capacidade mesmo com erros
+                        const capacitySection = document.getElementById('capacitySection');
+                        document.getElementById('planHourlyCapacity').textContent = formatNumber(ligacoesPorHora);
+                        document.getElementById('planDailyCapacity').textContent = formatNumber(limiteLeads);
+                        document.getElementById('uploadedLeadsCount').textContent = formatNumber(totalLeads);
+                        
+                        const percentage = Math.min((totalLeads / limiteLeads) * 100, 100);
+                        const progressBar = document.getElementById('capacityProgressBar');
+                        progressBar.style.width = percentage + '%';
+                        
+                        setTimeout(() => {
+                            uploadSection.style.display = 'none';
+                            capacitySection.style.display = 'block';
+                            // NÃO mostra mappingSection nem nextBtn se houver erros
+                            mappingSection.style.display = 'none';
+                            nextBtn.style.display = 'none';
+                            previousBtn.style.display = 'none';
+                        }, 800);
+                        
+                        return; // Para aqui se houver erros
+                    } else {
+                        console.log('[VALIDATION] ✅ Todos os telefones estão corretos!');
+                        // Oculta seção de erros se não houver
+                        document.getElementById('validationErrorsSection').style.display = 'none';
+                    }
+
+                    populateColumnSelectors();
+
+                    // Mostra card de capacidade com os dados
+                    const capacitySection = document.getElementById('capacitySection');
+                    document.getElementById('planHourlyCapacity').textContent = formatNumber(ligacoesPorHora);
+                    document.getElementById('planDailyCapacity').textContent = formatNumber(limiteLeads);
+                    document.getElementById('uploadedLeadsCount').textContent = formatNumber(totalLeads);
+
+                    // Atualiza barra de progresso
+                    const percentage = Math.min((totalLeads / limiteLeads) * 100, 100);
+                    const progressBar = document.getElementById('capacityProgressBar');
+                    progressBar.style.width = percentage + '%';
+
+                    setTimeout(() => {
+                        uploadSection.style.display = 'none';
+                        capacitySection.style.display = 'block';
+                        mappingSection.style.display = 'block';
+                        nextBtn.style.display = 'block';
+                        previousBtn.style.display = 'block';
+                    }, 800);
+                }
+            } catch (error) {
+                console.error('[UPLOAD] Erro:', error);
+                showError(`Erro ao processar arquivo: ${error.message}`);
+            }
+        }
+
+        async function processCSV(file) {
+            return new Promise((resolve, reject) => {
+                Papa.parse(file, {
+                    header: true,
+                    skipEmptyLines: true,
+                    complete: (results) => {
+                        uploadedData = {
+                            headers: Object.keys(results.data[0] || {}),
+                            rows: results.data
+                        };
+                        resolve();
+                    },
+                    error: reject
+                });
+            });
+        }
+
+        async function processExcel(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    try {
+                        const data = new Uint8Array(e.target.result);
+                        const workbook = XLSX.read(data, { type: 'array' });
+                        const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                        const jsonData = XLSX.utils.sheet_to_json(firstSheet);
+                        
+                        uploadedData = {
+                            headers: Object.keys(jsonData[0] || {}),
+                            rows: jsonData
+                        };
+                        resolve();
+                    } catch (error) {
+                        reject(error);
+                    }
+                };
+                reader.onerror = reject;
+                reader.readAsArrayBuffer(file);
+            });
+        }
+
+        function populateColumnSelectors() {
+            nameColumn.innerHTML = '<option value="">Selecionar...</option>';
+            phoneColumn.innerHTML = '<option value="">Selecionar...</option>';
+
+            uploadedData.headers.forEach((header, index) => {
+                const optionName = document.createElement('option');
+                optionName.value = index;
+                optionName.textContent = header;
+                nameColumn.appendChild(optionName);
+
+                const optionPhone = document.createElement('option');
+                optionPhone.value = index;
+                optionPhone.textContent = header;
+                phoneColumn.appendChild(optionPhone);
+            });
+        }
+
+        previousBtn.addEventListener('click', () => {
+            if (mappingSection.style.display === 'block') {
+                mappingSection.style.display = 'none';
+                uploadSection.style.display = 'block';
+                nextBtn.style.display = 'none';
+                previousBtn.style.display = 'none';
+                uploadedData = null;
+                fileInput.value = '';
+
+                // Oculta card de capacidade ao voltar
+                document.getElementById('capacitySection').style.display = 'none';
+                // Oculta seção de erros de validação ao voltar
+                document.getElementById('validationErrorsSection').style.display = 'none';
+            } else {
+                window.location.href = 'seleciona-assistente.html';
+            }
+        });
+
+        nextBtn.addEventListener('click', validateMapping);
+
+        function validateMapping() {
+            console.log('[VALIDATE] 🎯 Iniciando validação de mapeamento...');
+            hideMessages();
+
+            const nameCol = nameColumn.value;
+            const phoneCol = phoneColumn.value;
+
+            console.log('[VALIDATE] Colunas selecionadas:', { nameCol, phoneCol });
+
+            if (!nameCol || !phoneCol) {
+                showError('Por favor, selecione as colunas de nome e telefone');
+                return;
+            }
+
+            if (nameCol === phoneCol) {
+                showError('Colunas de nome e telefone devem ser diferentes');
+                return;
+            }
+
+            // Processa leads
+            processedLeads = uploadedData.rows.map(row => ({
+                name: row[uploadedData.headers[nameCol]],
+                phone: row[uploadedData.headers[phoneCol]]
+            })).filter(lead => lead.name && lead.phone);
+
+            console.log('[VALIDATE] ✅ Leads processados:', processedLeads.length);
+
+            // Valida limite
+            if (!validateLeadsLimit()) {
+                console.log('[VALIDATE] ❌ Validação de limite falhou');
+                return;
+            }
+
+            console.log('[VALIDATE] ✅ Limite validado, exibindo seções...');
+
+            // Exibe seções de agendamento e timeline
+            showSchedulingSections();
+        }
+
+        function validateLeadsLimit() {
+            const numLeads = processedLeads.length;
+            const { numeroLinhas, ligacoesPorHora, ligacoesDiarias } = planData;
+
+            console.log('[VALIDATE] Validando limite:', numLeads, '<=', ligacoesDiarias);
+
+            // Renderiza card de capacidade manualmente
+            document.getElementById('planHourlyCapacity').textContent = formatNumber(ligacoesPorHora);
+            document.getElementById('planDailyCapacity').textContent = formatNumber(ligacoesDiarias);
+            document.getElementById('uploadedLeadsCount').textContent = formatNumber(numLeads);
+
+            // Atualiza barra de progresso
+            const percentage = Math.min((numLeads / ligacoesDiarias) * 100, 100);
+            const progressBar = document.getElementById('capacityProgressBar');
+            progressBar.style.width = percentage + '%';
+
+            // Remove classes anteriores de cor
+            progressBar.classList.remove('warning', 'danger');
+
+            // Atualiza status com ícones SVG
+            const statusElement = document.getElementById('capacityStatus');
+            if (numLeads > ligacoesDiarias) {
+                statusElement.innerHTML = `
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="15" y1="9" x2="9" y2="15"></line>
+                        <line x1="9" y1="9" x2="15" y2="15"></line>
+                    </svg>
+                    Limite excedido
+                `;
+                statusElement.className = 'capacity-status status-danger';
+                progressBar.classList.add('danger');
+            } else if (percentage >= 90) {
+                statusElement.innerHTML = `
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                        <line x1="12" y1="9" x2="12" y2="13"></line>
+                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                    Próximo ao limite
+                `;
+                statusElement.className = 'capacity-status status-warning';
+                progressBar.classList.add('warning');
+            } else {
+                statusElement.innerHTML = `
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                    Dentro do limite
+                `;
+                statusElement.className = 'capacity-status status-ok';
+            }
+
+            document.getElementById('capacitySection').style.display = 'block';
+
+            // Verifica se excede limite
+            if (numLeads > ligacoesDiarias) {
+                console.error('[VALIDATE] Limite excedido!');
+                showLimitExceededError(ligacoesDiarias, numLeads);
+                return false;
+            }
+
+            return true;
+        }
+
+        function formatNumber(num) {
+            return num.toLocaleString('pt-BR');
+        }
+
+        function showLimitExceededError(maxLeads, attemptedLeads) {
+            const errorHtml = `
+                <div class="error-modal">
+                    <div class="error-content">
+                        <div class="error-icon">❌</div>
+                        <h2 class="error-title">Limite Excedido</h2>
+                        <p class="error-message">
+                            Seu plano permite até <strong>${formatNumber(maxLeads)}</strong> ligações por dia.
+                            <br>
+                            Você tentou fazer upload de <strong>${formatNumber(attemptedLeads)}</strong> leads.
+                        </p>
+                        <div class="error-details">
+                            <p>Para aumentar seu limite, entre em contato com o suporte:</p>
+                            <a href="mailto:suporte@salesdever.io" class="support-link">
+                                📧 suporte@salesdever.io
+                            </a>
+                        </div>
+                        <button class="error-close-btn" onclick="closeLimitError()">
+                            Entendi
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            const modalContainer = document.createElement('div');
+            modalContainer.id = 'limitErrorModal';
+            modalContainer.className = 'error-modal-overlay';
+            modalContainer.innerHTML = errorHtml;
+            document.body.appendChild(modalContainer);
+
+            setTimeout(() => {
+                modalContainer.classList.add('active');
+            }, 10);
+        }
+
+        function closeLimitError() {
+            const modal = document.getElementById('limitErrorModal');
+            if (modal) {
+                modal.classList.remove('active');
+                setTimeout(() => {
+                    modal.remove();
+                }, 300);
+            }
+        }
+
+        function showInvalidTimeframeError(endTime, commercialEnd) {
+            const errorHtml = `
+                <div class="error-modal">
+                    <div class="error-content">
+                        <div class="error-icon">⏰</div>
+                        <h2 class="error-title">Horário Inválido</h2>
+                        <p class="error-message">
+                            A campanha terminaria às <strong>${endTime}</strong>
+                            <br>
+                            Horário comercial: até <strong>${commercialEnd}</strong>
+                        </p>
+                        <p class="error-suggestion">
+                            Tente:
+                            <br>
+                            • Escolher um horário de início mais cedo
+                            <br>
+                            • Reduzir o número de leads
+                        </p>
+                        <button class="error-close-btn" onclick="closeLimitError()">
+                            Entendi
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            const modalContainer = document.createElement('div');
+            modalContainer.id = 'limitErrorModal';
+            modalContainer.className = 'error-modal-overlay';
+            modalContainer.innerHTML = errorHtml;
+            document.body.appendChild(modalContainer);
+
+            setTimeout(() => {
+                modalContainer.classList.add('active');
+            }, 10);
+        }
+
+        function showSchedulingSections() {
+            console.log('[UI] 🎯 Iniciando showSchedulingSections...');
+
+            // Oculta seção de mapeamento e capacidade (já que será mostrado embaixo)
+            mappingSection.style.display = 'none';
+            document.getElementById('capacitySection').style.display = 'none';
+
+            // Exibe seções de agendamento
+            const schedulingSection = document.getElementById('schedulingSection');
+            schedulingSection.style.display = 'block';
+
+            // Define data padrão
+            const dateInput = document.getElementById('campaignDate');
+            selectedDate = dateInput.value;
+
+            // Adiciona event listener para data
+            dateInput.addEventListener('change', () => {
+                selectedDate = dateInput.value;
+                console.log('[DATE] Data atualizada:', selectedDate);
+
+                // Re-renderiza a timeline para atualizar horários disponíveis
+                renderInteractiveTimeline();
+
+                // Se tentou selecionar hoje e hoje não está disponível, força amanhã
+                if (isDateToday(selectedDate) && !canScheduleToday(campaignDuration)) {
+                    checkTodayAvailability();
+                } else {
+                    // Reseta a flag se selecionou outra data
+                    todayUnavailable = campaignDuration > 0 && !canScheduleToday(campaignDuration);
+                    renderCampaignCalendar();
+                }
+            });
+
+            // Renderiza timeline interativa automaticamente
+            renderInteractiveTimeline();
+            document.getElementById('campaignTimeline').style.display = 'block';
+
+            // Verifica se a campanha cabe hoje e seleciona amanhã automaticamente se não cabe
+            checkTodayAvailability();
+
+            // Atualiza texto do botão
+            nextBtnText.textContent = 'Criar Campanha →';
+            nextBtn.removeEventListener('click', validateMapping);
+            nextBtn.addEventListener('click', validateAndShowPopup);
+
+            // Scroll suave
+            setTimeout(() => {
+                schedulingSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+
+            console.log('[UI] ✅ Seções de agendamento exibidas');
+        }
+
+        function updateTimelineWithCustomHours() {
+            const date = document.getElementById('campaignDate').value;
+            const startTime = document.getElementById('campaignStartTime').value;
+            const endTime = document.getElementById('campaignEndTime').value;
+
+            console.log('[TIMELINE] Horários personalizados:', { date, startTime, endTime });
+
+            if (!date || !startTime || !endTime) {
+                console.log('[TIMELINE] Aguardando seleção completa');
+                return;
+            }
+
+            // Validação: término deve ser maior que início
+            const [startH, startM] = startTime.split(':').map(Number);
+            const [endH, endM] = endTime.split(':').map(Number);
+            const startMinutes = startH * 60 + startM;
+            const endMinutes = endH * 60 + endM;
+
+            if (endMinutes <= startMinutes) {
+                showError('O horário de término deve ser maior que o horário de início');
+                document.getElementById('campaignTimeline').style.display = 'none';
+                return;
+            }
+
+            selectedDate = date;
+            selectedStartTime = startTime;
+
+            // Renderiza timeline interativa
+            renderInteractiveTimeline();
+
+            // Exibe seção de timeline
+            document.getElementById('campaignTimeline').style.display = 'block';
+
+            console.log('[TIMELINE] Timeline interativa renderizada');
+        }
+
+        function generateCustomTimeline(numLeads, startTime, endTime, numeroLinhas) {
+            // Calcula quantas horas estão disponíveis
+            const [startH, startM] = startTime.split(':').map(Number);
+            const [endH, endM] = endTime.split(':').map(Number);
+            const startMinutes = startH * 60 + startM;
+            const endMinutes = endH * 60 + endM;
+            const totalMinutes = endMinutes - startMinutes;
+            const totalHours = totalMinutes / 60;
+
+            // Distribui leads igualmente por hora
+            const leadsPerHour = Math.floor(numLeads / totalHours);
+            const leadsRemainder = numLeads % totalHours;
+
+            const intervalos = [];
+            let currentTime = startTime;
+            let leadsDistributed = 0;
+
+            for (let i = 0; i < Math.ceil(totalHours); i++) {
+                // Define quantos leads vão nesta hora
+                let leadsThisHour = leadsPerHour;
+                if (i < leadsRemainder) {
+                    leadsThisHour += 1; // Distribui o resto nas primeiras horas
+                }
+
+                if (leadsDistributed >= numLeads) break;
+
+                const nextTime = addMinutes(currentTime, 60);
+                const actualLeads = Math.min(leadsThisHour, numLeads - leadsDistributed);
+
+                intervalos.push({
+                    inicio: currentTime,
+                    fim: nextTime,
+                    ligacoes: actualLeads,
+                    isPartial: actualLeads < leadsPerHour,
+                    isFull: actualLeads === leadsPerHour
+                });
+
+                leadsDistributed += actualLeads;
+                currentTime = nextTime;
+            }
+
+            return intervalos;
+        }
+
+        function renderCampaignSummary(summary) {
+            const { startTime, endTime, duration, totalLeads } = summary;
+
+            document.getElementById('startTime').textContent = startTime;
+            document.getElementById('endTime').textContent = endTime;
+            document.getElementById('duration').textContent = formatDuration(duration);
+        }
+
+        function formatDuration(minutes) {
+            const hours = Math.floor(minutes / 60);
+            const mins = minutes % 60;
+
+            if (hours === 0) return `${mins}min`;
+            if (mins === 0) return `${hours}h`;
+            return `${hours}h ${mins}min`;
+        }
+
+        function updateTimeline() {
+            const date = document.getElementById('campaignDate').value;
+            const time = document.getElementById('campaignStartTime').value;
+
+            if (!date || !time) {
+                console.log('[TIMELINE] Data ou horário não selecionado');
+                return;
+            }
+
+            selectedDate = date;
+            selectedStartTime = time;
+
+            console.log('[TIMELINE] Atualizando com', {
+                leads: processedLeads.length,
+                startTime: time,
+                linhas: planData.numeroLinhas
+            });
+
+            // Valida horário e gera timeline
+            const validation = validateCampaign(processedLeads.length, time, planData.numeroLinhas);
+
+            if (!validation.valid) {
+                if (validation.error === 'INVALID_TIMEFRAME') {
+                    showInvalidTimeframeError(validation.endTime, validation.commercialEnd);
+                }
+                return;
+            }
+
+            // Gera timeline
+            const intervalos = generateTimeline(processedLeads.length, time, planData.numeroLinhas);
+            const duration = calculateCampaignDuration(processedLeads.length, planData.numeroLinhas);
+            const endTime = calculateEndTime(time, duration);
+
+            // Renderiza timeline
+            renderTimeline(intervalos, 'timelineBody');
+
+            // Renderiza resumo
+            renderCampaignSummary({
+                startTime: time,
+                endTime: endTime,
+                duration: duration,
+                totalLeads: processedLeads.length,
+                hourlyCapacity: planData.ligacoesPorHora,
+                dailyCapacity: planData.ligacoesDiarias
+            });
+
+            console.log('[TIMELINE] Renderizada com sucesso');
+        }
+
+        function animateTimelineRender() {
+            // Animação opcional
+        }
+
+        function validateAndShowPopup() {
+            hideMessages();
+
+            // Valida seleção de data
+            if (!selectedDate) {
+                showError('Por favor, selecione a data da campanha');
+                return;
+            }
+
+            // Valida se a campanha foi posicionada
+            if (!campaignStartHour) {
+                showError('Por favor, posicione a campanha arrastando o bloco roxo sobre os horários desejados');
+                return;
+            }
+
+            // Valida se o horário está no passado (se for hoje)
+            if (isDateToday(selectedDate)) {
+                if (isHourInPast(campaignStartHour)) {
+                    showError('O horário selecionado já passou. Por favor, escolha um horário futuro ou selecione outra data.');
+                    return;
+                }
+
+                // Valida se a campanha cabe no horário comercial
+                const duration = calculateCampaignDuration(processedLeads.length, planData.numeroLinhas);
+                const durationHours = Math.ceil(duration / 60);
+                if (!canScheduleToday(durationHours)) {
+                    showError(`Campanha de ${durationHours}h não pode ser agendada para hoje. Por favor, selecione outra data.`);
+                    return;
+                }
+            }
+
+            contactCount.textContent = formatNumber(processedLeads.length);
+            campaignPopup.style.display = 'flex';
+        }
+
+        cancelCampaign.addEventListener('click', () => {
+            campaignPopup.style.display = 'none';
+        });
+
+        startCampaign.addEventListener('click', async () => {
+            startCampaign.disabled = true;
+            campaignBtnText.textContent = 'Enviando...';
+
+            try {
+                const campaignName = document.getElementById('campaignName').value.trim() ||
+                    `Campanha ${new Date().toLocaleDateString('pt-BR')}`;
+
+                const campaignId = `camp_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`;
+
+                // Calcula dados de agendamento
+                const duration = calculateCampaignDuration(processedLeads.length, planData.numeroLinhas);
+                const endTime = calculateEndTime(campaignStartHour, duration);
+                const intervalos = generateTimeline(processedLeads.length, campaignStartHour, planData.numeroLinhas);
+
+                // Cria timestamp de início em UTC-3 (Brasília)
+                const scheduledStartAt = `${selectedDate}T${campaignStartHour}:00-03:00`;
+                const scheduledEndAt = `${selectedDate}T${endTime}:00-03:00`;
+
+                const payload = {
+                    campaign_id: campaignId,
+                    campaign_name: campaignName,
+                    campaign_type: 'outbound',
+                    leads: processedLeads,
+                    assistant_id: finalSelections?.assistant?.id,
+                    assistant_name: finalSelections?.assistant?.name,
+                    number_id: finalSelections?.number?.id,
+                    number_name: finalSelections?.number?.name,
+                    phone_number: finalSelections?.number?.number,
+                    tenant_id: finalSelections?.userData?.user?.tenant_id,
+                    org_private_key: finalSelections?.userData?.user?.org_private_key,
+                    instance_name: finalSelections?.instance?.instance_name || null,
+                    // Dados de agendamento
+                    scheduled_date: selectedDate,
+                    start_time: campaignStartHour,
+                    end_time: endTime,
+                    scheduled_start_at: scheduledStartAt,  // Timestamptz UTC-3
+                    scheduled_end_at: scheduledEndAt,      // Timestamptz UTC-3
+                    estimated_duration_minutes: duration,
+                    hourly_capacity: planData.ligacoesPorHora,
+                    daily_capacity: planData.ligacoesDiarias,
+                    timeline: intervalos,
+                    // Metadados
+                    timestamp: new Date().toISOString(),
+                    total_contacts: processedLeads.length
+                };
+
+                console.log('[CAMPAIGN] 🚀 Enviando payload:', payload);
+
+                const response = await fetch('https://sdr.salesdever.io/webhook/17de397e-8f85-4b3c-9807-7e28ae16c0c4', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    window.location.href = `obrigado.html?contacts=${processedLeads.length}&campaign=${encodeURIComponent(campaignName)}`;
+                } else {
+                    throw new Error('Erro ao enviar dados');
+                }
+            } catch (error) {
+                console.error('[CAMPAIGN] Erro:', error);
+                showError(`Erro ao iniciar campanha: ${error.message}`);
+                startCampaign.disabled = false;
+                campaignBtnText.textContent = 'Iniciar Campanha';
+            }
+        });
+
+        function showError(message) {
+            showModernPopup(message, 'error');
+        }
+
+        function showSuccess(message) {
+            showModernPopup(message, 'success');
+        }
+
+        function showModernPopup(message, type = 'error') {
+            const existing = document.getElementById('modernPopup');
+            if (existing) existing.remove();
+
+            const popup = document.createElement('div');
+            popup.id = 'modernPopup';
+            popup.className = `modern-popup ${type}`;
+
+            const icon = type === 'error' ? '⚠️' : '✅';
+            const title = type === 'error' ? 'Atenção!' : 'Sucesso!';
+
+            popup.innerHTML = `
+                <div class="popup-content">
+                    <div class="popup-icon">${icon}</div>
+                    <h3 class="popup-title">${title}</h3>
+                    <p class="popup-message">${message}</p>
+                    <button class="popup-btn" onclick="closeModernPopup()">Entendi</button>
+                </div>
+                <div class="popup-overlay" onclick="closeModernPopup()"></div>
+            `;
+
+            document.body.appendChild(popup);
+
+            setTimeout(() => popup.classList.add('show'), 10);
+        }
+
+        function closeModernPopup() {
+            const popup = document.getElementById('modernPopup');
+            if (popup) {
+                popup.classList.remove('show');
+                setTimeout(() => popup.remove(), 300);
+            }
+        }
+
+        function hideMessages() {
+            // Mantido para compatibilidade
+        }
+
+        window.addEventListener('load', async () => {
+            console.log('[INIT] 🚀 Inicializando sistema...');
+
+            // Verifica se os módulos foram carregados
+            console.log('[INIT] Verificando módulos:');
+            console.log('  - calculateHourlyCapacity:', typeof calculateHourlyCapacity);
+            console.log('  - generateTimeline:', typeof generateTimeline);
+            console.log('  - renderTimeline:', typeof renderTimeline);
+            console.log('  - renderCapacityCard:', typeof renderCapacityCard);
+
+            if (!loadFinalSelections()) {
+                setTimeout(() => {
+                    window.location.href = 'seleciona-assistente.html';
+                }, 3000);
+                return;
+            }
+
+            if (!(await loadPlanData())) {
+                setTimeout(() => {
+                    window.location.href = '/index.html';
+                }, 3000);
+                return;
+            }
+
+            console.log('[INIT] ✅ Sistema inicializado com sucesso');
+            console.log('[INIT] 📊 Plan Data:', planData);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="https://imagens-zipline.hgabnb.easypanel.host/u/2FsJTY.png">
+    <link rel="shortcut icon" type="image/png" href="https://imagens-zipline.hgabnb.easypanel.host/u/2FsJTY.png">
+    <link rel="apple-touch-icon" href="https://imagens-zipline.hgabnb.easypanel.host/u/2FsJTY.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Conta - Sistema de Clientes</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Raleway', -apple-system, system-ui, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #0a0014;
+            color: #ffffff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Neural Background */
+        .neural-background {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background: radial-gradient(ellipse at top, #1a0a2e 0%, #000000 50%, #000000 100%);
+            overflow: hidden;
+        }
+
+        .gradient-sphere {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.8;
+            mix-blend-mode: screen;
+            animation: morphing 25s infinite ease-in-out;
+            will-change: transform;
+            backface-visibility: hidden;
+            transform: translateZ(0);
+        }
+
+        .sphere-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #a594ff 0%, #7b68ff 40%, transparent 70%);
+            top: -300px;
+            left: -200px;
+            animation-delay: 0s;
+        }
+
+        .sphere-2 {
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, #8b7aff 0%, #6b5aff 40%, transparent 70%);
+            bottom: -400px;
+            right: -300px;
+            animation-delay: -12s;
+        }
+
+        .sphere-3 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #9d7fff 0%, #7d5fff 40%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) translateZ(0);
+            animation-delay: -6s;
+        }
+
+        .sphere-4 {
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, #a594ff 0%, #8574ff 40%, transparent 70%);
+            top: 20%;
+            right: 10%;
+            animation-delay: -18s;
+        }
+
+        @keyframes morphing {
+            0%, 100% { 
+                transform: translate(0, 0) scale(1) rotate(0deg) translateZ(0);
+                border-radius: 50%;
+            }
+            20% { 
+                transform: translate(100px, -80px) scale(1.15) rotate(45deg) translateZ(0);
+                border-radius: 42% 58% 70% 30% / 45% 55% 45% 55%;
+            }
+            40% { 
+                transform: translate(-60px, 100px) scale(0.9) rotate(90deg) translateZ(0);
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            }
+            60% { 
+                transform: translate(80px, 60px) scale(1.1) rotate(135deg) translateZ(0);
+                border-radius: 35% 65% 55% 45% / 50% 60% 40% 50%;
+            }
+            80% { 
+                transform: translate(-90px, -70px) scale(0.95) rotate(180deg) translateZ(0);
+                border-radius: 70% 30% 50% 50% / 40% 60% 40% 60%;
+            }
+        }
+
+        /* Grid Overlay */
+        .grid-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            background-image: 
+                linear-gradient(rgba(165, 148, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(165, 148, 255, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            animation: grid-flow 20s linear infinite;
+            will-change: background-position;
+            transform: translateZ(0);
+        }
+
+        @keyframes grid-flow {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 40px 40px;
+            }
+        }
+
+        /* Main Container */
+        .container {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        /* Glass Card */
+        .glass-card {
+            position: relative;
+            width: 100%;
+            max-width: 440px;
+            background: rgba(20, 15, 40, 0.4);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            border: 1px solid rgba(165, 148, 255, 0.15);
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(165, 148, 255, 0.1) inset,
+                0 0 80px rgba(165, 148, 255, 0.1);
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity;
+            transform: translateZ(0);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px) translateZ(0);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) translateZ(0);
+            }
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(165, 148, 255, 0.3), transparent, rgba(123, 104, 255, 0.3));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo-container {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 80px;
+            margin-bottom: 1.5rem;
+            position: relative;
+            animation: logoGlow 3s ease-in-out infinite;
+            will-change: filter;
+        }
+
+        @keyframes logoGlow {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(165, 148, 255, 0.5)); }
+            50% { filter: drop-shadow(0 0 40px rgba(165, 148, 255, 0.8)); }
+        }
+
+        .logo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 0.5rem;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-label {
+            display: block;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.01em;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            background: rgba(30, 20, 60, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(165, 148, 255, 0.2);
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            outline: none;
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .form-input:focus {
+            background: rgba(30, 20, 60, 0.7);
+            border-color: #a594ff;
+            box-shadow: 
+                0 0 0 4px rgba(165, 148, 255, 0.1),
+                0 0 20px rgba(165, 148, 255, 0.2);
+        }
+
+        .form-input.error {
+            border-color: rgba(239, 68, 68, 0.8);
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .form-input.success {
+            border-color: rgba(34, 197, 94, 0.8);
+            background: rgba(34, 197, 94, 0.1);
+        }
+
+        /* Password Requirements */
+        .password-requirements {
+            background: rgba(30, 20, 60, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(165, 148, 255, 0.15);
+            border-radius: 12px;
+            padding: 0.875rem;
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .requirement {
+            display: flex;
+            align-items: center;
+            margin: 0.35rem 0;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .requirement-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 0.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .requirement-icon.pending {
+            background-color: rgba(165, 148, 255, 0.2);
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .requirement-icon.valid {
+            background-color: #22C55E;
+            color: white;
+        }
+
+        .requirement-icon.invalid {
+            background-color: #EF4444;
+            color: white;
+        }
+
+        /* Password Match Indicator */
+        .password-match-indicator {
+            margin-top: 0.5rem;
+            padding: 0.625rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            text-align: center;
+            display: none;
+            backdrop-filter: blur(10px);
+        }
+
+        .password-match-indicator.match {
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #bbf7d0;
+            display: block;
+        }
+
+        .password-match-indicator.no-match {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fecaca;
+            display: block;
+        }
+
+        /* Button */
+        .create-account-button {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #a594ff 0%, #8b7aff 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 4px 20px rgba(165, 148, 255, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+            margin-top: 0.5rem;
+        }
+
+        .create-account-button::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .create-account-button:hover::before {
+            opacity: 1;
+        }
+
+        .create-account-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 6px 30px rgba(165, 148, 255, 0.6),
+                0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+        }
+
+        .create-account-button:active {
+            transform: translateY(0);
+        }
+
+        .create-account-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .button-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        /* Loading Spinner */
+        .loading-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #ffffff;
+            animation: spin 0.8s linear infinite;
+            display: none;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Messages */
+        .error-message {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(220, 38, 38, 0.15));
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fecaca;
+            padding: 0.875rem 1rem;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: none;
+        }
+
+        .success-message {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(22, 163, 74, 0.15));
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #bbf7d0;
+            padding: 0.875rem 1rem;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: none;
+        }
+
+        /* Login Link Section */
+        .login-link {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(165, 148, 255, 0.1);
+        }
+
+        .login-link p {
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .login-link a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            color: #a594ff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 12px;
+            background: rgba(165, 148, 255, 0.1);
+            border: 1px solid rgba(165, 148, 255, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .login-link a:hover {
+            background: rgba(165, 148, 255, 0.2);
+            border-color: rgba(165, 148, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(165, 148, 255, 0.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .glass-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .title {
+                font-size: 1.75rem;
+            }
+
+            .gradient-sphere {
+                filter: blur(80px);
+                animation-duration: 30s;
+            }
+
+            .sphere-1, .sphere-2, .sphere-3, .sphere-4 {
+                opacity: 0.6;
+            }
+
+            .grid-overlay {
+                animation-duration: 30s;
+            }
+
+            .logo-container {
+                animation: none;
+                filter: drop-shadow(0 0 20px rgba(165, 148, 255, 0.5));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gradient-sphere {
+                filter: blur(60px);
+                animation-duration: 35s;
+            }
+
+            @keyframes morphing {
+                0%, 100% { 
+                    transform: translate(0, 0) scale(1) translateZ(0);
+                    border-radius: 50%;
+                }
+                50% { 
+                    transform: translate(50px, -40px) scale(1.05) translateZ(0);
+                    border-radius: 45% 55% 60% 40% / 50% 50% 50% 50%;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Neural Animated Background -->
+    <div class="neural-background">
+        <div class="gradient-sphere sphere-1"></div>
+        <div class="gradient-sphere sphere-2"></div>
+        <div class="gradient-sphere sphere-3"></div>
+        <div class="gradient-sphere sphere-4"></div>
+    </div>
+    
+    <!-- Grid Overlay -->
+    <div class="grid-overlay"></div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="glass-card">
+            <div class="header">
+                <div class="logo-container">
+                    <img src="https://i.postimg.cc/G2RwCBHb/Frame-10.png" alt="Logo" />
+                </div>
+                <h1 class="title">Criar Conta</h1>
+                <p class="subtitle">Crie sua conta para gerenciar assistentes e números</p>
+            </div>
+
+            <form id="createAccountForm">
+                <div id="errorMessage" class="error-message"></div>
+                <div id="successMessage" class="success-message"></div>
+
+                <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        class="form-input" 
+                        placeholder="seu@email.com"
+                        required
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="form-label">Senha</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        class="form-input" 
+                        placeholder="••••••••"
+                        required
+                    />
+                    <div class="password-requirements">
+                        <div class="requirement">
+                            <div class="requirement-icon pending" id="lengthIcon">?</div>
+                            <span>Mínimo 8 caracteres</span>
+                        </div>
+                        <div class="requirement">
+                            <div class="requirement-icon pending" id="upperIcon">?</div>
+                            <span>Pelo menos 1 letra maiúscula</span>
+                        </div>
+                        <div class="requirement">
+                            <div class="requirement-icon pending" id="lowerIcon">?</div>
+                            <span>Pelo menos 1 letra minúscula</span>
+                        </div>
+                        <div class="requirement">
+                            <div class="requirement-icon pending" id="numberIcon">?</div>
+                            <span>Pelo menos 1 número</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword" class="form-label">Confirmar Senha</label>
+                    <input 
+                        type="password" 
+                        id="confirmPassword" 
+                        name="confirmPassword" 
+                        class="form-input" 
+                        placeholder="••••••••"
+                        required
+                    />
+                    <div class="password-match-indicator" id="passwordMatchIndicator">
+                        As senhas coincidem ✓
+                    </div>
+                </div>
+
+                <button type="submit" id="createAccountButton" class="create-account-button">
+                    <div class="button-content">
+                        <div id="loadingSpinner" class="loading-spinner"></div>
+                        <span id="buttonText">Criar Conta</span>
+                    </div>
+                </button>
+            </form>
+
+            <div class="login-link">
+                <p>Já tem uma conta?</p>
+                <a href="login/login.html">Fazer login</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const createAccountForm = document.getElementById('createAccountForm');
+        const createAccountButton = document.getElementById('createAccountButton');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const buttonText = document.getElementById('buttonText');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const passwordMatchIndicator = document.getElementById('passwordMatchIndicator');
+
+        const lengthIcon = document.getElementById('lengthIcon');
+        const upperIcon = document.getElementById('upperIcon');
+        const lowerIcon = document.getElementById('lowerIcon');
+        const numberIcon = document.getElementById('numberIcon');
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+            successMessage.style.display = 'none';
+        }
+
+        function showSuccess(message) {
+            successMessage.textContent = message;
+            successMessage.style.display = 'block';
+            errorMessage.style.display = 'none';
+        }
+
+        function hideMessages() {
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
+        }
+
+        function setLoading(loading) {
+            if (loading) {
+                loadingSpinner.style.display = 'block';
+                buttonText.textContent = 'Criando conta...';
+                createAccountButton.disabled = true;
+            } else {
+                loadingSpinner.style.display = 'none';
+                buttonText.textContent = 'Criar Conta';
+                createAccountButton.disabled = false;
+            }
+        }
+
+        function validatePasswordRequirements(password) {
+            const requirements = {
+                length: password.length >= 8,
+                upper: /[A-Z]/.test(password),
+                lower: /[a-z]/.test(password),
+                number: /\d/.test(password)
+            };
+
+            updateRequirementIcon(lengthIcon, requirements.length);
+            updateRequirementIcon(upperIcon, requirements.upper);
+            updateRequirementIcon(lowerIcon, requirements.lower);
+            updateRequirementIcon(numberIcon, requirements.number);
+
+            return Object.values(requirements).every(req => req);
+        }
+
+        function updateRequirementIcon(icon, isValid) {
+            icon.className = 'requirement-icon';
+            if (isValid) {
+                icon.classList.add('valid');
+                icon.textContent = '✓';
+            } else {
+                icon.classList.add('invalid');
+                icon.textContent = '✗';
+            }
+        }
+
+        function checkPasswordMatch() {
+            const password = passwordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
+            
+            if (confirmPassword === '') {
+                passwordMatchIndicator.style.display = 'none';
+                confirmPasswordInput.classList.remove('error', 'success');
+                return false;
+            }
+
+            if (password === confirmPassword) {
+                passwordMatchIndicator.className = 'password-match-indicator match';
+                passwordMatchIndicator.textContent = 'As senhas coincidem ✓';
+                confirmPasswordInput.classList.remove('error');
+                confirmPasswordInput.classList.add('success');
+                return true;
+            } else {
+                passwordMatchIndicator.className = 'password-match-indicator no-match';
+                passwordMatchIndicator.textContent = 'As senhas não coincidem ✗';
+                confirmPasswordInput.classList.remove('success');
+                confirmPasswordInput.classList.add('error');
+                return false;
+            }
+        }
+
+        function validateForm() {
+            const email = document.getElementById('email').value.trim();
+            const password = passwordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
+
+            if (!email) {
+                showError('Por favor, insira um email válido');
+                return false;
+            }
+
+            if (!validatePasswordRequirements(password)) {
+                showError('Por favor, atenda todos os requisitos de senha');
+                return false;
+            }
+
+            if (password !== confirmPassword) {
+                showError('As senhas não coincidem');
+                return false;
+            }
+
+            return true;
+        }
+
+        passwordInput.addEventListener('input', function() {
+            validatePasswordRequirements(this.value);
+            if (confirmPasswordInput.value) {
+                checkPasswordMatch();
+            }
+        });
+
+        confirmPasswordInput.addEventListener('input', checkPasswordMatch);
+
+        async function createAccount(email, password) {
+            const response = await fetch('https://sdr.salesdever.io/webhook/criacao-de-conta-saas-salesdever', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: email,
+                    senha: password
+                })
+            });
+
+            const data = await response.json();
+            
+            if (response.status !== 200 || data.status === 'error') {
+                throw new Error(data.message || 'Erro ao criar conta');
+            }
+            
+            return data;
+        }
+
+        async function authenticateUser(username, password) {
+            try {
+                console.log('🔄 Fazendo login automático após criação de conta...', {username});
+
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+                const response = await fetch('https://sdr.salesdever.io/webhook/recebe-login-', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        login: username,
+                        senha: password
+                    }),
+                    signal: controller.signal
+                });
+
+                clearTimeout(timeoutId);
+                console.log('📡 Status da resposta de login:', response.status);
+
+                if (!response.ok) {
+                    throw new Error(`Erro HTTP: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log('✅ Resposta de login:', JSON.stringify(data, null, 2));
+
+                if (data.status === 'error') {
+                    throw new Error(data.message || 'Erro ao fazer login automático');
+                }
+
+                let userData = Array.isArray(data) ? data[0] : data;
+
+                // Debug detalhado
+                console.log('🔍 [CRIAR CONTA] numero_linhas recebido:', userData.numero_linhas);
+                console.log('🔍 [CRIAR CONTA] minutes_plan recebido:', userData.minutes_plan);
+                console.log('🔍 [CRIAR CONTA] Todos os campos:', Object.keys(userData));
+
+                if (data.minutes_max !== undefined && userData.minutes_max === undefined) {
+                    userData.minutes_max = data.minutes_max;
+                }
+
+                if (userData.minutes_max === undefined || userData.minutes_max === null) {
+                    userData.minutes_max = '0';
+                }
+
+                // Verifica numero_linhas com fallbacks
+                if (!userData.numero_linhas && userData.numero_linhas !== 0) {
+                    console.error('❌ [CRIAR CONTA] numero_linhas NÃO encontrado!');
+                    userData.numero_linhas = userData.number_lines || userData.num_linhas || userData.lines || '0';
+                    console.log('🔧 [CRIAR CONTA] numero_linhas após fallback:', userData.numero_linhas);
+                }
+
+                if (!userData.tenant_id || !userData.org_private_key) {
+                    throw new Error('Dados de autenticação incompletos');
+                }
+
+                return userData;
+
+            } catch (error) {
+                console.error('❌ Erro no login automático:', error);
+                throw error;
+            }
+        }
+
+        createAccountForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            if (!validateForm()) {
+                return;
+            }
+
+            const email = document.getElementById('email').value.trim();
+            const password = passwordInput.value;
+
+            hideMessages();
+            setLoading(true);
+
+            try {
+                // Passo 1: Criar a conta
+                const responseData = await createAccount(email, password);
+
+                showSuccess('Conta criada com sucesso! Fazendo login...');
+
+                // Aguarda 1 segundo para garantir que a conta foi processada
+                await new Promise(resolve => setTimeout(resolve, 1000));
+
+                // Passo 2: Fazer login automático
+                const userData = await authenticateUser(email, password);
+
+                showSuccess('Login realizado! Redirecionando para o dashboard...');
+
+                // Passo 3: Salvar dados no localStorage
+                const loginData = {
+                    email: email,
+                    tenant_id: userData.tenant_id,
+                    org_private_key: userData.org_private_key,
+                    plano_client: userData.plano_client,
+                    multiplo_plano: userData.multiplo_plano,
+                    minutes_max: userData.minutes_max || '0',
+                    isLoggedIn: true,
+                    loginTimestamp: new Date().toISOString()
+                };
+
+                localStorage.setItem('userData', JSON.stringify(loginData));
+                localStorage.setItem('userEmail', email);
+                localStorage.setItem('tenant_id', userData.tenant_id);
+                localStorage.setItem('org_private_key', userData.org_private_key);
+                localStorage.setItem('plano_client', userData.plano_client);
+                localStorage.setItem('multiplo_plano', userData.multiplo_plano);
+                localStorage.setItem('minutes_max', userData.minutes_max || '0');
+                localStorage.setItem('numero_linhas', userData.numero_linhas || '0');
+                localStorage.setItem('minutos_plano', userData.minutes_plan || '0');
+                localStorage.setItem('minutes_plan', userData.minutes_plan || '0');
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('loginTimestamp', new Date().toISOString());
+
+                console.log('✅ Conta criada e login realizado! Redirecionando para dashboard...');
+                console.log('✅ [CRIAR CONTA] numero_linhas salvo:', localStorage.getItem('numero_linhas'));
+                console.log('✅ [CRIAR CONTA] minutes_plan salvo:', localStorage.getItem('minutes_plan'));
+
+                // Alerta se dados críticos estiverem zerados
+                const numeroLinhasSalvo = localStorage.getItem('numero_linhas');
+                if (numeroLinhasSalvo === '0' || !numeroLinhasSalvo) {
+                    console.warn('⚠️ [CRIAR CONTA] numero_linhas está zerado! Isso pode causar problemas.');
+                }
+
+                // Passo 4: Redirecionar para o dashboard
+                setTimeout(() => {
+                    window.location.href = 'menu_principal/menu.html';
+                }, 1500);
+
+            } catch (error) {
+                console.error('❌ Erro:', error);
+                showError(error.message || 'Erro ao criar conta. Tente novamente.');
+            } finally {
+                setLoading(false);
+            }
+        });
+
+        document.getElementById('email').addEventListener('input', hideMessages);
+        passwordInput.addEventListener('input', hideMessages);
+        confirmPasswordInput.addEventListener('input', hideMessages);
+    </script>
+</body>
+</html>

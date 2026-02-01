@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="https://imagens-zipline.hgabnb.easypanel.host/u/2FsJTY.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conectar Google Calendar - Salesdever</title>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Raleway', sans-serif; }
+        body { background: #0a0420; min-height: 100vh; color: #ffffff; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+        .container { max-width: 500px; width: 100%; }
+        .card { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 1.5rem; padding: 2.5rem; text-align: center; }
+        .card-title { font-size: 1.8rem; font-weight: 700; margin-bottom: 1rem; color: #fff; }
+        .card-subtitle { font-size: 1rem; color: rgba(255,255,255,0.6); margin-bottom: 2rem; }
+        .user-info { background: rgba(165,148,255,0.1); border: 1px solid rgba(165,148,255,0.3); border-radius: 0.75rem; padding: 1rem; margin-bottom: 1.5rem; text-align: left; }
+        .user-info-label { font-size: 0.8rem; color: rgba(255,255,255,0.5); }
+        .user-info-value { font-size: 1rem; color: #A594FF; font-weight: 600; }
+        .btn-google { width: 100%; padding: 1rem; background: white; color: #333; border: none; border-radius: 1rem; font-weight: 700; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.75rem; }
+        .btn-google:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
+        .btn-google:disabled { opacity: 0.6; cursor: not-allowed; }
+        .btn-google svg { width: 24px; height: 24px; }
+        .error-message { background: rgba(239,68,68,0.2); border: 1px solid rgba(239,68,68,0.4); color: #EF4444; padding: 1rem; border-radius: 1rem; margin-top: 1rem; display: none; }
+        .success-message { background: rgba(34,197,94,0.2); border: 1px solid rgba(34,197,94,0.4); color: #22C55E; padding: 1rem; border-radius: 1rem; margin-top: 1rem; display: none; }
+        .spinner { width: 20px; height: 20px; border: 2px solid rgba(0,0,0,0.1); border-radius: 50%; border-top-color: #333; animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1 class="card-title">Conectar Calendário</h1>
+            <p class="card-subtitle">Conecte seu Google Calendar para permitir agendamentos automáticos.</p>
+
+            <div class="user-info" id="userInfoBox" style="display:none;">
+                <div class="user-info-label">Conectando calendário para:</div>
+                <div class="user-info-value" id="userEmailDisplay"></div>
+            </div>
+
+            <button class="btn-google" id="connectBtn" onclick="connectGoogleCalendar()">
+                <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                <span>Conectar com Google Calendar</span>
+            </button>
+
+            <div id="errorMessage" class="error-message"></div>
+            <div id="successMessage" class="success-message"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'https://sdr.salesdever.io/webhook';
+
+        function getUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                tenant_id: params.get('tenant_id'),
+                user_email: params.get('user_email') || params.get('email'),
+                success: params.get('success'),
+                error: params.get('error')
+            };
+        }
+
+        function init() {
+            const params = getUrlParams();
+
+            // Mostrar sucesso se voltou do OAuth
+            if (params.success === 'true') {
+                document.getElementById('successMessage').innerHTML = '<strong>✅ Calendário conectado com sucesso!</strong>';
+                document.getElementById('successMessage').style.display = 'block';
+                document.getElementById('connectBtn').disabled = true;
+                document.getElementById('connectBtn').innerHTML = '<span>✓ Conectado</span>';
+                return;
+            }
+
+            // Mostrar erro se voltou com erro
+            if (params.error) {
+                document.getElementById('errorMessage').textContent = 'Erro ao conectar. Tente novamente.';
+                document.getElementById('errorMessage').style.display = 'block';
+            }
+
+            // Mostrar email do usuário
+            if (params.user_email) {
+                document.getElementById('userInfoBox').style.display = 'block';
+                document.getElementById('userEmailDisplay').textContent = params.user_email;
+            }
+
+            // Validar parâmetros
+            if (!params.tenant_id || !params.user_email) {
+                document.getElementById('errorMessage').textContent = 'Link inválido. Solicite um novo convite.';
+                document.getElementById('errorMessage').style.display = 'block';
+                document.getElementById('connectBtn').disabled = true;
+            }
+        }
+
+        async function connectGoogleCalendar() {
+            const btn = document.getElementById('connectBtn');
+            const errorDiv = document.getElementById('errorMessage');
+            const params = getUrlParams();
+
+            btn.disabled = true;
+            btn.innerHTML = '<div class="spinner"></div><span>Conectando...</span>';
+            errorDiv.style.display = 'none';
+
+            try {
+                const returnUrl = 'https://app1.salesdever.io/menu_principal/conexoes/conecta-calendario.html?success=true';
+
+                const response = await fetch(API_BASE + '/calendar-auth-url', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        tenant_id: params.tenant_id,
+                        user_email: params.user_email,
+                        return_url: returnUrl
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success && data.auth_url) {
+                    window.location.href = data.auth_url;
+                } else {
+                    throw new Error(data.error || 'Erro ao obter URL');
+                }
+
+            } catch (error) {
+                errorDiv.textContent = error.message;
+                errorDiv.style.display = 'block';
+                btn.disabled = false;
+                btn.innerHTML = '<svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg><span>Conectar com Google Calendar</span>';
+            }
+        }
+
+        window.addEventListener('load', init);
+    </script>
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Importar Prompt Master</title>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Raleway', sans-serif;
+      background: linear-gradient(135deg, #0a0420 0%, #1a1040 100%);
+      color: #fff;
+      min-height: 100vh;
+      padding: 18px;
+    }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px 18px;
+      background: rgba(15, 6, 36, 0.75);
+      border: 1px solid rgba(165, 148, 255, 0.2);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      margin-bottom: 14px;
+    }
+    .header h1 { font-size: 16px; font-weight: 800; }
+    .header small { display: block; margin-top: 2px; color: rgba(255,255,255,0.55); font-size: 12px; }
+    .btn {
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(165, 148, 255, 0.25);
+      background: rgba(255,255,255,0.06);
+      color: #fff;
+      cursor: pointer;
+      font-weight: 800;
+    }
+    .btn.primary {
+      border-color: rgba(165, 148, 255, 0.6);
+      background: linear-gradient(135deg, #A594FF, #667eea);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .card {
+      background: rgba(15, 6, 36, 0.75);
+      border: 1px solid rgba(165, 148, 255, 0.2);
+      border-radius: 16px;
+      padding: 16px;
+      backdrop-filter: blur(10px);
+      min-height: 0;
+    }
+    .card h2 { font-size: 14px; font-weight: 800; margin-bottom: 10px; }
+    .field { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+    .field label { color: rgba(255,255,255,0.72); font-weight: 800; font-size: 12px; }
+    textarea {
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(165, 148, 255, 0.25);
+      background: rgba(0,0,0,0.25);
+      color: #fff;
+      outline: none;
+      font-family: 'Raleway', sans-serif;
+      min-height: 180px;
+      resize: vertical;
+      width: 100%;
+    }
+    .hint { margin-top: 6px; font-size: 12px; color: rgba(255,255,255,0.55); }
+    .row { display: flex; gap: 10px; justify-content: flex-end; margin-top: 12px; flex-wrap: wrap; }
+    .full { grid-column: 1 / -1; }
+    .status { margin-top: 10px; font-size: 12px; color: rgba(255,255,255,0.6); }
+    @media (max-width: 950px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div>
+        <h1>Importar Prompt Master</h1>
+        <small id="subtitle">assistant_id: -</small>
+      </div>
+      <div class="row" style="margin-top:0;">
+        <button class="btn" onclick="runParse()">Separar seções</button>
+        <button class="btn primary" onclick="confirmImport()">Confirmar e gerar Flow</button>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card full">
+        <h2>1) Cole o Prompt Master</h2>
+        <div class="field">
+          <label for="prompt">Prompt Master</label>
+          <textarea id="prompt" placeholder="Cole aqui seu Prompt Master completo..."></textarea>
+          <div class="hint">Dica: headings (##) ajudam o parser a separar as seções.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>2) Globais extraídas (editável)</h2>
+        <div class="field">
+          <label>Globals (JSON)</label>
+          <textarea id="globalsJson" placeholder='{"identity":"...","personality":"..."}'></textarea>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>3) Blocos sugeridos (editável)</h2>
+        <div class="field">
+          <label>Blocks (JSON array)</label>
+          <textarea id="blocksJson" placeholder='[{"type":"primeira_mensagem","content":"..."}]'></textarea>
+        </div>
+        <div class="hint">Tipos suportados: primeira_mensagem, texto, aguardar, conectivos, encerrar, tool.</div>
+      </div>
+    </div>
+
+    <div class="status" id="status"></div>
+  </div>
+
+  <script>
+    function getQueryParam(name) {
+      const url = new URL(window.location.href);
+      return url.searchParams.get(name);
+    }
+
+    function loadSelectedAssistente() {
+      const raw = localStorage.getItem('sd_selected_assistente');
+      if (raw) {
+        try { return JSON.parse(raw); } catch (e) { return null; }
+      }
+      return null;
+    }
+
+    function resolveAssistantId() {
+      return getQueryParam('assistente_id') || getQueryParam('assistant_id') || (loadSelectedAssistente()?.id) || (loadSelectedAssistente()?.assistente_id) || '';
+    }
+
+    const assistantId = resolveAssistantId();
+    document.getElementById('subtitle').textContent = `assistant_id: ${assistantId || '-'}`;
+
+    function setStatus(msg) {
+      document.getElementById('status').textContent = msg || '';
+    }
+
+    async function runParse() {
+      if (!assistantId) {
+        alert('assistant_id não encontrado (use ?assistente_id=...)');
+        return;
+      }
+      const prompt = document.getElementById('prompt').value;
+      if (!prompt.trim()) {
+        alert('Cole um Prompt Master primeiro.');
+        return;
+      }
+
+      setStatus('Separando seções...');
+      const res = await fetch(`/api/assistants/${encodeURIComponent(assistantId)}/prompt-import/parse`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt_master: prompt }),
+      });
+      const json = await res.json();
+      if (!res.ok || !json.success) {
+        setStatus('');
+        alert(json.detail || 'Erro ao processar prompt.');
+        return;
+      }
+
+      document.getElementById('globalsJson').value = JSON.stringify(json.extracted_globals || {}, null, 2);
+      document.getElementById('blocksJson').value = JSON.stringify(json.suggested_blocks || [], null, 2);
+      setStatus('Pronto: ajuste os campos e confirme.');
+    }
+
+    function buildFlowBlocks(rawBlocks) {
+      const now = Date.now();
+      return rawBlocks.map((b, idx) => {
+        const id = `imp_${now}_${idx}`;
+        const out = {
+          id,
+          type: b.type,
+          content: (b.content || '').toString(),
+          nextBlock: null,
+          parentConditionId: null,
+          branchType: null,
+        };
+        if (b.timeout != null) out.timeout = b.timeout;
+        if (b.toolType) out.toolType = b.toolType;
+        if (b.toolConfig) out.toolConfig = b.toolConfig;
+        if (b.routes) out.routes = b.routes;
+        if (b.fallback) out.fallback = b.fallback;
+        if (b.analyzeVariable) out.analyzeVariable = b.analyzeVariable;
+        return out;
+      });
+    }
+
+    async function confirmImport() {
+      if (!assistantId) {
+        alert('assistant_id não encontrado (use ?assistente_id=...)');
+        return;
+      }
+
+      let globals, blocks;
+      try {
+        globals = JSON.parse(document.getElementById('globalsJson').value || '{}');
+      } catch (e) {
+        alert('JSON inválido em Globals.');
+        return;
+      }
+      try {
+        blocks = JSON.parse(document.getElementById('blocksJson').value || '[]');
+      } catch (e) {
+        alert('JSON inválido em Blocks.');
+        return;
+      }
+
+      const profilePayload = {
+        identity: globals.identity || '',
+        personality: globals.personality || '',
+        phonetic_rules: globals.phonetic_rules || '',
+        absolute_rules: globals.absolute_rules || '',
+        natural_expressions: globals.natural_expressions || '',
+        scheduling_rules: globals.scheduling_rules || {},
+      };
+
+      const flowPayload = {
+        flow_json: {
+          promptMaster: '', // prompt do flow (globals ficam no profile)
+          blocks: buildFlowBlocks(blocks),
+        },
+        title: 'Importado',
+        description: 'Gerado via import assistido',
+      };
+
+      setStatus('Salvando globals + flow...');
+      const p1 = fetch(`/api/assistants/${encodeURIComponent(assistantId)}/profile`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(profilePayload),
+      });
+      const p2 = fetch(`/api/assistants/${encodeURIComponent(assistantId)}/flow`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(flowPayload),
+      });
+
+      const [r1, r2] = await Promise.all([p1, p2]);
+      if (!r1.ok || !r2.ok) {
+        setStatus('');
+        alert('Erro ao salvar. Verifique SUPABASE_KEY e as tabelas no Supabase.');
+        return;
+      }
+
+      setStatus('Import concluído. Abra a aba "Flow Editor" para ver os blocos.');
+    }
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="https://imagens-zipline.hgabnb.easypanel.host/u/2FsJTY.png">
+    <link rel="shortcut icon" type="image/png" href="https://imagens-zipline.hgabnb.easypanel.host/u/2FsJTY.png">
+    <link rel="apple-touch-icon" href="https://imagens-zipline.hgabnb.easypanel.host/u/2FsJTY.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Números - Salesdever</title>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        body {
+            background: #0a0420;
+            min-height: 100vh;
+            color: #ffffff;
+            padding: 2rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 50%, rgba(165, 148, 255, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(102, 126, 234, 0.06) 0%, transparent 50%);
+            animation: backgroundFloat 20s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes backgroundFloat {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(3%, 3%); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container {
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 0.6s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #ffffff, #A594FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 400;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .error {
+            text-align: center;
+            padding: 3rem;
+            color: #EF4444;
+            font-size: 1.1rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 0.5rem;
+        }
+
+        .card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: 3rem;
+            box-shadow: 0 8px 32px rgba(165, 148, 255, 0.15),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            animation: fadeInUp 0.6s ease 0.1s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(165, 148, 255, 0.25);
+        }
+
+        .numbers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .number-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease both;
+        }
+
+        .number-card:nth-child(1) { animation-delay: 0.1s; }
+        .number-card:nth-child(2) { animation-delay: 0.2s; }
+        .number-card:nth-child(3) { animation-delay: 0.3s; }
+        .number-card:nth-child(4) { animation-delay: 0.4s; }
+        .number-card:nth-child(5) { animation-delay: 0.5s; }
+        .number-card:nth-child(6) { animation-delay: 0.6s; }
+
+        .number-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #A594FF, transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .number-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(165, 148, 255, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .number-card:hover {
+            border-color: rgba(165, 148, 255, 0.5);
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: 0 15px 40px rgba(165, 148, 255, 0.25);
+        }
+
+        .number-card:hover::before,
+        .number-card:hover::after {
+            opacity: 1;
+        }
+
+        .number-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .number-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.4;
+            flex: 1;
+            padding-right: 1rem;
+            margin-bottom: 0.75rem;
+            text-shadow: 0 2px 10px rgba(165, 148, 255, 0.3);
+        }
+
+        .number-value {
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 0;
+            letter-spacing: 0.8px;
+            font-weight: 500;
+        }
+
+        .status-badge {
+            padding: 0.35rem 0.85rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+        }
+
+        .status-active {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.3), rgba(22, 163, 74, 0.3));
+            border: 1px solid rgba(34, 197, 94, 0.5);
+            color: #22C55E;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 5rem 2rem;
+            color: #94a3b8;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .empty-state svg {
+            margin-bottom: 2rem;
+            opacity: 0.6;
+            filter: drop-shadow(0 4px 15px rgba(165, 148, 255, 0.3));
+        }
+
+        .empty-state h3 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 1.25rem;
+        }
+
+        .empty-state p {
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 0;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .available-numbers {
+            display: none;
+            margin-top: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+        }
+
+        .form-control {
+            width: 100%;
+            background: rgba(10, 5, 30, 0.95);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(165, 148, 255, 0.5);
+            border-radius: 1rem;
+            padding: 1rem 1.5rem;
+            color: #ffffff;
+            font-family: 'Raleway', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+            opacity: 1;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #A594FF;
+            background: rgba(5, 2, 20, 1);
+            box-shadow: 0 0 0 4px rgba(165, 148, 255, 0.3);
+        }
+
+        .available-numbers::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .available-numbers::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+        }
+
+        .available-numbers::-webkit-scrollbar-thumb {
+            background: rgba(165, 148, 255, 0.4);
+            border-radius: 12px;
+        }
+
+        .available-numbers::-webkit-scrollbar-thumb:hover {
+            background: rgba(165, 148, 255, 0.6);
+        }
+
+        .available-number-item {
+            background: rgba(10, 5, 30, 0.9);
+            border: 1px solid rgba(165, 148, 255, 0.4);
+            border-radius: 1rem;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .available-number-item:hover {
+            background: rgba(10, 5, 30, 1);
+            border-color: rgba(165, 148, 255, 0.7);
+            transform: translateX(8px);
+            box-shadow: 0 4px 20px rgba(165, 148, 255, 0.4);
+        }
+
+        .available-number-display {
+            font-family: 'SF Mono', 'Monaco', monospace;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: 1px;
+        }
+
+        .select-btn {
+            padding: 0.65rem 1.5rem;
+            background: linear-gradient(135deg, #A594FF, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(165, 148, 255, 0.4);
+        }
+
+        .select-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(165, 148, 255, 0.6);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 1rem;
+            font-family: 'Raleway', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            letter-spacing: -0.01em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .btn:hover::before {
+            transform: translateX(100%);
+        }
+
+        .btn-secondary {
+            background: rgba(10, 5, 30, 0.95);
+            color: #ffffff;
+            border: 2px solid rgba(165, 148, 255, 0.5);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(5, 2, 20, 1);
+            color: #ffffff;
+            border-color: rgba(165, 148, 255, 0.7);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(165, 148, 255, 0.4);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #A594FF, #764ba2);
+            color: white;
+            box-shadow: 0 4px 20px rgba(165, 148, 255, 0.5);
+            border: 1px solid rgba(165, 148, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 35px rgba(165, 148, 255, 0.7);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(165, 148, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #A594FF;
+            animation: spin 0.8s linear infinite;
+            display: none;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .success-message {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(22, 163, 74, 0.2));
+            border: 1px solid rgba(34, 197, 94, 0.4);
+            color: #22C55E;
+            padding: 1rem 1.5rem;
+            border-radius: 1rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-top: 1rem;
+            backdrop-filter: blur(10px);
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .error-message {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(220, 38, 38, 0.2));
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #EF4444;
+            padding: 1rem 1.5rem;
+            border-radius: 1rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-top: 1rem;
+            backdrop-filter: blur(10px);
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .container {
+                padding: 1.5rem 1rem;
+            }
+
+            .header {
+                margin-bottom: 2rem;
+            }
+
+            .title {
+                font-size: 1.8rem;
+            }
+
+            .subtitle {
+                font-size: 0.95rem;
+            }
+
+            .numbers-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+                font-size: 1.3rem;
+            }
+
+            .card {
+                padding: 1.75rem 1.5rem;
+            }
+
+            .number-card {
+                padding: 1.75rem 1.5rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                padding: 0.95rem 1.75rem;
+            }
+
+            .empty-state {
+                padding: 3rem 1.5rem;
+            }
+
+            .empty-state h3 {
+                font-size: 1.5rem;
+            }
+
+            .empty-state p {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container fade-in">
+        <div class="header">
+            <h1 class="title">Gerenciar Números</h1>
+            <p class="subtitle">Visualize e compre números de telefone para suas campanhas</p>
+        </div>
+
+        <!-- Seção de Comprar Número -->
+        <div class="section-title">
+            <span>Comprar Novo Número</span>
+        </div>
+
+        <div class="card">
+            <div id="searchSection">
+                <div class="form-group">
+                    <label>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                        Pesquisar por DDD
+                    </label>
+                    <div style="display: flex; gap: 16px; align-items: flex-start;">
+                        <div style="flex: 1;">
+                            <input 
+                                type="text" 
+                                id="dddInput" 
+                                class="form-control"
+                                placeholder="Digite o DDD (ex: 11, 21, 85...)"
+                                maxlength="2"
+                            />
+                            <small style="color: rgba(255, 255, 255, 0.55); margin-top: 10px; display: block; line-height: 1.5; font-size: 0.9rem;">
+                                Digite apenas os números do DDD. Ex: 11 (São Paulo), 21 (Rio de Janeiro), 85 (Fortaleza)
+                            </small>
+                        </div>
+                        <button class="btn btn-primary" onclick="searchNumbers()" style="padding: 1rem 2.5rem; white-space: nowrap;">
+                            Pesquisar
+                        </button>
+                    </div>
+                </div>
+
+                <div class="loading-spinner" id="searchSpinner"></div>
+                <div class="error-message" id="searchError"></div>
+            </div>
+
+            <div class="available-numbers" id="availableNumbers">
+                <h4 style="color: #ffffff; margin-bottom: 20px; font-size: 1.2rem; font-weight: 700;">
+                    Números Disponíveis
+                </h4>
+                <div id="availableNumbersList"></div>
+            </div>
+
+            <div id="confirmSection" style="display: none;">
+                <div style="border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 2rem; margin-top: 2rem;">
+                    <div class="form-group">
+                        <label>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            Número Selecionado
+                        </label>
+                        <div style="background: rgba(10, 5, 30, 0.95); padding: 1.5rem; border-radius: 1rem; border: 2px solid rgba(165, 148, 255, 0.5); margin-bottom: 1.5rem; text-align: center;">
+                            <span id="selectedNumberDisplay" style="font-family: 'SF Mono', monospace; font-size: 1.4rem; font-weight: 700; color: #A594FF; letter-spacing: 1.2px;"></span>
+                        </div>
+
+                        <label>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            Nome do Número
+                        </label>
+                        <input 
+                            type="text" 
+                            id="friendlyNameInput" 
+                            class="form-control"
+                            placeholder="Ex: Atendimento Principal, Vendas..."
+                        />
+                        <small style="color: rgba(255, 255, 255, 0.55); margin-top: 10px; display: block; line-height: 1.5; font-size: 0.9rem;">
+                            Este nome será usado para identificar o número no sistema
+                        </small>
+                    </div>
+
+                    <div style="display: flex; gap: 16px; margin-top: 2rem;">
+                        <button class="btn btn-secondary" onclick="backToSearch()" style="flex: 1;">
+                            Voltar
+                        </button>
+                        <button class="btn btn-primary" onclick="confirmPurchase()" style="flex: 1;">
+                            Confirmar Compra
+                        </button>
+                    </div>
+
+                    <div class="loading-spinner" id="purchaseSpinner"></div>
+                    <div class="success-message" id="purchaseSuccess"></div>
+                    <div class="error-message" id="purchaseError"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção Meus Números -->
+        <div class="section-title">
+            <span>Meus Números</span>
+        </div>
+
+        <div id="loadingState" class="loading" style="display: none;">
+            Carregando números...
+        </div>
+
+        <div id="errorState" class="error" style="display: none;">
+            Erro ao carregar números. Tente novamente.
+        </div>
+
+        <div id="emptyState" class="empty-state" style="display: none;">
+            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#A594FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            <h3>Nenhum Número Cadastrado</h3>
+            <p>Você ainda não possui números de telefone.<br>Use a seção acima para comprar seu primeiro número.</p>
+        </div>
+
+        <div id="numbersGrid" class="numbers-grid" style="display: none;">
+            <!-- Números serão renderizados aqui dinamicamente -->
+        </div>
+    </div>
+
+    <script>
+        let userData = null;
+        let numbersData = [];
+        let selectedNumber = '';
+
+        // Webhooks - ATUALIZADOS PARA NOVO DOMÍNIO
+        const SEARCH_URL = 'https://sdr.salesdever.io/webhook/search-numbers-';
+        const BUY_URL = 'https://sdr.salesdever.io/webhook/buy-number-';
+        const GET_NUMBERS_URL = 'https://sdr.salesdever.io/webhook/saas-buscar-numbers-';
+
+        // Carregar dados do usuário do localStorage (seguindo o padrão do login.html)
+        function loadUserData() {
+            try {
+                console.log('[LoadUser] Iniciando carregamento de dados...');
+                
+                // Buscar dados salvos individualmente (padrão do login.html)
+                const userEmail = localStorage.getItem('userEmail');
+                const tenantId = localStorage.getItem('tenant_id');
+                const orgPrivateKey = localStorage.getItem('org_private_key');
+                const isLoggedIn = localStorage.getItem('isLoggedIn');
+                
+                // Validar se está logado
+                if (!isLoggedIn || isLoggedIn !== 'true') {
+                    console.error('[LoadUser] ❌ Usuário não está logado');
+                    return false;
+                }
+                
+                // Validar dados necessários
+                if (!userEmail || !tenantId || !orgPrivateKey) {
+                    console.error('[LoadUser] ❌ Dados incompletos no localStorage');
+                    console.log('Email:', userEmail);
+                    console.log('TenantID:', tenantId);
+                    console.log('OrgKey:', orgPrivateKey ? '***' : null);
+                    return false;
+                }
+                
+                // Criar objeto userData com a estrutura necessária
+                userData = {
+                    email: userEmail,
+                    login: userEmail,
+                    tenant_id: tenantId,
+                    org_private_key: orgPrivateKey,
+                    isLoggedIn: true
+                };
+                
+                console.log('[LoadUser] ✅ Dados carregados com sucesso:', {
+                    email: userData.email,
+                    tenant_id: userData.tenant_id,
+                    org_private_key: '***'
+                });
+                
+                return true;
+                
+            } catch (error) {
+                console.error('[LoadUser] ❌ Erro ao carregar dados:', error);
+                return false;
+            }
+        }
+
+        // Carregar números do cliente
+        async function loadClientNumbers() {
+            if (!userData || !userData.tenant_id) {
+                console.error('[LoadNumbers] ❌ Dados do usuário não encontrados');
+                return;
+            }
+
+            try {
+                console.log('[LoadNumbers] 📞 Buscando números do cliente...');
+                
+                const response = await fetch(GET_NUMBERS_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        login: userData.email,
+                        tenant_id: userData.tenant_id,
+                        org_private_key: userData.org_private_key
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erro ao buscar números');
+                }
+
+                const data = await response.json();
+                numbersData = Array.isArray(data) ? data : (data.numbers || []);
+                
+                console.log('[LoadNumbers] ✅ Números carregados:', numbersData.length);
+                renderNumbers();
+                
+            } catch (error) {
+                console.error('[LoadNumbers] ❌ Erro ao carregar números:', error);
+                showEmptyState();
+            }
+        }
+
+        // Renderizar números
+        function renderNumbers() {
+            const grid = document.getElementById('numbersGrid');
+            
+            if (!numbersData || numbersData.length === 0) {
+                showEmptyState();
+                return;
+            }
+
+            grid.innerHTML = '';
+            numbersData.forEach(number => {
+                const card = createNumberCard(number);
+                grid.appendChild(card);
+            });
+
+            document.getElementById('emptyState').style.display = 'none';
+            grid.style.display = 'grid';
+        }
+
+        // Criar card de número
+        function createNumberCard(number) {
+            const card = document.createElement('div');
+            card.className = 'number-card';
+
+            const numberName = number.number_name || 'Sem nome';
+            const phoneNumber = number.phone_number || 'N/A';
+            const status = number.status || 'ativo';
+
+            card.innerHTML = `
+                <div class="number-header">
+                    <div>
+                        <div class="number-name">${numberName}</div>
+                        <div class="number-value">${phoneNumber}</div>
+                    </div>
+                    <div class="status-badge status-active">${status.charAt(0).toUpperCase() + status.slice(1)}</div>
+                </div>
+            `;
+
+            return card;
+        }
+
+        // Mostrar estado vazio
+        function showEmptyState() {
+            document.getElementById('emptyState').style.display = 'block';
+            document.getElementById('numbersGrid').style.display = 'none';
+        }
+
+        // Resetar formulário de compra
+        function resetBuyForm() {
+            document.getElementById('dddInput').value = '';
+            document.getElementById('friendlyNameInput').value = '';
+            document.getElementById('availableNumbers').style.display = 'none';
+            document.getElementById('confirmSection').style.display = 'none';
+            document.getElementById('searchError').style.display = 'none';
+            document.getElementById('purchaseError').style.display = 'none';
+            document.getElementById('purchaseSuccess').style.display = 'none';
+            selectedNumber = '';
+        }
+
+        // Pesquisar números
+        async function searchNumbers() {
+            const ddd = document.getElementById('dddInput').value.trim();
+
+            if (!ddd || ddd.length !== 2) {
+                showError('searchError', 'Por favor, digite um DDD válido (2 dígitos)');
+                return;
+            }
+
+            if (!userData) {
+                showError('searchError', 'Dados de usuário não encontrados. Faça login novamente.');
+                return;
+            }
+
+            hideError('searchError');
+            showSpinner('searchSpinner');
+
+            try {
+                console.log('[SearchNumbers] 🔍 Pesquisando números para DDD:', ddd);
+                
+                const response = await fetch(SEARCH_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        ddd: ddd,
+                        login: userData.email,
+                        tenant_id: userData.tenant_id,
+                        org_private_key: userData.org_private_key
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erro ao buscar números');
+                }
+
+                const data = await response.json();
+                console.log('[SearchNumbers] ✅ Números disponíveis recebidos:', data);
+                displayAvailableNumbers(data.available_phone_numbers || []);
+                
+            } catch (error) {
+                console.error('[SearchNumbers] ❌ Erro ao pesquisar números:', error);
+                showError('searchError', 'Erro ao buscar números. Tente novamente.');
+            } finally {
+                hideSpinner('searchSpinner');
+            }
+        }
+
+        // Exibir números disponíveis
+        function displayAvailableNumbers(numbers) {
+            const list = document.getElementById('availableNumbersList');
+
+            if (!numbers || numbers.length === 0) {
+                list.innerHTML = '<p style="text-align: center; color: rgba(255, 255, 255, 0.6); padding: 20px;">Nenhum número disponível para este DDD.</p>';
+            } else {
+                list.innerHTML = numbers.map(number => `
+                    <div class="available-number-item" onclick="selectNumberToBuy('${number.phone_number}')">
+                        <span class="available-number-display">${number.phone_number}</span>
+                        <button class="select-btn">Selecionar</button>
+                    </div>
+                `).join('');
+            }
+
+            document.getElementById('availableNumbers').style.display = 'block';
+        }
+
+        // Selecionar número para comprar
+        function selectNumberToBuy(phoneNumber) {
+            selectedNumber = phoneNumber;
+            document.getElementById('selectedNumberDisplay').textContent = phoneNumber;
+            document.getElementById('availableNumbers').style.display = 'none';
+            document.getElementById('confirmSection').style.display = 'block';
+        }
+
+        // Voltar para pesquisa
+        function backToSearch() {
+            document.getElementById('availableNumbers').style.display = 'block';
+            document.getElementById('confirmSection').style.display = 'none';
+            selectedNumber = '';
+        }
+
+        // Confirmar compra
+        async function confirmPurchase() {
+            const friendlyName = document.getElementById('friendlyNameInput').value.trim();
+
+            if (!friendlyName) {
+                showError('purchaseError', 'Por favor, informe um nome para o número');
+                return;
+            }
+
+            if (!selectedNumber) {
+                showError('purchaseError', 'Nenhum número selecionado');
+                return;
+            }
+
+            if (!userData) {
+                showError('purchaseError', 'Dados de usuário não encontrados. Faça login novamente.');
+                return;
+            }
+
+            hideError('purchaseError');
+            hideSuccess('purchaseSuccess');
+            showSpinner('purchaseSpinner');
+
+            try {
+                console.log('[BuyNumber] 💰 Comprando número:', selectedNumber);
+                
+                const response = await fetch(BUY_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        phoneNumber: selectedNumber,
+                        friendlyName: friendlyName,
+                        login: userData.email,
+                        tenant_id: userData.tenant_id,
+                        org_private_key: userData.org_private_key
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erro ao comprar número');
+                }
+
+                const data = await response.json();
+                console.log('[BuyNumber] ✅ Número comprado com sucesso:', data);
+                showSuccess('purchaseSuccess', 'Número comprado com sucesso!');
+                
+                // Recarregar números e limpar formulário após 2 segundos
+                setTimeout(() => {
+                    resetBuyForm();
+                    loadClientNumbers();
+                }, 2000);
+
+            } catch (error) {
+                console.error('[BuyNumber] ❌ Erro ao comprar número:', error);
+                showError('purchaseError', 'Erro ao comprar número. Tente novamente.');
+            } finally {
+                hideSpinner('purchaseSpinner');
+            }
+        }
+
+        // Funções auxiliares
+        function showSpinner(id) {
+            const el = document.getElementById(id);
+            if (el) el.style.display = 'block';
+        }
+
+        function hideSpinner(id) {
+            const el = document.getElementById(id);
+            if (el) el.style.display = 'none';
+        }
+
+        function showError(id, message) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.textContent = message;
+                el.style.display = 'block';
+            }
+        }
+
+        function hideError(id) {
+            const el = document.getElementById(id);
+            if (el) el.style.display = 'none';
+        }
+
+        function showSuccess(id, message) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.textContent = message;
+                el.style.display = 'block';
+            }
+        }
+
+        function hideSuccess(id) {
+            const el = document.getElementById(id);
+            if (el) el.style.display = 'none';
+        }
+
+        // Event listeners
+        document.getElementById('dddInput').addEventListener('input', function(e) {
+            e.target.value = e.target.value.replace(/\D/g, '').slice(0, 2);
+        });
+
+        document.getElementById('dddInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchNumbers();
+            }
+        });
+
+        // Inicialização
+        window.addEventListener('load', () => {
+            console.log('[Init] 🚀 Inicializando página...');
+            
+            if (loadUserData()) {
+                console.log('[Init] ✅ Usuário autenticado, carregando números...');
+                // Carrega números em background sem bloquear a UI
+                setTimeout(() => {
+                    loadClientNumbers();
+                }, 100);
+            } else {
+                console.error('[Init] ❌ Falha ao carregar dados do usuário');
+                showError('errorState', 'Dados do usuário não encontrados. Faça login novamente.');
+                document.getElementById('errorState').style.display = 'block';
+                
+                // Redireciona para login após 3 segundos
+                setTimeout(() => {
+                    window.location.href = '../../index.html';
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>

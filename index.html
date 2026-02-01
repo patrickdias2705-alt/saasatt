@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="https://imagens-zipline.hgabnb.easypanel.host/u/2FsJTY.png">
+    <link rel="shortcut icon" type="image/png" href="https://imagens-zipline.hgabnb.easypanel.host/u/2FsJTY.png">
+    <link rel="apple-touch-icon" href="https://imagens-zipline.hgabnb.easypanel.host/u/2FsJTY.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Sistema de Clientes</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Raleway', -apple-system, system-ui, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #0a0014;
+            color: #ffffff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Neural Background */
+        .neural-background {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background: radial-gradient(ellipse at top, #1a0a2e 0%, #000000 50%, #000000 100%);
+            overflow: hidden;
+        }
+
+        .gradient-sphere {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.8;
+            mix-blend-mode: screen;
+            animation: morphing 25s infinite ease-in-out;
+            will-change: transform;
+            backface-visibility: hidden;
+            transform: translateZ(0);
+        }
+
+        .sphere-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #a594ff 0%, #7b68ff 40%, transparent 70%);
+            top: -300px;
+            left: -200px;
+            animation-delay: 0s;
+        }
+
+        .sphere-2 {
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, #8b7aff 0%, #6b5aff 40%, transparent 70%);
+            bottom: -400px;
+            right: -300px;
+            animation-delay: -12s;
+        }
+
+        .sphere-3 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #9d7fff 0%, #7d5fff 40%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) translateZ(0);
+            animation-delay: -6s;
+        }
+
+        .sphere-4 {
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, #a594ff 0%, #8574ff 40%, transparent 70%);
+            top: 20%;
+            right: 10%;
+            animation-delay: -18s;
+        }
+
+        @keyframes morphing {
+            0%, 100% { 
+                transform: translate(0, 0) scale(1) rotate(0deg) translateZ(0);
+                border-radius: 50%;
+            }
+            20% { 
+                transform: translate(100px, -80px) scale(1.15) rotate(45deg) translateZ(0);
+                border-radius: 42% 58% 70% 30% / 45% 55% 45% 55%;
+            }
+            40% { 
+                transform: translate(-60px, 100px) scale(0.9) rotate(90deg) translateZ(0);
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            }
+            60% { 
+                transform: translate(80px, 60px) scale(1.1) rotate(135deg) translateZ(0);
+                border-radius: 35% 65% 55% 45% / 50% 60% 40% 50%;
+            }
+            80% { 
+                transform: translate(-90px, -70px) scale(0.95) rotate(180deg) translateZ(0);
+                border-radius: 70% 30% 50% 50% / 40% 60% 40% 60%;
+            }
+        }
+
+        /* Grid Overlay */
+        .grid-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            background-image: 
+                linear-gradient(rgba(165, 148, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(165, 148, 255, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            animation: grid-flow 20s linear infinite;
+            will-change: background-position;
+            transform: translateZ(0);
+        }
+
+        @keyframes grid-flow {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 40px 40px;
+            }
+        }
+
+        /* Main Container */
+        .container {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        /* Glass Card */
+        .glass-card {
+            position: relative;
+            width: 100%;
+            max-width: 440px;
+            background: rgba(20, 15, 40, 0.4);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            border: 1px solid rgba(165, 148, 255, 0.15);
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(165, 148, 255, 0.1) inset,
+                0 0 80px rgba(165, 148, 255, 0.1);
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity;
+            transform: translateZ(0);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px) translateZ(0);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) translateZ(0);
+            }
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(165, 148, 255, 0.3), transparent, rgba(123, 104, 255, 0.3));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .logo-container {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 80px;
+            margin-bottom: 1.5rem;
+            position: relative;
+            animation: logoGlow 3s ease-in-out infinite;
+            will-change: filter;
+        }
+
+        @keyframes logoGlow {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(165, 148, 255, 0.5)); }
+            50% { filter: drop-shadow(0 0 40px rgba(165, 148, 255, 0.8)); }
+        }
+
+        .logo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 0;
+            letter-spacing: -0.02em;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.01em;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            background: rgba(30, 20, 60, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(165, 148, 255, 0.2);
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            outline: none;
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .form-input:focus {
+            background: rgba(30, 20, 60, 0.7);
+            border-color: #a594ff;
+            box-shadow: 
+                0 0 0 4px rgba(165, 148, 255, 0.1),
+                0 0 20px rgba(165, 148, 255, 0.2);
+        }
+
+        /* Button */
+        .login-button {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #a594ff 0%, #8b7aff 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 4px 20px rgba(165, 148, 255, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+        }
+
+        .login-button::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .login-button:hover::before {
+            opacity: 1;
+        }
+
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 6px 30px rgba(165, 148, 255, 0.6),
+                0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+        }
+
+        .login-button:active {
+            transform: translateY(0);
+        }
+
+        .login-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .button-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        /* Loading Spinner */
+        .loading-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #ffffff;
+            animation: spin 0.8s linear infinite;
+            display: none;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Messages */
+        .error-message {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(220, 38, 38, 0.15));
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fecaca;
+            padding: 0.875rem 1rem;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: none;
+        }
+
+        .success-message {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(22, 163, 74, 0.15));
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #bbf7d0;
+            padding: 0.875rem 1rem;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: none;
+        }
+
+        /* Create Account Section */
+        .create-account-section {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(165, 148, 255, 0.1);
+        }
+
+        .create-account-section p {
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .create-account-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            color: #a594ff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 12px;
+            background: rgba(165, 148, 255, 0.1);
+            border: 1px solid rgba(165, 148, 255, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .create-account-link:hover {
+            background: rgba(165, 148, 255, 0.2);
+            border-color: rgba(165, 148, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(165, 148, 255, 0.2);
+        }
+
+        /* Responsive - OTIMIZAÇÕES PARA TELAS MENORES */
+        @media (max-width: 768px) {
+            .glass-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .title {
+                font-size: 1.75rem;
+            }
+
+            /* Reduz blur e simplifica animações em mobile */
+            .gradient-sphere {
+                filter: blur(80px);
+                animation-duration: 30s;
+            }
+
+            .sphere-1, .sphere-2, .sphere-3, .sphere-4 {
+                opacity: 0.6;
+            }
+
+            /* Simplifica animação do grid em mobile */
+            .grid-overlay {
+                animation-duration: 30s;
+            }
+
+            /* Desabilita animação do logo em mobile para melhor performance */
+            .logo-container {
+                animation: none;
+                filter: drop-shadow(0 0 20px rgba(165, 148, 255, 0.5));
+            }
+        }
+
+        /* Otimizações adicionais para dispositivos de baixa performance */
+        @media (max-width: 480px) {
+            .gradient-sphere {
+                filter: blur(60px);
+                animation-duration: 35s;
+            }
+
+            @keyframes morphing {
+                0%, 100% { 
+                    transform: translate(0, 0) scale(1) translateZ(0);
+                    border-radius: 50%;
+                }
+                50% { 
+                    transform: translate(50px, -40px) scale(1.05) translateZ(0);
+                    border-radius: 45% 55% 60% 40% / 50% 50% 50% 50%;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Neural Animated Background -->
+    <div class="neural-background">
+        <div class="gradient-sphere sphere-1"></div>
+        <div class="gradient-sphere sphere-2"></div>
+        <div class="gradient-sphere sphere-3"></div>
+        <div class="gradient-sphere sphere-4"></div>
+    </div>
+    
+    <!-- Grid Overlay -->
+    <div class="grid-overlay"></div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="glass-card">
+            <div class="header">
+                <div class="logo-container">
+                    <img src="https://i.postimg.cc/G2RwCBHb/Frame-10.png" alt="Logo" />
+                </div>
+                <h1 class="title">Bem-vindo</h1>
+            </div>
+
+            <form id="loginForm">
+                <div id="errorMessage" class="error-message"></div>
+                <div id="successMessage" class="success-message"></div>
+
+                <div class="form-group">
+                    <label for="username" class="form-label">Email</label>
+                    <input 
+                        type="email" 
+                        id="username" 
+                        name="username" 
+                        class="form-input" 
+                        placeholder="seu@email.com"
+                        required
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="form-label">Senha</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        class="form-input" 
+                        placeholder="••••••••"
+                        required
+                    />
+                </div>
+
+                <button type="submit" id="loginButton" class="login-button">
+                    <div class="button-content">
+                        <div id="loadingSpinner" class="loading-spinner"></div>
+                        <span id="buttonText">Entrar</span>
+                    </div>
+                </button>
+            </form>
+
+            <div class="create-account-section">
+                <p>Ainda não tem uma conta?</p>
+                <a href="/criar-conta.html" class="create-account-link">
+                    Criar nova conta
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============ PREENCHIMENTO AUTOMÁTICO DE CAMPOS APÓS CRIAÇÃO DE CONTA ============
+        window.addEventListener('DOMContentLoaded', function() {
+            // Recupera os dados do sessionStorage (vindos da página de criar conta)
+            const savedEmail = sessionStorage.getItem('newAccountEmail');
+            const savedPassword = sessionStorage.getItem('newAccountPassword');
+            
+            // Se existirem dados, preenche os campos automaticamente
+            if (savedEmail && savedPassword) {
+                document.getElementById('username').value = savedEmail;
+                document.getElementById('password').value = savedPassword;
+                
+                // Limpa o sessionStorage após usar para segurança
+                sessionStorage.removeItem('newAccountEmail');
+                sessionStorage.removeItem('newAccountPassword');
+                
+                // Mostra mensagem de sucesso informando que pode fazer login
+                const successMsg = document.getElementById('successMessage');
+                successMsg.textContent = 'Conta criada com sucesso! Clique em "Entrar" para acessar.';
+                successMsg.style.display = 'block';
+                
+                console.log('✅ Campos preenchidos automaticamente após criação de conta');
+            }
+        });
+        // ============ FIM DO PREENCHIMENTO AUTOMÁTICO ============
+
+        // ============ LÓGICA DE LOGIN COM TRATAMENTO DE CORS MELHORADO ============
+        const loginForm = document.getElementById('loginForm');
+        const loginButton = document.getElementById('loginButton');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const buttonText = document.getElementById('buttonText');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+            successMessage.style.display = 'none';
+        }
+
+        function showSuccess(message) {
+            successMessage.textContent = message;
+            successMessage.style.display = 'block';
+            errorMessage.style.display = 'none';
+        }
+
+        function hideMessages() {
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
+        }
+
+        function setLoading(loading) {
+            if (loading) {
+                loadingSpinner.style.display = 'block';
+                buttonText.textContent = 'Verificando...';
+                loginButton.disabled = true;
+            } else {
+                loadingSpinner.style.display = 'none';
+                buttonText.textContent = 'Entrar';
+                loginButton.disabled = false;
+            }
+        }
+
+        async function authenticateUser(username, password) {
+            try {
+                console.log('🔄 Tentando autenticar...', {username});
+                
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 segundos
+                
+                const response = await fetch('https://sdr.salesdever.io/webhook/recebe-login-', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        login: username,
+                        senha: password
+                    }),
+                    signal: controller.signal
+                });
+
+                clearTimeout(timeoutId);
+                console.log('📡 Status da resposta:', response.status);
+
+                // Verifica se a resposta é OK
+                if (!response.ok) {
+                    throw new Error(`Erro HTTP: ${response.status}`);
+                }
+
+                // Tenta parsear o JSON
+                const data = await response.json();
+                console.log('═══════════════════════════════════════════════════════════');
+                console.log('✅ RESPOSTA COMPLETA DO SERVIDOR:', JSON.stringify(data, null, 2));
+                console.log('═══════════════════════════════════════════════════════════');
+
+                if (data.status === 'error') {
+                    throw new Error(data.message || 'Usuário ou senha incorretos');
+                }
+
+                let userData = Array.isArray(data) ? data[0] : data;
+
+                console.log('📦 userData após array check:', JSON.stringify(userData, null, 2));
+
+                // Se minutes_max está em data mas não em userData, copiar
+                if (data.minutes_max !== undefined && userData.minutes_max === undefined) {
+                    console.log('🔧 minutes_max encontrado em data, copiando para userData');
+                    userData.minutes_max = data.minutes_max;
+                }
+
+                // Garantir que minutes_max existe (mesmo que seja 0)
+                if (userData.minutes_max === undefined || userData.minutes_max === null) {
+                    console.warn('⚠️ minutes_max NÃO encontrado no servidor, usando fallback 0');
+                    userData.minutes_max = '0';
+                } else {
+                    console.log('✅ minutes_max encontrado:', userData.minutes_max, '(tipo:', typeof userData.minutes_max, ')');
+                }
+
+                if (!userData.tenant_id || !userData.org_private_key) {
+                    console.warn('⚠️ Dados incompletos do servidor:', userData);
+                    throw new Error('Dados de autenticação incompletos');
+                }
+
+                return userData;
+
+            } catch (error) {
+                console.error('❌ Erro detalhado:', error);
+                
+                // Tratamento específico de erros
+                if (error.name === 'AbortError') {
+                    throw new Error('⏱️ Timeout: O servidor demorou muito para responder');
+                }
+                if (error instanceof TypeError) {
+                    // Este é o erro "Failed to fetch" - geralmente CORS ou rede
+                    throw new Error('🚫 Erro de CORS: O servidor n8n precisa configurar os headers CORS. Entre em contato com o suporte.');
+                }
+                if (error.message.includes('NetworkError') || error.message.includes('Failed to fetch')) {
+                    throw new Error('🔌 Erro de conexão: Verifique se o servidor está online');
+                }
+                
+                throw error;
+            }
+        }
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+
+            if (!username || !password) {
+                showError('Por favor, preencha todos os campos');
+                return;
+            }
+
+            hideMessages();
+            setLoading(true);
+
+            try {
+                const userData = await authenticateUser(username, password);
+
+                // Debug: mostra todos os dados retornados
+                console.log('🔍 Dados completos retornados do servidor:', userData);
+                console.log('🔍 minutes_max recebido:', userData.minutes_max);
+                console.log('🔍 minutes_plan recebido:', userData.minutes_plan);
+                console.log('🔍 numero_linhas recebido:', userData.numero_linhas);
+                console.log('🔍 Todos os campos do userData:', Object.keys(userData));
+
+                // Verifica se numero_linhas está presente
+                if (!userData.numero_linhas && userData.numero_linhas !== 0) {
+                    console.error('❌ CRITICAL: numero_linhas NÃO encontrado no servidor!');
+                    console.log('Tentando campos alternativos: number_lines, num_linhas, lines');
+                    userData.numero_linhas = userData.number_lines || userData.num_linhas || userData.lines || '0';
+                    console.log('🔧 numero_linhas após fallback:', userData.numero_linhas);
+                }
+
+                showSuccess('Login realizado com sucesso! Redirecionando...');
+
+                const loginData = {
+                    email: username,
+                    tenant_id: userData.tenant_id,
+                    org_private_key: userData.org_private_key,
+                    plano_client: userData.plano_client,
+                    multiplo_plano: userData.multiplo_plano,
+                    minutes_max: userData.minutes_max || '0',
+                    isLoggedIn: true,
+                    loginTimestamp: new Date().toISOString()
+                };
+
+                localStorage.setItem('userData', JSON.stringify(loginData));
+                localStorage.setItem('login', username); // Adiciona 'login' para compatibilidade
+                localStorage.setItem('userEmail', username);
+                localStorage.setItem('tenant_id', userData.tenant_id);
+                localStorage.setItem('org_private_key', userData.org_private_key);
+                localStorage.setItem('plano_client', userData.plano_client);
+                localStorage.setItem('multiplo_plano', userData.multiplo_plano);
+                localStorage.setItem('minutes_max', userData.minutes_max || '0');
+                localStorage.setItem('numero_linhas', userData.numero_linhas || '0');
+                localStorage.setItem('minutos_plano', userData.minutes_plan || '0');
+                localStorage.setItem('minutes_plan', userData.minutes_plan || '0');
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('loginTimestamp', new Date().toISOString());
+
+                // Salva foto_perfil e user_name se existirem
+                if (userData.foto_perfil && userData.foto_perfil !== 'null' && userData.foto_perfil !== null) {
+                    localStorage.setItem('foto_perfil', userData.foto_perfil);
+                    console.log('✅ foto_perfil salvo no localStorage:', userData.foto_perfil);
+                } else {
+                    console.log('ℹ️ foto_perfil não encontrado ou é null');
+                }
+
+                if (userData.user_name && userData.user_name !== 'null' && userData.user_name !== null) {
+                    localStorage.setItem('user_name', userData.user_name);
+                    console.log('✅ user_name salvo no localStorage:', userData.user_name);
+                } else {
+                    console.log('ℹ️ user_name não encontrado ou é null');
+                }
+
+                console.log('✅ Login bem-sucedido! Dados salvos:', loginData);
+                console.log('✅ minutes_max salvo no localStorage:', localStorage.getItem('minutes_max'));
+                console.log('✅ numero_linhas salvo no localStorage:', localStorage.getItem('numero_linhas'));
+                console.log('✅ minutes_plan salvo no localStorage:', localStorage.getItem('minutes_plan'));
+
+                // Alerta se dados críticos estiverem zerados
+                const numeroLinhasSalvo = localStorage.getItem('numero_linhas');
+                if (numeroLinhasSalvo === '0' || !numeroLinhasSalvo) {
+                    console.warn('⚠️ ATENÇÃO: numero_linhas está zerado! Isso pode causar problemas na criação de campanhas.');
+                }
+                
+                setTimeout(() => {
+                    window.location.href = '../menu_principal/menu.html';
+                }, 1500);
+
+            } catch (error) {
+                console.error('❌ Erro no login:', error);
+                showError(error.message || 'Erro ao fazer login. Tente novamente.');
+            } finally {
+                setLoading(false);
+            }
+        });
+
+        document.getElementById('username').addEventListener('input', hideMessages);
+        document.getElementById('password').addEventListener('input', hideMessages);
+
+        window.addEventListener('load', () => {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const tenant_id = localStorage.getItem('tenant_id');
+            const org_private_key = localStorage.getItem('org_private_key');
+            
+            if (isLoggedIn === 'true' && tenant_id && org_private_key) {
+                console.log('✅ Usuário já está logado com dados completos, redirecionando...');
+                window.location.href = '../menu_principal/menu.html';
+            } else if (isLoggedIn === 'true') {
+                console.warn('⚠️ Login incompleto detectado, limpando localStorage...');
+                localStorage.clear();
+            }
+        });
+        // ============ FIM DA LÓGICA DE LOGIN ============
+    </script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Configurações Globais do Assistente</title>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Raleway', sans-serif;
+      background: linear-gradient(135deg, #0a0420 0%, #1a1040 100%);
+      color: #fff;
+      min-height: 100vh;
+      padding: 18px;
+    }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px 18px;
+      background: rgba(15, 6, 36, 0.75);
+      border: 1px solid rgba(165, 148, 255, 0.2);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      margin-bottom: 14px;
+    }
+    .header h1 { font-size: 16px; font-weight: 800; }
+    .header small { display: block; margin-top: 2px; color: rgba(255,255,255,0.55); font-size: 12px; }
+    .actions { display: flex; gap: 10px; }
+    .btn {
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(165, 148, 255, 0.25);
+      background: rgba(255,255,255,0.06);
+      color: #fff;
+      cursor: pointer;
+      font-weight: 800;
+    }
+    .btn.primary {
+      border-color: rgba(165, 148, 255, 0.6);
+      background: linear-gradient(135deg, #A594FF, #667eea);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .card {
+      background: rgba(15, 6, 36, 0.75);
+      border: 1px solid rgba(165, 148, 255, 0.2);
+      border-radius: 16px;
+      padding: 16px;
+      backdrop-filter: blur(10px);
+      min-height: 0;
+    }
+    .card h2 { font-size: 14px; font-weight: 800; margin-bottom: 10px; }
+    .field { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+    .field label { color: rgba(255,255,255,0.72); font-weight: 800; font-size: 12px; }
+    .field textarea, .field input {
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(165, 148, 255, 0.25);
+      background: rgba(0,0,0,0.25);
+      color: #fff;
+      outline: none;
+      font-family: 'Raleway', sans-serif;
+    }
+    .field textarea { min-height: 140px; resize: vertical; }
+    .hint { margin-top: 6px; font-size: 12px; color: rgba(255,255,255,0.55); }
+    .full { grid-column: 1 / -1; }
+    .status {
+      margin-top: 10px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.6);
+    }
+    @media (max-width: 950px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div>
+        <h1>Configurações globais do assistente</h1>
+        <small id="subtitle">assistant_id: -</small>
+      </div>
+      <div class="actions">
+        <button class="btn" onclick="reloadProfile()">Recarregar</button>
+        <button class="btn primary" onclick="saveProfile()">Salvar</button>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Identidade</h2>
+        <div class="field">
+          <label for="identity">Identidade / Papel da IA</label>
+          <textarea id="identity" placeholder="Quem é a IA, missão, contexto..."></textarea>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Personalidade</h2>
+        <div class="field">
+          <label for="personality">Voz, tom e diretrizes</label>
+          <textarea id="personality" placeholder="Tom de voz, postura, ritmo, diretrizes..."></textarea>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Pronúncia</h2>
+        <div class="field">
+          <label for="phonetic_rules">Regras de pronúncia / fonética</label>
+          <textarea id="phonetic_rules" placeholder="@ = arroba&#10;% = por cento&#10;5 = cinco"></textarea>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Regras</h2>
+        <div class="field">
+          <label for="absolute_rules">Regras absolutas</label>
+          <textarea id="absolute_rules" placeholder="✅ SEMPRE..., ❌ NUNCA..."></textarea>
+        </div>
+      </div>
+
+      <div class="card full">
+        <h2>Expressões naturais</h2>
+        <div class="field">
+          <label for="natural_expressions">Expressões / conectivos</label>
+          <textarea id="natural_expressions" placeholder="Confirmações, transições, empatia..."></textarea>
+        </div>
+      </div>
+
+      <div class="card full">
+        <h2>Agendamento</h2>
+        <div class="field">
+          <label for="scheduling_rules">Regras de agendamento (JSON)</label>
+          <textarea id="scheduling_rules" placeholder='{"dias_uteis":[1,2,3,4,5],"janela":{"inicio":"09:00","fim":"18:00"}}'></textarea>
+          <div class="hint">Dica: se preferir, deixe vazio e o sistema mantém {}.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="status" id="status"></div>
+  </div>
+
+  <script>
+    function getQueryParam(name) {
+      const url = new URL(window.location.href);
+      return url.searchParams.get(name);
+    }
+
+    function loadSelectedAssistente() {
+      const raw = localStorage.getItem('sd_selected_assistente');
+      if (raw) {
+        try { return JSON.parse(raw); } catch (e) { return null; }
+      }
+      return null;
+    }
+
+    function resolveAssistantId() {
+      return getQueryParam('assistente_id') || getQueryParam('assistant_id') || (loadSelectedAssistente()?.id) || (loadSelectedAssistente()?.assistente_id) || '';
+    }
+
+    const assistantId = resolveAssistantId();
+    document.getElementById('subtitle').textContent = `assistant_id: ${assistantId || '-'}`;
+
+    function setStatus(msg) {
+      document.getElementById('status').textContent = msg || '';
+    }
+
+    function setForm(profile) {
+      document.getElementById('identity').value = profile?.identity || '';
+      document.getElementById('personality').value = profile?.personality || '';
+      document.getElementById('phonetic_rules').value = profile?.phonetic_rules || '';
+      document.getElementById('absolute_rules').value = profile?.absolute_rules || '';
+      document.getElementById('natural_expressions').value = profile?.natural_expressions || '';
+      const sr = profile?.scheduling_rules || {};
+      document.getElementById('scheduling_rules').value = Object.keys(sr).length ? JSON.stringify(sr, null, 2) : '';
+    }
+
+    async function reloadProfile() {
+      if (!assistantId) {
+        alert('assistant_id não encontrado (use ?assistente_id=...)');
+        return;
+      }
+      setStatus('Carregando...');
+      const res = await fetch(`/api/assistants/${encodeURIComponent(assistantId)}/profile`);
+      const json = await res.json();
+      setForm(json.profile || {});
+      setStatus('Carregado.');
+    }
+
+    async function saveProfile() {
+      if (!assistantId) {
+        alert('assistant_id não encontrado (use ?assistente_id=...)');
+        return;
+      }
+      let schedulingRules = {};
+      const raw = document.getElementById('scheduling_rules').value.trim();
+      if (raw) {
+        try {
+          schedulingRules = JSON.parse(raw);
+        } catch (e) {
+          alert('JSON inválido em "Regras de agendamento".');
+          return;
+        }
+      }
+
+      const payload = {
+        identity: document.getElementById('identity').value,
+        personality: document.getElementById('personality').value,
+        phonetic_rules: document.getElementById('phonetic_rules').value,
+        absolute_rules: document.getElementById('absolute_rules').value,
+        natural_expressions: document.getElementById('natural_expressions').value,
+        scheduling_rules: schedulingRules,
+      };
+
+      setStatus('Salvando...');
+      const res = await fetch(`/api/assistants/${encodeURIComponent(assistantId)}/profile`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) {
+        const txt = await res.text();
+        setStatus('');
+        alert(`Erro ao salvar: ${txt}`);
+        return;
+      }
+      setStatus('Salvo com sucesso.');
+    }
+
+    // boot
+    reloadProfile().catch(() => setStatus('Falha ao carregar (verifique SUPABASE_KEY).'));
+  </script>
+</body>
+</html>
+

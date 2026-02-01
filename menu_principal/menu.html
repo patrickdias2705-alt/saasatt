@@ -1,0 +1,2568 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="https://imagens-zipline.hgabnb.easypanel.host/u/2FsJTY.png">
+    <link rel="shortcut icon" type="image/png" href="https://imagens-zipline.hgabnb.easypanel.host/u/2FsJTY.png">
+    <link rel="apple-touch-icon" href="https://imagens-zipline.hgabnb.easypanel.host/u/2FsJTY.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salesdever - Dashboard</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        body {
+            background: #040017;
+            min-height: 100vh;
+            color: #ffffff;
+            display: flex;
+            overflow-x: hidden;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Mobile Menu Toggle Button */
+        .mobile-menu-btn {
+            position: fixed;
+            top: 1.25rem;
+            left: 1.25rem;
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, rgba(20, 15, 45, 0.95), rgba(30, 25, 60, 0.95));
+            backdrop-filter: blur(20px);
+            border: 1.5px solid rgba(165, 148, 255, 0.4);
+            border-radius: 14px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10001;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 0 0 rgba(165, 148, 255, 0.4);
+        }
+
+        .mobile-menu-btn:hover {
+            border-color: rgba(165, 148, 255, 0.6);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.5), 0 0 20px rgba(165, 148, 255, 0.3);
+        }
+
+        .mobile-menu-btn:active {
+            transform: scale(0.95);
+        }
+
+        .hamburger {
+            width: 24px;
+            height: 18px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .hamburger span {
+            width: 100%;
+            height: 2.5px;
+            background: linear-gradient(90deg, #a594ff, #c4b5ff);
+            border-radius: 2px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 1px 3px rgba(165, 148, 255, 0.3);
+        }
+
+        .mobile-menu-btn.active .hamburger span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .mobile-menu-btn.active .hamburger span:nth-child(2) {
+            opacity: 0;
+            transform: translateX(-10px);
+        }
+
+        .mobile-menu-btn.active .hamburger span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* Sidebar Overlay */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 998;
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Sidebar - Otimizado para performance */
+        .sidebar {
+            width: 280px;
+            min-height: 100vh;
+            height: 100vh;
+            background: rgba(20, 15, 45, 0.98);
+            border-right: 1px solid rgba(144, 122, 255, 0.25);
+            padding: 2rem 0;
+            flex-shrink: 0;
+            z-index: 999;
+            transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            /* Otimizações de performance */
+            will-change: width;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        /* Sidebar Toggle Button - FORA mas COLADO na borda externa */
+        .sidebar-toggle-btn {
+            position: absolute;
+            top: 60px; /* Altura próxima ao logo */
+            left: 280px; /* COLADO na borda externa direita da sidebar expandida */
+            width: 18px; /* Área um pouco menor */
+            height: 24px; /* Área um pouco menor */
+            background: rgba(120, 100, 200, 0.8);
+            border: 1px solid rgba(100, 80, 180, 0.9);
+            border-left: none; /* Remove borda esquerda para colar */
+            border-radius: 0 6px 6px 0; /* Apenas bordas direitas arredondadas */
+            color: rgba(255, 255, 255, 0.95);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1002;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .sidebar-toggle-btn:hover {
+            background: rgba(130, 110, 210, 0.9);
+            border-color: rgba(110, 90, 190, 1);
+            color: #ffffff;
+            width: 20px; /* Expande um pouco no hover */
+            box-shadow: 3px 0 12px rgba(120, 100, 200, 0.5);
+        }
+
+        .sidebar-toggle-btn:active {
+            width: 16px; /* Contrai no click */
+        }
+
+        .toggle-icon {
+            width: 10px; /* Ícone menor para o formato retangular */
+            height: 10px;
+            transition: all 0.25s ease;
+        }
+
+        /* Movimento controlado via JavaScript - CSS removido para evitar conflitos */
+
+        /* Hide toggle button on mobile */
+        @media (max-width: 768px) {
+            .sidebar-toggle-btn {
+                display: none;
+            }
+        }
+
+        /* Sidebar Collapsed */
+        .sidebar.collapsed {
+            width: 70px;
+        }
+
+        /* Logo Section Collapsed */
+        .sidebar.collapsed .logo-section {
+            padding: 0;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .sidebar.collapsed .logo-container {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .sidebar.collapsed .brand-subtitle {
+            display: none;
+        }
+
+        /* Nav Menu Collapsed */
+        .sidebar.collapsed .nav-menu {
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Nav Links Collapsed */
+        .sidebar.collapsed .nav-link {
+            justify-content: center;
+            align-items: center;
+            padding: 0.875rem;
+            margin: 0.125rem 0;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            border-radius: 12px;
+        }
+
+        .sidebar.collapsed .nav-link-dropdown {
+            justify-content: center;
+            align-items: center;
+            padding: 0.875rem;
+            margin: 0.125rem 0;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            border-radius: 12px;
+        }
+
+        .sidebar.collapsed .nav-item {
+            margin-bottom: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .sidebar.collapsed .nav-item-dropdown {
+            margin-bottom: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .sidebar.collapsed .nav-link span,
+        .sidebar.collapsed .nav-link-dropdown .nav-link-content span {
+            display: none;
+        }
+
+        .sidebar.collapsed .dropdown-arrow {
+            display: none;
+        }
+
+        .sidebar.collapsed .submenu {
+            display: none;
+        }
+
+        /* Dropdown funcional no modo colapsado */
+        .sidebar.collapsed .submenu.open {
+            display: block !important;
+            position: fixed;
+            left: 70px;
+            background: rgba(20, 15, 45, 0.98);
+            border: 1px solid rgba(165, 148, 255, 0.3);
+            border-radius: 12px;
+            padding: 0.5rem 0;
+            min-width: 200px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 10000;
+            animation: slideInFromLeft 0.2s ease;
+        }
+
+        .sidebar.collapsed .submenu.open .submenu-link {
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border-radius: 8px;
+            margin: 0.25rem 0.5rem;
+        }
+
+        .sidebar.collapsed .submenu.open .submenu-link:hover {
+            background: rgba(165, 148, 255, 0.15);
+            color: #ffffff;
+        }
+
+        /* Animação de entrada do submenu */
+        @keyframes slideInFromLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* User Section Collapsed */
+        .sidebar.collapsed .user-section {
+            padding: 0;
+            margin: 1rem 0;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            background: none;
+            border: none;
+            box-shadow: none;
+        }
+
+        .sidebar.collapsed .user-section:hover {
+            background: none;
+            border: none;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .sidebar.collapsed .user-info {
+            display: none;
+        }
+
+        .sidebar.collapsed .user-avatar {
+            width: 42px;
+            height: 42px;
+            font-size: 1.1rem;
+            box-shadow: 0 3px 12px rgba(165, 148, 255, 0.4);
+        }
+
+        /* Nav Icons */
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 0.75rem;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar.collapsed .nav-icon {
+            margin-right: 0;
+            width: 22px;
+            height: 22px;
+            stroke-width: 1.8;
+        }
+
+        /* Smooth transitions for text */
+        .sidebar .nav-link span,
+        .sidebar .nav-link-dropdown .nav-link-content span,
+        .sidebar .submenu-link span {
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .sidebar.collapsed .nav-link span,
+        .sidebar.collapsed .nav-link-dropdown .nav-link-content span,
+        .sidebar.collapsed .submenu-link span {
+            opacity: 0;
+            transform: translateX(-15px);
+            visibility: hidden;
+        }
+
+        /* Logo transitions */
+        .logo-container img {
+            transition: opacity 0.2s ease;
+        }
+
+        /* User avatar transitions */
+        .user-avatar {
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        /* Nav link transitions - otimizado para performance */
+        .nav-link, .nav-link-dropdown {
+            transition: background-color 0.2s ease, transform 0.2s ease, color 0.2s ease;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .sidebar.collapsed {
+                width: 280px;
+            }
+
+            .sidebar.collapsed .nav-link span,
+            .sidebar.collapsed .nav-link-dropdown .nav-link-content span,
+            .sidebar.collapsed .submenu-link span {
+                display: block;
+                opacity: 1;
+                transform: translateX(0);
+                visibility: visible;
+            }
+
+            .sidebar.collapsed .nav-icon {
+                margin-right: 0.75rem;
+            }
+
+            .sidebar.collapsed .user-info {
+                display: block;
+            }
+
+            .sidebar.collapsed .brand-subtitle {
+                display: block;
+            }
+
+            .sidebar.collapsed .dropdown-arrow {
+                display: block;
+            }
+        }
+
+        .logo-section {
+            padding: 0 2rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .logo-container {
+            width: 180px;
+            height: 60px;
+            margin: 0 auto 0.5rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .brand-subtitle {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-menu {
+            padding: 0 1rem;
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .nav-menu::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .nav-menu::-webkit-scrollbar-track {
+            background: rgba(165, 148, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .nav-menu::-webkit-scrollbar-thumb {
+            background: rgba(165, 148, 255, 0.3);
+            border-radius: 10px;
+        }
+
+        .nav-menu::-webkit-scrollbar-thumb:hover {
+            background: rgba(165, 148, 255, 0.5);
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            border-radius: 1rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(165, 148, 255, 0.2), transparent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::before {
+            width: 100%;
+        }
+
+        .nav-link:hover {
+            background: rgba(165, 148, 255, 0.1);
+            color: #ffffff;
+            transform: translateX(4px);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(135deg, rgba(165, 148, 255, 0.25), rgba(139, 122, 255, 0.25));
+            border: 1px solid rgba(165, 148, 255, 0.4);
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(165, 148, 255, 0.2);
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 0.75rem;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            flex-shrink: 0;
+        }
+
+        /* Submenu Dropdown Styles */
+        .nav-item-dropdown {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link-dropdown {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            border-radius: 1rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .nav-link-dropdown::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(165, 148, 255, 0.2), transparent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link-dropdown:hover::before {
+            width: 100%;
+        }
+
+        .nav-link-dropdown:hover {
+            background: rgba(165, 148, 255, 0.1);
+            color: #ffffff;
+        }
+
+        .nav-link-dropdown.active {
+            background: linear-gradient(135deg, rgba(165, 148, 255, 0.25), rgba(139, 122, 255, 0.25));
+            border: 1px solid rgba(165, 148, 255, 0.4);
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(165, 148, 255, 0.2);
+        }
+
+        .nav-link-content {
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+
+        .dropdown-arrow {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .nav-link-dropdown.open .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+
+        .submenu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding-left: 2.5rem;
+            border-left: 1.5px solid rgba(165, 148, 255, 0.2);
+            margin-left: 2.5rem;
+        }
+
+        .submenu.open {
+            max-height: 500px;
+        }
+
+        .submenu-item {
+            margin-top: 0.25rem;
+        }
+
+        .submenu-link {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            border-radius: 0.75rem;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            font-weight: 400;
+        }
+
+        .submenu-link:hover {
+            background: rgba(165, 148, 255, 0.08);
+            color: #ffffff;
+            transform: translateX(4px);
+        }
+
+        .submenu-link.active {
+            background: rgba(165, 148, 255, 0.15);
+            color: #ffffff;
+        }
+
+        .submenu-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 0.75rem;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            flex-shrink: 0;
+        }
+
+        /* User Section */
+        .user-section {
+            padding: 1rem;
+            margin: 1rem;
+            background: rgba(165, 148, 255, 0.1);
+            border: 1px solid rgba(165, 148, 255, 0.25);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .user-section:hover {
+            background: rgba(165, 148, 255, 0.15);
+            border-color: rgba(165, 148, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(165, 148, 255, 0.2);
+        }
+
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #a594ff, #8b7aff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #ffffff;
+            flex-shrink: 0;
+            box-shadow: 0 2px 10px rgba(165, 148, 255, 0.3);
+        }
+
+        .user-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .user-name {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 0.15rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .user-email {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Dropdown Menu */
+        .user-dropdown {
+            position: absolute;
+            bottom: 100%;
+            left: 0;
+            right: 0;
+            margin-bottom: 0.5rem;
+            background: rgba(30, 25, 60, 0.98);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(165, 148, 255, 0.3);
+            border-radius: 1rem;
+            padding: 0.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .user-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            border-radius: 0.75rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            gap: 0.75rem;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(165, 148, 255, 0.15);
+            color: #ffffff;
+            transform: translateX(4px);
+        }
+
+        .dropdown-item.logout {
+            color: #ff6b6b;
+        }
+
+        .dropdown-item.logout:hover {
+            background: rgba(255, 107, 107, 0.1);
+            color: #ff8787;
+        }
+
+        .dropdown-icon {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: rgba(165, 148, 255, 0.2);
+            margin: 0.5rem 0;
+        }
+
+        /* Custom Popup Styles */
+        .custom-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(30, 25, 60, 0.98);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(165, 148, 255, 0.3);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            max-width: 400px;
+            width: 90%;
+            z-index: 10002;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .custom-popup.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .custom-popup.success {
+            border-color: rgba(76, 175, 80, 0.5);
+        }
+
+        .custom-popup.error {
+            border-color: rgba(244, 67, 54, 0.5);
+        }
+
+        .popup-icon {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 1rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .popup-icon.success {
+            background: linear-gradient(135deg, #4caf50, #45a049);
+        }
+
+        .popup-icon.error {
+            background: linear-gradient(135deg, #f44336, #e53935);
+        }
+
+        .popup-message {
+            text-align: center;
+            color: #ffffff;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .popup-button {
+            background: linear-gradient(135deg, #a594ff, #8b7aff);
+            color: #ffffff;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .popup-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(165, 148, 255, 0.4);
+        }
+
+        /* Modal/Popup Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal {
+            background: rgba(30, 25, 60, 0.98);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(165, 148, 255, 0.3);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #a594ff, #8b7aff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .modal-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: #ffffff;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .modal-content {
+            margin-bottom: 2rem;
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .info-item {
+            background: rgba(165, 148, 255, 0.05);
+            border: 1px solid rgba(165, 148, 255, 0.2);
+            border-radius: 0.75rem;
+            padding: 1rem;
+        }
+
+        .info-label {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-value {
+            font-size: 1rem;
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .modal-text {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        .modal-button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .modal-button.primary {
+            background: linear-gradient(135deg, #a594ff, #8b7aff);
+            color: #ffffff;
+        }
+
+        .modal-button.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(165, 148, 255, 0.4);
+        }
+
+        .modal-button.secondary {
+            background: rgba(165, 148, 255, 0.1);
+            color: #ffffff;
+            border: 1px solid rgba(165, 148, 255, 0.3);
+        }
+
+        .modal-button.secondary:hover {
+            background: rgba(165, 148, 255, 0.2);
+        }
+
+        .modal-button.danger {
+            background: linear-gradient(135deg, #ff6b6b, #ff5252);
+            color: #ffffff;
+        }
+
+        .modal-button.danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 32px;
+            height: 32px;
+            background: rgba(165, 148, 255, 0.1);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: rgba(165, 148, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .modal-close svg {
+            width: 16px;
+            height: 16px;
+            stroke: #ffffff;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            min-height: 100vh;
+            display: flex;
+            transition: margin-left 0.3s ease;
+        }
+
+        .content-frame {
+            width: 100%;
+            height: 100vh;
+            border: none;
+            background: transparent;
+            box-shadow: none;
+            outline: none;
+            overflow: auto;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                height: 100vh;
+                transform: translateX(-100%);
+                box-shadow: 2px 0 30px rgba(0, 0, 0, 0.5);
+                z-index: 999;
+            }
+
+            .sidebar.mobile-visible {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding-top: 0;
+                width: 100%;
+            }
+
+            .content-frame {
+                padding-top: 80px;
+            }
+
+            .user-dropdown {
+                bottom: auto;
+                top: 100%;
+                margin-top: 0.5rem;
+                margin-bottom: 0;
+            }
+
+            .modal {
+                padding: 1.5rem;
+                max-width: 95%;
+            }
+
+            .modal-actions {
+                flex-direction: column;
+            }
+
+            .modal-button {
+                width: 100%;
+            }
+
+            .logo-section {
+                margin-bottom: 2rem;
+            }
+
+            .brand-subtitle {
+                font-size: 0.9rem;
+            }
+
+            .nav-link {
+                padding: 0.875rem 1.25rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .mobile-menu-btn {
+                width: 48px;
+                height: 48px;
+                top: 1rem;
+                left: 1rem;
+            }
+
+            .hamburger {
+                width: 22px;
+                height: 16px;
+            }
+
+            .sidebar {
+                width: 85vw;
+                max-width: 320px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Menu Button -->
+    <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileMenu()">
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </button>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeMobileMenu()"></div>
+
+    <!-- Sidebar Toggle Button - FORA da sidebar, mas colado -->
+    <button class="sidebar-toggle-btn" id="sidebarToggleBtn" onclick="toggleSidebar()" title="Toggle Menu">
+        <svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 18l6-6-6-6"></path>
+            <path d="M15 18l6-6-6-6"></path>
+        </svg>
+    </button>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+
+        <div class="logo-section">
+            <div class="logo-container">
+                <img id="logoFull" src="https://i.postimg.cc/wB6z89WD/Salesdever-04-9.png" alt="Salesdever Logo" style="max-width: 100%; max-height: 100%; object-fit: contain;" />
+                <img id="logoCompact" src="https://i.postimg.cc/BvXn7Ynj/image-3.png" alt="Salesdever Logo Compact" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;" />
+            </div>
+            <div class="brand-subtitle">
+            </div>
+        </div>
+
+        <nav class="nav-menu">
+            <div class="nav-item">
+                <a href="#dashboard" class="nav-link active" onclick="showSection('dashboard', this)">
+                    <svg class="nav-icon" viewBox="0 0 24 24">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    <span>Dashboard</span>
+                </a>
+            </div>
+
+            <div class="nav-item">
+                <a href="#campanhas" class="nav-link" onclick="showSection('campanhas', this)">
+                    <svg class="nav-icon" viewBox="0 0 24 24">
+                        <path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"></path>
+                        <path d="M13 13l6 6"></path>
+                    </svg>
+                    <span>Campanhas</span>
+                </a>
+            </div>
+
+            <div class="nav-item">
+                <a href="#follow-up" class="nav-link" onclick="showSection('follow-up', this)">
+                    <svg class="nav-icon" viewBox="0 0 24 24">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                    </svg>
+                    <span>Follow-up</span>
+                </a>
+            </div>
+
+            <div class="nav-item">
+                <a href="#assistente" class="nav-link" onclick="showSection('assistente', this)">
+                    <svg class="nav-icon" viewBox="0 0 24 24">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span>Assistentes</span>
+                </a>
+            </div>
+
+            <div class="nav-item-dropdown">
+                <div class="nav-link-dropdown" onclick="toggleSubmenu(this)">
+                    <div class="nav-link-content">
+                        <svg class="nav-icon" viewBox="0 0 24 24">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                        <span>Conversas</span>
+                    </div>
+                    <svg class="dropdown-arrow" viewBox="0 0 24 24">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="submenu">
+                    <div class="submenu-item">
+                        <a href="#contatos" class="submenu-link" onclick="showSection('contatos', this); event.stopPropagation();">
+                            <svg class="submenu-icon" viewBox="0 0 24 24">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                            Contatos
+                        </a>
+                    </div>
+                    <div class="submenu-item">
+                        <a href="#mensagens" class="submenu-link" onclick="showSection('mensagens-whatsapp', this); event.stopPropagation();">
+                            <svg class="submenu-icon" viewBox="0 0 24 24">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                            Mensagens
+                        </a>
+                    </div>
+                    <div class="submenu-item">
+                        <a href="#ligacoes" class="submenu-link" onclick="showSection('conversas', this); event.stopPropagation();">
+                            <svg class="submenu-icon" viewBox="0 0 24 24">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                            </svg>
+                            Ligações
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-item-dropdown">
+                <div class="nav-link-dropdown" onclick="toggleSubmenu(this)">
+                    <div class="nav-link-content">
+                        <svg class="nav-icon" viewBox="0 0 24 24">
+                            <path d="M12 22v-4"></path>
+                            <rect x="6" y="11" width="12" height="7" rx="1"></rect>
+                            <line x1="9" y1="11" x2="9" y2="5"></line>
+                            <line x1="15" y1="11" x2="15" y2="5"></line>
+                        </svg>
+                        <span>Conexões</span>
+                    </div>
+                    <svg class="dropdown-arrow" viewBox="0 0 24 24">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="submenu">
+                    <div class="submenu-item">
+                        <a href="#whatsapp" class="submenu-link" onclick="showSection('integracao-whatsapp', this); event.stopPropagation();">
+                            <svg class="submenu-icon" viewBox="0 0 24 24">
+                                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                            </svg>
+                            Whatsapp
+                        </a>
+                    </div>
+                    <div class="submenu-item">
+                        <a href="#webhook" class="submenu-link" onclick="showSection('webhook', this); event.stopPropagation();">
+                            <svg class="submenu-icon" viewBox="0 0 24 24">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            Webhook
+                        </a>
+                    </div>
+                    <div class="submenu-item">
+                        <a href="#calendario" class="submenu-link" onclick="showSection('calendario', this); event.stopPropagation();">
+                            <svg class="submenu-icon" viewBox="0 0 24 24">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                            Calendário
+                        </a>
+                    </div>
+                    <div class="submenu-item">
+                        <a href="#comprar-numeros" class="submenu-link" onclick="showSection('comprar-numeros', this); event.stopPropagation();">
+                            <svg class="submenu-icon" viewBox="0 0 24 24">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                            </svg>
+                            Números
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <a href="#ajuda" class="nav-link" onclick="showSection('ajuda', this)">
+                    <svg class="nav-icon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                        <path d="M12 17h.01"></path>
+                    </svg>
+                    <span>Ajuda</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- User Section com Dropdown -->
+        <div class="user-section" id="userSection" onclick="toggleUserDropdown()">
+            <!-- Dropdown Menu -->
+            <div class="user-dropdown" id="userDropdown">
+                <a href="#" class="dropdown-item" onclick="event.stopPropagation(); viewProfile()">
+                    <svg class="dropdown-icon" viewBox="0 0 24 24">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    Meu Perfil
+                </a>
+                
+                <a href="#" class="dropdown-item" onclick="event.stopPropagation(); viewSettings()">
+                    <svg class="dropdown-icon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                    </svg>
+                    Configurações
+                </a>
+
+                <div class="dropdown-divider"></div>
+                
+                <a href="#" class="dropdown-item logout" onclick="event.stopPropagation(); logout()">
+                    <svg class="dropdown-icon" viewBox="0 0 24 24">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                    Sair da Conta
+                </a>
+            </div>
+
+            <div class="user-avatar" id="userAvatar">U</div>
+            <div class="user-info">
+                <div class="user-name" id="userName">Usuário</div>
+                <div class="user-email" id="userEmail">email@exemplo.com</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content fade-in">
+        <iframe id="contentFrame" class="content-frame" src="dashboard-home.html" frameborder="0" scrolling="auto"></iframe>
+    </div>
+
+    <!-- Modal de Perfil -->
+    <div class="modal-overlay" id="profileModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('profileModal')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            
+            <div class="modal-header">
+                <div class="modal-icon" id="profileModalAvatar">U</div>
+                <div class="modal-title">Meu Perfil</div>
+            </div>
+            
+            <div class="modal-content">
+                <div class="profile-info">
+                    <div class="info-item">
+                        <div class="info-label">Nome da Conta</div>
+                        <div class="info-value" id="profileName">-</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">Email</div>
+                        <div class="info-value" id="profileEmail">-</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">Conta Criada em</div>
+                        <div class="info-value" id="profileCreatedAt">-</div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-label">Ligações Diárias Máximas</div>
+                        <div class="info-value" id="profileMaxCalls">-</div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-label">Minutos do Plano</div>
+                        <div class="info-value" id="profileMinutes">-</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-actions">
+                <button class="modal-button primary" onclick="closeModal('profileModal')">
+                    Fechar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmação de Logout -->
+    <div class="modal-overlay" id="logoutModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('logoutModal')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            
+            <div class="modal-header">
+                <div class="modal-icon">🚪</div>
+                <div class="modal-title">Sair da Conta</div>
+            </div>
+            
+            <div class="modal-content">
+                <p class="modal-text">Tem certeza que deseja sair da sua conta?</p>
+            </div>
+            
+            <div class="modal-actions">
+                <button class="modal-button secondary" onclick="closeModal('logoutModal')">
+                    Cancelar
+                </button>
+                <button class="modal-button danger" onclick="confirmLogout()">
+                    Sair
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Configurações -->
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('settingsModal')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+
+            <div class="modal-header">
+                <div class="modal-icon">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                    </svg>
+                </div>
+                <div class="modal-title">Configurações</div>
+            </div>
+
+            <div class="modal-content">
+                <div class="profile-info">
+                    <!-- Seção de Foto de Perfil -->
+                    <div class="info-item">
+                        <div class="info-label">Foto de Perfil</div>
+
+                        <!-- Preview da Imagem -->
+                        <div class="photo-preview-container" style="text-align: center; margin: 1rem 0;">
+                            <div class="photo-preview" id="photoPreview" style="width: 120px; height: 120px; margin: 0 auto; border-radius: 50%; overflow: hidden; border: 3px solid rgba(165, 148, 255, 0.3); box-shadow: 0 4px 20px rgba(165, 148, 255, 0.2); transition: all 0.3s ease; position: relative;">
+                                <div class="settings-avatar" id="settingsAvatar" style="width: 100%; height: 100%; background: linear-gradient(135deg, #a594ff, #8b7aff); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: 600; color: #ffffff;">
+                                    U
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Botões de Ação -->
+                        <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                            <input type="file" id="photoUpload" accept="image/*" style="display: none;" onchange="handlePhotoUpload(this)">
+                            <button class="modal-button secondary" onclick="document.getElementById('photoUpload').click()" style="flex: 1; font-size: 0.9rem;">
+                                <svg style="width: 16px; height: 16px; margin-right: 0.5rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                    <circle cx="9" cy="9" r="2"/>
+                                    <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+                                </svg>
+                                Escolher Foto
+                            </button>
+                            <button class="modal-button secondary" onclick="removeProfilePhoto()" style="flex: 1; font-size: 0.9rem;">
+                                <svg style="width: 16px; height: 16px; margin-right: 0.5rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="3 6 5 6 21 6"/>
+                                    <path d="m19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2 2h4a2 2 0 0 1 2 2v2"/>
+                                </svg>
+                                Remover
+                            </button>
+                        </div>
+
+                        <!-- Indicador de Preview -->
+                        <div id="previewIndicator" style="display: none; text-align: center; margin-top: 0.5rem; font-size: 0.85rem; color: rgba(255, 255, 255, 0.7);">
+                            Preview da nova imagem - clique em "Salvar Alterações" para confirmar
+                        </div>
+                    </div>
+
+                    <!-- Seção de Nome -->
+                    <div class="info-item">
+                        <div class="info-label">Nome da Conta</div>
+                        <input type="text" id="settingsUserName" placeholder="Digite seu nome" style="width: 100%; padding: 0.75rem; border: 1px solid rgba(165, 148, 255, 0.3); border-radius: 0.5rem; background: rgba(165, 148, 255, 0.05); color: #ffffff; font-family: 'Raleway', sans-serif; margin-top: 0.5rem;">
+                    </div>
+                </div>
+
+                <div id="uploadProgress" style="display: none; margin-top: 1rem; text-align: center; color: rgba(255, 255, 255, 0.8);">
+                    Enviando foto...
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button class="modal-button secondary" onclick="closeModal('settingsModal')">
+                    Cancelar
+                </button>
+                <button class="modal-button primary" onclick="saveSettings()">
+                    Salvar Alterações
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Popup -->
+    <div class="custom-popup" id="customPopup">
+        <div class="popup-icon" id="popupIcon">✓</div>
+        <div class="popup-message" id="popupMessage">Mensagem do popup</div>
+        <button class="popup-button" onclick="hideCustomPopup()">OK</button>
+    </div>
+
+    <script>
+        // Função para carregar informações do usuário do localStorage
+        function loadUserInfo() {
+            try {
+                const userEmail = localStorage.getItem('login') || localStorage.getItem('userEmail');
+                const userName = localStorage.getItem('user_name');
+                const fotoPerfil = localStorage.getItem('foto_perfil');
+
+                console.log('📋 Carregando informações do usuário:', { userEmail, userName, fotoPerfil });
+
+                if (userEmail) {
+                    // Define o nome a ser exibido: user_name se disponível, senão pega do email
+                    let displayName;
+                    if (userName && userName.trim() && userName !== 'null' && userName !== '[null]' && userName !== 'undefined') {
+                        displayName = userName;
+                    } else {
+                        const username = userEmail.split('@')[0];
+                        displayName = username.charAt(0).toUpperCase() + username.slice(1);
+                    }
+
+                    document.getElementById('userName').textContent = displayName;
+                    document.getElementById('userEmail').textContent = userEmail;
+
+                    // Atualiza avatar - usa foto de perfil se disponível, senão usa inicial
+                    updateUserAvatar(fotoPerfil, displayName);
+                }
+            } catch (error) {
+                console.error('Erro ao carregar informações do usuário:', error);
+            }
+        }
+
+        // Função para atualizar o avatar do usuário
+        function updateUserAvatar(fotoPerfil, displayName) {
+            const userAvatar = document.getElementById('userAvatar');
+            const profileModalAvatar = document.getElementById('profileModalAvatar');
+
+            console.log('🖼️ Atualizando avatar:', { fotoPerfil, displayName });
+
+            // Verifica se tem foto de perfil válida
+            if (fotoPerfil && fotoPerfil.trim() && fotoPerfil !== 'null' && fotoPerfil !== 'undefined' && fotoPerfil !== '[null]' && fotoPerfil !== 'null,' && fotoPerfil.toLowerCase() !== 'null') {
+                console.log('✅ Usando foto de perfil:', fotoPerfil);
+                // Se tem foto de perfil, usa ela
+                if (userAvatar) {
+                    userAvatar.innerHTML = `<img src="${fotoPerfil}" alt="Avatar" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block;">`;
+                    userAvatar.style.background = 'none';
+                    userAvatar.style.display = 'flex';
+                    userAvatar.style.alignItems = 'center';
+                    userAvatar.style.justifyContent = 'center';
+                    userAvatar.style.overflow = 'hidden';
+                }
+                if (profileModalAvatar) {
+                    profileModalAvatar.innerHTML = `<img src="${fotoPerfil}" alt="Avatar" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block;">`;
+                    profileModalAvatar.style.background = 'none';
+                    profileModalAvatar.style.display = 'flex';
+                    profileModalAvatar.style.alignItems = 'center';
+                    profileModalAvatar.style.justifyContent = 'center';
+                    profileModalAvatar.style.overflow = 'hidden';
+                }
+            } else {
+                console.log('🔤 Usando inicial do nome:', displayName);
+                // Se não tem foto, usa a inicial do nome
+                const initial = displayName ? displayName.charAt(0).toUpperCase() : 'U';
+                if (userAvatar) {
+                    userAvatar.innerHTML = '';
+                    userAvatar.textContent = initial;
+                    userAvatar.style.background = 'linear-gradient(135deg, #a594ff, #8b7aff)';
+                    userAvatar.style.display = 'flex';
+                    userAvatar.style.alignItems = 'center';
+                    userAvatar.style.justifyContent = 'center';
+                }
+                if (profileModalAvatar) {
+                    profileModalAvatar.innerHTML = '';
+                    profileModalAvatar.textContent = initial;
+                    profileModalAvatar.style.background = 'linear-gradient(135deg, #a594ff, #8b7aff)';
+                    profileModalAvatar.style.display = 'flex';
+                    profileModalAvatar.style.alignItems = 'center';
+                    profileModalAvatar.style.justifyContent = 'center';
+                }
+            }
+        }
+
+        // Funções Mobile Menu
+        function toggleMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const btn = document.getElementById('mobileMenuBtn');
+            
+            sidebar.classList.toggle('mobile-visible');
+            overlay.classList.toggle('active');
+            btn.classList.toggle('active');
+            
+            // Prevenir scroll do body quando menu aberto
+            if (sidebar.classList.contains('mobile-visible')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        }
+
+        function closeMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const btn = document.getElementById('mobileMenuBtn');
+            
+            sidebar.classList.remove('mobile-visible');
+            overlay.classList.remove('active');
+            btn.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Funções de Modal
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Fechar modal ao clicar no overlay
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('modal-overlay')) {
+                closeModal(event.target.id);
+            }
+        });
+
+        // Fechar submenus quando clicar fora (especialmente para modo colapsado)
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('sidebar');
+            const isCollapsed = sidebar.classList.contains('collapsed');
+
+            // Se estiver colapsado e clicar fora da sidebar
+            if (isCollapsed && !sidebar.contains(event.target)) {
+                document.querySelectorAll('.nav-link-dropdown.open').forEach(link => {
+                    link.classList.remove('open');
+                    link.nextElementSibling.classList.remove('open');
+                });
+            }
+        });
+
+        // Função para formatar data
+        function formatDate(dateString) {
+            if (!dateString) return 'Data não disponível';
+
+            try {
+                const date = new Date(dateString);
+                const options = {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                };
+                return date.toLocaleDateString('pt-BR', options);
+            } catch (error) {
+                return 'Data inválida';
+            }
+        }
+
+        // Toggle do dropdown do usuário
+        function toggleUserDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.classList.toggle('active');
+        }
+
+        // Fechar dropdown ao clicar fora
+        document.addEventListener('click', function(event) {
+            const userSection = document.getElementById('userSection');
+            const dropdown = document.getElementById('userDropdown');
+            
+            if (!userSection.contains(event.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+
+        // Função para mostrar perfil
+        // Função para formatar número com separador de milhares
+        function formatNumber(num) {
+            return num.toLocaleString('pt-BR');
+        }
+
+        async function viewProfile() {
+            try {
+                const userEmail = localStorage.getItem('login') || localStorage.getItem('userEmail');
+                const userName = localStorage.getItem('user_name');
+                const fotoPerfil = localStorage.getItem('foto_perfil');
+                const createdAt = localStorage.getItem('loginTimestamp') || localStorage.getItem('created_at');
+                const numeroLinhas = localStorage.getItem('numero_linhas') || '0';
+
+                if (userEmail) {
+                    // Define o nome a ser exibido: user_name se disponível, senão pega do email
+                    let displayName;
+                    if (userName && userName.trim() && userName !== 'null' && userName !== '[null]' && userName !== 'undefined') {
+                        displayName = userName;
+                    } else {
+                        const username = userEmail.split('@')[0];
+                        displayName = username.charAt(0).toUpperCase() + username.slice(1);
+                    }
+
+                    // Atualiza avatar no modal de perfil
+                    updateUserAvatar(fotoPerfil, displayName);
+                    document.getElementById('profileName').textContent = displayName;
+                    document.getElementById('profileEmail').textContent = userEmail;
+                    document.getElementById('profileCreatedAt').textContent = formatDate(createdAt);
+                }
+
+                // Calcula ligações diárias máximas (numero_linhas × 600)
+                let linhas = parseInt(numeroLinhas) || 0;
+
+                // Se numero_linhas for 0, tenta buscar do servidor
+                if (linhas === 0) {
+                    console.warn('⚠️ [PROFILE] numero_linhas está zerado, tentando buscar do servidor...');
+                    try {
+                        const tenantId = localStorage.getItem('tenant_id');
+                        const orgPrivateKey = localStorage.getItem('org_private_key');
+                        const login = userEmail;
+
+                        if (tenantId && orgPrivateKey && login) {
+                            const response = await fetch('https://sdr.salesdever.io/webhook/ver-minutos-saas', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    tenant_id: tenantId,
+                                    org_private_key: orgPrivateKey,
+                                    login: login
+                                })
+                            });
+
+                            if (response.ok) {
+                                const data = await response.json();
+                                const planData = Array.isArray(data) ? data[0] : data;
+
+                                // Tenta diferentes nomes de campos
+                                linhas = parseInt(planData.numero_linhas || planData.number_lines || planData.num_linhas || planData.lines || '0');
+
+                                console.log('📊 [PROFILE] numero_linhas carregado do servidor:', linhas);
+
+                                if (linhas > 0) {
+                                    // Salva no localStorage para próximas vezes
+                                    localStorage.setItem('numero_linhas', String(linhas));
+                                }
+                            }
+                        }
+                    } catch (error) {
+                        console.error('❌ [PROFILE] Erro ao buscar numero_linhas:', error);
+                    }
+                }
+
+                const ligacoesDiarias = linhas * 600;
+                const maxCallsElement = document.getElementById('profileMaxCalls');
+                if (maxCallsElement) {
+                    maxCallsElement.textContent = formatNumber(ligacoesDiarias);
+                }
+
+                // Busca informação de minutos do plano
+                const minutesElement = document.getElementById('profileMinutes');
+                let minutosPlano = localStorage.getItem('minutos_plano') || localStorage.getItem('minutes_plan') || localStorage.getItem('total_minutes') || localStorage.getItem('plano_minutos');
+                const minutosPlanoInt = parseInt(minutosPlano) || 0;
+
+                // Se não encontrou minutos válidos no localStorage, busca do servidor
+                if (minutosPlanoInt === 0 && minutesElement) {
+                    minutesElement.textContent = 'Carregando...';
+                    try {
+                        const tenantId = localStorage.getItem('tenant_id');
+                        const orgPrivateKey = localStorage.getItem('org_private_key');
+                        const login = userEmail;
+
+                        if (tenantId && orgPrivateKey && login) {
+                            const response = await fetch('https://sdr.salesdever.io/webhook/ver-minutos-saas', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    tenant_id: tenantId,
+                                    org_private_key: orgPrivateKey,
+                                    login: login
+                                })
+                            });
+
+                            if (response.ok) {
+                                const data = await response.json();
+                                const minutesData = Array.isArray(data) ? data[0] : data;
+                                const minutesPlan = parseFloat(minutesData.minutes_plan || 0);
+
+                                console.log('📊 [PROFILE] Minutos carregados do servidor:', minutesPlan);
+
+                                // Salva no localStorage para próximas vezes
+                                localStorage.setItem('minutes_plan', String(minutesPlan));
+                                localStorage.setItem('minutos_plano', String(minutesPlan));
+
+                                minutesElement.textContent = formatNumber(minutesPlan) + ' min';
+                            } else {
+                                minutesElement.textContent = 'Não disponível';
+                            }
+                        } else {
+                            minutesElement.textContent = 'Não disponível';
+                        }
+                    } catch (error) {
+                        console.error('Erro ao buscar minutos do servidor:', error);
+                        minutesElement.textContent = 'Erro ao carregar';
+                    }
+                } else if (minutesElement) {
+                    minutesElement.textContent = formatNumber(minutosPlanoInt) + ' min';
+                }
+
+                document.getElementById('userDropdown').classList.remove('active');
+                openModal('profileModal');
+            } catch (error) {
+                console.error('Erro ao carregar perfil:', error);
+            }
+        }
+
+        // Função para mostrar configurações
+        function viewSettings() {
+            document.getElementById('userDropdown').classList.remove('active');
+
+            // Limpa arquivo temporário ao abrir o modal
+            tempUploadedFile = null;
+
+            // Carrega as informações atuais no modal
+            const userEmail = localStorage.getItem('login') || localStorage.getItem('userEmail');
+            const userName = localStorage.getItem('user_name');
+            const fotoPerfil = localStorage.getItem('foto_perfil');
+
+            // Define o nome atual
+            let displayName = '';
+            if (userName && userName.trim() && userName !== 'null' && userName !== '[null]' && userName !== 'undefined') {
+                displayName = userName;
+            } else if (userEmail) {
+                const username = userEmail.split('@')[0];
+                displayName = username.charAt(0).toUpperCase() + username.slice(1);
+            }
+
+            // Preenche o campo de nome
+            document.getElementById('settingsUserName').value = displayName;
+
+            // Atualiza o avatar de configurações e reseta efeitos visuais
+            const settingsAvatar = document.getElementById('settingsAvatar');
+            const photoPreview = document.getElementById('photoPreview');
+            const previewIndicator = document.getElementById('previewIndicator');
+
+            // Reseta efeitos visuais
+            photoPreview.style.border = '3px solid rgba(165, 148, 255, 0.3)';
+            photoPreview.style.boxShadow = '0 4px 20px rgba(165, 148, 255, 0.2)';
+            previewIndicator.style.display = 'none';
+
+            if (fotoPerfil && fotoPerfil.trim() && fotoPerfil !== 'null' && fotoPerfil !== '[null]' && fotoPerfil !== 'undefined' && fotoPerfil.toLowerCase() !== 'null') {
+                settingsAvatar.innerHTML = `<img src="${fotoPerfil}" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover; display: block;">`;
+                settingsAvatar.style.background = 'none';
+            } else {
+                settingsAvatar.innerHTML = '';
+                settingsAvatar.textContent = displayName.charAt(0).toUpperCase();
+                settingsAvatar.style.background = 'linear-gradient(135deg, #a594ff, #8b7aff)';
+            }
+
+            openModal('settingsModal');
+        }
+
+        // Função de logout (abre modal de confirmação)
+        function logout() {
+            document.getElementById('userDropdown').classList.remove('active');
+            openModal('logoutModal');
+        }
+
+        // Confirmar logout
+        function confirmLogout() {
+            console.log('🚪 Realizando logout...');
+
+            localStorage.clear();
+            sessionStorage.clear();
+
+            console.log('✅ Cache limpo com sucesso!');
+
+            closeModal('logoutModal');
+
+            setTimeout(() => {
+                window.location.href = '../index.html';
+            }, 300);
+        }
+
+        function showSection(sectionName, linkElement) {
+            const contentFrame = document.getElementById('contentFrame');
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+
+            const submenuLinks = document.querySelectorAll('.submenu-link');
+            submenuLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+
+            if (linkElement) {
+                linkElement.classList.add('active');
+            }
+
+            // Fecha menu mobile ao selecionar
+            if (window.innerWidth <= 768) {
+                closeMobileMenu();
+            }
+
+            switch(sectionName) {
+                case 'dashboard':
+                    contentFrame.src = 'dashboard/dashboard.html';
+                    break;
+                case 'campanhas':
+                    contentFrame.src = 'campanhas/criar-campanhas.html';
+                    break;
+                case 'assistente':
+                    contentFrame.src = 'assistentes/assistente.html';
+                    break;
+                case 'conversas':
+                    contentFrame.src = 'conversas/conversas.html';
+                    break;
+                case 'mensagens-whatsapp':
+                    contentFrame.src = 'conversas/mensagens-whatsapp.html';
+                    break;
+                case 'contatos':
+                    contentFrame.src = 'conversas/contatos.html';
+                    break;
+                case 'follow-up':
+                    contentFrame.src = 'follow-up/criar_follow-up.html';
+                    break;
+                case 'integracao-whatsapp':
+                    contentFrame.src = 'conexoes/configurar-whatsapp.html';
+                    break;
+                case 'webhook':
+                    contentFrame.src = 'conexoes/webhooks.html';
+                    break;
+                case 'calendario':
+                    contentFrame.src = 'conexoes/conecta-calendario.html';
+                    break;
+                case 'comprar-numeros':
+                    contentFrame.src = 'conexoes/comprar-numero.html';
+                    break;
+                case 'ajuda':
+                    contentFrame.src = 'ajuda/ajuda.html';
+                    break;
+                default:
+                    contentFrame.src = 'dashboard/dashboard.html';
+            }
+        }
+
+        // Função para controlar o toggle do submenu
+        function toggleSubmenu(element) {
+            const sidebar = document.getElementById('sidebar');
+            const submenu = element.nextElementSibling;
+            const isOpen = element.classList.contains('open');
+            const isCollapsed = sidebar.classList.contains('collapsed');
+
+
+            // Fecha todos os outros submenus
+            document.querySelectorAll('.nav-link-dropdown').forEach(link => {
+                if (link !== element) {
+                    link.classList.remove('open');
+                    const otherSubmenu = link.nextElementSibling;
+                    if (otherSubmenu) {
+                        otherSubmenu.classList.remove('open');
+                        // Limpa estilos inline quando fechar outros submenus
+                        otherSubmenu.style.position = '';
+                        otherSubmenu.style.left = '';
+                        otherSubmenu.style.top = '';
+                        otherSubmenu.style.zIndex = '';
+                    }
+                }
+            });
+
+            // Toggle do submenu atual
+            if (isOpen) {
+                element.classList.remove('open');
+                submenu.classList.remove('open');
+                // Limpa estilos inline quando fechar
+                submenu.style.position = '';
+                submenu.style.left = '';
+                submenu.style.top = '';
+                submenu.style.zIndex = '';
+            } else {
+                element.classList.add('open');
+                submenu.classList.add('open');
+
+                // NOVA REGRA: Se estiver colapsado E for Conversas ou Conexões, expandir o menu
+                if (isCollapsed) {
+                    const menuText = element.querySelector('span');
+                    const isConversasOrConexoes = menuText && (
+                        menuText.textContent.trim() === 'Conversas' ||
+                        menuText.textContent.trim() === 'Conexões'
+                    );
+
+                    if (isConversasOrConexoes) {
+                        // Expande o menu principal automaticamente
+                        expandSidebar();
+                        // Como o menu foi expandido, usar posicionamento normal
+                        submenu.style.position = '';
+                        submenu.style.left = '';
+                        submenu.style.top = '';
+                        submenu.style.zIndex = '';
+                    } else {
+                        // Para outros submenus, manter comportamento atual
+                        const rect = element.getBoundingClientRect();
+                        submenu.style.position = 'fixed';
+                        submenu.style.left = '70px';
+                        submenu.style.top = rect.top + 'px';
+                        submenu.style.zIndex = '10000';
+                    }
+                } else {
+                    // Remove estilos de posicionamento fixo quando expandido
+                    submenu.style.position = '';
+                    submenu.style.left = '';
+                    submenu.style.top = '';
+                    submenu.style.zIndex = '';
+                }
+            }
+        }
+
+        // Funcionalidade de Sidebar Toggle Fixo
+        const sidebar = document.getElementById('sidebar');
+        const logoFull = document.getElementById('logoFull');
+        const logoCompact = document.getElementById('logoCompact');
+
+        // Estado salvo do menu (expandido/colapsado)
+        let sidebarState = localStorage.getItem('sidebarCollapsed') === 'true';
+
+        function collapseSidebar() {
+            const toggleBtn = document.getElementById('sidebarToggleBtn');
+            sidebar.classList.add('collapsed');
+            // Troca para logo compacta
+            logoFull.style.display = 'none';
+            logoCompact.style.display = 'block';
+            // Move botão para posição colapsada
+            toggleBtn.style.left = '70px';
+            toggleBtn.querySelector('.toggle-icon').style.transform = 'rotate(180deg)';
+            // Salva estado no localStorage
+            localStorage.setItem('sidebarCollapsed', 'true');
+        }
+
+        function expandSidebar() {
+            const toggleBtn = document.getElementById('sidebarToggleBtn');
+            sidebar.classList.remove('collapsed');
+            // Troca para logo completa
+            logoFull.style.display = 'block';
+            logoCompact.style.display = 'none';
+            // Move botão para posição expandida
+            toggleBtn.style.left = '280px';
+            toggleBtn.querySelector('.toggle-icon').style.transform = 'rotate(0deg)';
+            // Salva estado no localStorage
+            localStorage.setItem('sidebarCollapsed', 'false');
+        }
+
+        // Nova função toggle para o botão
+        function toggleSidebar() {
+            if (window.innerWidth > 768) { // Apenas em desktop
+                if (sidebar.classList.contains('collapsed')) {
+                    expandSidebar();
+                } else {
+                    collapseSidebar();
+                }
+            }
+        }
+
+        // Função para aplicar estado salvo
+        function applySavedSidebarState() {
+            if (window.innerWidth > 768) {
+                if (sidebarState) {
+                    collapseSidebar();
+                } else {
+                    expandSidebar();
+                }
+            }
+        }
+
+        // Inicialização
+        window.addEventListener('load', () => {
+            loadUserInfo();
+            showSection('dashboard', document.querySelector('.nav-link[href="#dashboard"]'));
+
+            // Aplica estado salvo apenas em desktop
+            applySavedSidebarState();
+        });
+
+        // Fechar menu mobile ao redimensionar para desktop
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                closeMobileMenu();
+                // Aplica estado salvo em desktop
+                applySavedSidebarState();
+            } else {
+                // No mobile, sempre expande e mostra logo completa
+                expandSidebar();
+            }
+        });
+
+        // Funções para popups customizados
+        function showCustomPopup(message, type = 'success') {
+            const popup = document.getElementById('customPopup');
+            const icon = document.getElementById('popupIcon');
+            const messageElement = document.getElementById('popupMessage');
+
+            messageElement.textContent = message;
+            popup.className = `custom-popup ${type}`;
+            icon.className = `popup-icon ${type}`;
+
+            if (type === 'success') {
+                icon.textContent = '✓';
+            } else if (type === 'error') {
+                icon.textContent = '✗';
+            }
+
+            popup.classList.add('show');
+        }
+
+        function hideCustomPopup() {
+            const popup = document.getElementById('customPopup');
+            popup.classList.remove('show');
+        }
+
+        // Função para enviar dados para o webhook (sempre envia TUDO)
+        async function updateUserProfile(file = null, newName = null) {
+            try {
+                const userEmail = localStorage.getItem('login') || localStorage.getItem('userEmail');
+                const tenantId = localStorage.getItem('tenant_id');
+                const orgPrivateKey = localStorage.getItem('org_private_key');
+                const currentUserName = localStorage.getItem('user_name') || '';
+                const currentFotoPerfil = localStorage.getItem('foto_perfil') || '';
+
+                if (!userEmail || !tenantId || !orgPrivateKey) {
+                    showCustomPopup('Erro: Informações de autenticação não encontradas.', 'error');
+                    return false;
+                }
+
+                // Mostra progresso
+                document.getElementById('uploadProgress').style.display = 'block';
+
+                // Determina os valores finais a serem enviados
+                const finalUserName = newName || currentUserName;
+                const finalFotoPerfil = currentFotoPerfil;
+
+                console.log('📤 Enviando dados completos para webhook:', {
+                    login: userEmail,
+                    user_name: finalUserName,
+                    foto_perfil_atual: finalFotoPerfil,
+                    nova_imagem: file ? 'SIM' : 'NÃO'
+                });
+
+                // Prepara o FormData com TODOS os dados
+                const formData = new FormData();
+
+                // Sempre envia os dados de autenticação
+                formData.append('login', userEmail);
+                formData.append('tenant_id', tenantId);
+                formData.append('org_private_key', orgPrivateKey);
+
+                // SEMPRE envia o nome (novo ou atual, mesmo se for vazio)
+                formData.append('user_name', finalUserName);
+
+                // SEMPRE envia a foto atual (mesmo se for null/vazio)
+                formData.append('foto_perfil_atual', finalFotoPerfil);
+
+                // Se tem arquivo de imagem NOVA, adiciona ele
+                if (file) {
+                    formData.append('file', file);
+                }
+
+                // Envia para o webhook
+                const response = await fetch('https://sdr.salesdever.io/webhook/foto-de-perfil-saas-clientes', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log('✅ Atualização realizada com sucesso:', result);
+
+                    // Se foi enviado um novo nome, salva no localStorage
+                    if (newName) {
+                        localStorage.setItem('user_name', newName);
+                    }
+
+                    // Se retornou uma URL da imagem, salva no localStorage
+                    if (result.foto_url || result.url || result.foto_perfil) {
+                        const photoUrl = result.foto_url || result.url || result.foto_perfil;
+                        localStorage.setItem('foto_perfil', photoUrl);
+                    }
+
+                    // Atualiza a interface
+                    loadUserInfo();
+
+                    // Atualiza avatar no modal de configurações se estiver aberto
+                    const settingsModal = document.getElementById('settingsModal');
+                    if (settingsModal.classList.contains('active')) {
+                        viewSettings(); // Recarrega o modal
+                    }
+
+                    if (file && newName) {
+                        showCustomPopup('Nome e foto de perfil atualizados com sucesso!', 'success');
+                    } else if (file) {
+                        showCustomPopup('Foto de perfil atualizada com sucesso!', 'success');
+                    } else if (newName) {
+                        showCustomPopup('Nome atualizado com sucesso!', 'success');
+                    }
+
+                    return true;
+                } else {
+                    const error = await response.text();
+                    console.error('❌ Erro na atualização:', error);
+                    showCustomPopup('Erro ao atualizar perfil. Tente novamente.', 'error');
+                    return false;
+                }
+            } catch (error) {
+                console.error('❌ Erro na atualização:', error);
+                showCustomPopup('Erro ao atualizar perfil. Verifique sua conexão.', 'error');
+                return false;
+            } finally {
+                document.getElementById('uploadProgress').style.display = 'none';
+            }
+        }
+
+        // Variável global para armazenar o arquivo temporariamente
+        let tempUploadedFile = null;
+
+        // Função para lidar com o upload de foto (apenas preview)
+        function handlePhotoUpload(input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            // Validações básicas
+            if (!file.type.startsWith('image/')) {
+                showCustomPopup('Por favor, selecione apenas arquivos de imagem.', 'error');
+                input.value = '';
+                return;
+            }
+
+            if (file.size > 5 * 1024 * 1024) { // 5MB limit
+                showCustomPopup('A imagem deve ter no máximo 5MB.', 'error');
+                input.value = '';
+                return;
+            }
+
+            // Armazena o arquivo temporariamente
+            tempUploadedFile = file;
+
+            // Cria preview da imagem com visual melhorado
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const settingsAvatar = document.getElementById('settingsAvatar');
+                const photoPreview = document.getElementById('photoPreview');
+                const previewIndicator = document.getElementById('previewIndicator');
+
+                // Atualiza o preview com a nova imagem
+                settingsAvatar.innerHTML = `<img src="${e.target.result}" alt="Preview" style="width: 100%; height: 100%; object-fit: cover; display: block;">`;
+                settingsAvatar.style.background = 'none';
+
+                // Adiciona efeito visual de "nova imagem"
+                photoPreview.style.border = '3px solid rgba(76, 175, 80, 0.6)';
+                photoPreview.style.boxShadow = '0 4px 20px rgba(76, 175, 80, 0.3)';
+
+                // Mostra indicador de preview
+                previewIndicator.style.display = 'block';
+
+                console.log('📸 Preview da nova imagem carregado com sucesso');
+            };
+            reader.readAsDataURL(file);
+
+            // Limpa o input
+            input.value = '';
+        }
+
+        // Função para remover foto de perfil (apenas preview)
+        function removeProfilePhoto() {
+            // Marca que vai remover a foto (definindo como "REMOVE")
+            tempUploadedFile = "REMOVE";
+
+            // Atualiza apenas o preview no modal de configurações
+            const userEmail = localStorage.getItem('login') || localStorage.getItem('userEmail');
+            const userName = localStorage.getItem('user_name');
+            let displayName = userName || userEmail?.split('@')[0] || 'U';
+            if (!userName && userEmail) {
+                displayName = userEmail.split('@')[0].charAt(0).toUpperCase() + userEmail.split('@')[0].slice(1);
+            }
+
+            const settingsAvatar = document.getElementById('settingsAvatar');
+            const photoPreview = document.getElementById('photoPreview');
+            const previewIndicator = document.getElementById('previewIndicator');
+
+            // Restaura avatar com inicial
+            settingsAvatar.innerHTML = '';
+            settingsAvatar.textContent = displayName.charAt(0).toUpperCase();
+            settingsAvatar.style.background = 'linear-gradient(135deg, #a594ff, #8b7aff)';
+
+            // Adiciona efeito visual de "remoção"
+            photoPreview.style.border = '3px solid rgba(255, 107, 107, 0.6)';
+            photoPreview.style.boxShadow = '0 4px 20px rgba(255, 107, 107, 0.3)';
+
+            // Mostra indicador de remoção
+            previewIndicator.textContent = 'Foto será removida - clique em "Salvar Alterações" para confirmar';
+            previewIndicator.style.display = 'block';
+
+            console.log('🗑️ Preview: Foto de perfil será removida');
+        }
+
+        // Função para atualizar apenas o nome do usuário
+        async function updateUserName(newName) {
+            try {
+                const userEmail = localStorage.getItem('login') || localStorage.getItem('userEmail');
+                const tenantId = localStorage.getItem('tenant_id');
+                const orgPrivateKey = localStorage.getItem('org_private_key');
+
+                console.log('📝 Enviando alteração de NOME para webhook específico');
+
+                const formData = new FormData();
+                formData.append('login', userEmail);
+                formData.append('tenant_id', tenantId);
+                formData.append('org_private_key', orgPrivateKey);
+                formData.append('user_name', newName);
+
+                const response = await fetch('https://sdr.salesdever.io/webhook/nome-de-perfil-saas-clientes', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log('✅ Nome atualizado com sucesso:', result);
+                    localStorage.setItem('user_name', newName);
+                    return true;
+                } else {
+                    console.error('❌ Erro ao atualizar nome:', await response.text());
+                    return false;
+                }
+            } catch (error) {
+                console.error('❌ Erro ao atualizar nome:', error);
+                return false;
+            }
+        }
+
+        // Função para remover foto usando webhook específico
+        async function removeUserPhoto() {
+            try {
+                const userEmail = localStorage.getItem('login') || localStorage.getItem('userEmail');
+                const tenantId = localStorage.getItem('tenant_id');
+                const orgPrivateKey = localStorage.getItem('org_private_key');
+
+                console.log('🗑️ Removendo foto via webhook específico');
+
+                const formData = new FormData();
+                formData.append('login', userEmail);
+                formData.append('tenant_id', tenantId);
+                formData.append('org_private_key', orgPrivateKey);
+                formData.append('foto_perfil', ''); // Envia vazio para remover
+
+                const response = await fetch('https://sdr.salesdever.io/webhook/editar-foto-de-perfil-saas-clientes', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log('✅ Foto removida com sucesso:', result);
+                    localStorage.removeItem('foto_perfil');
+                    return true;
+                } else {
+                    console.error('❌ Erro ao remover foto:', await response.text());
+                    return false;
+                }
+            } catch (error) {
+                console.error('❌ Erro ao remover foto:', error);
+                return false;
+            }
+        }
+
+        // Função para atualizar apenas a foto do usuário
+        async function updateUserPhoto(file) {
+            try {
+                const userEmail = localStorage.getItem('login') || localStorage.getItem('userEmail');
+                const tenantId = localStorage.getItem('tenant_id');
+                const orgPrivateKey = localStorage.getItem('org_private_key');
+                const currentUserName = localStorage.getItem('user_name') || '';
+                const currentFotoPerfil = localStorage.getItem('foto_perfil') || '';
+
+                console.log('📸 Enviando alteração de FOTO para webhook específico');
+
+                const formData = new FormData();
+                formData.append('login', userEmail);
+                formData.append('tenant_id', tenantId);
+                formData.append('org_private_key', orgPrivateKey);
+                formData.append('user_name', currentUserName);
+                formData.append('foto_perfil_atual', currentFotoPerfil);
+
+                if (file) {
+                    formData.append('file', file);
+                }
+
+                const response = await fetch('https://sdr.salesdever.io/webhook/foto-de-perfil-saas-clientes', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log('✅ Foto atualizada com sucesso:', result);
+
+                    if (result.foto_url || result.url || result.foto_perfil) {
+                        const photoUrl = result.foto_url || result.url || result.foto_perfil;
+                        localStorage.setItem('foto_perfil', photoUrl);
+                    }
+                    return true;
+                } else {
+                    console.error('❌ Erro ao atualizar foto:', await response.text());
+                    return false;
+                }
+            } catch (error) {
+                console.error('❌ Erro ao atualizar foto:', error);
+                return false;
+            }
+        }
+
+        // Função para salvar configurações
+        async function saveSettings() {
+            const newUserName = document.getElementById('settingsUserName').value.trim();
+            const currentUserName = localStorage.getItem('user_name') || '';
+
+            if (!newUserName) {
+                showCustomPopup('Por favor, digite um nome.', 'error');
+                return;
+            }
+
+            // Verifica se houve alterações
+            const nomeAlterado = newUserName !== currentUserName;
+            const fotoAlterada = tempUploadedFile !== null;
+            const fotoRemovida = tempUploadedFile === "REMOVE";
+
+            if (!nomeAlterado && !fotoAlterada) {
+                showCustomPopup('Nenhuma alteração foi feita.', 'error');
+                return;
+            }
+
+            console.log('💾 Salvando configurações:', {
+                nomeAlterado,
+                fotoAlterada,
+                fotoRemovida,
+                arquivo: tempUploadedFile === "REMOVE" ? 'REMOVER' : (tempUploadedFile ? 'NOVA' : 'NÃO')
+            });
+
+            // Mostra progresso
+            document.getElementById('uploadProgress').style.display = 'block';
+
+            let successCount = 0;
+            let totalOperations = 0;
+
+            try {
+                // Se ambos foram alterados, chama ambos os webhooks
+                if (nomeAlterado && fotoAlterada) {
+                    totalOperations = 2;
+                    console.log('🔄 Ambos alterados - chamando 2 webhooks');
+
+                    let fotoSuccess;
+                    if (fotoRemovida) {
+                        // Chama webhook de remoção
+                        fotoSuccess = await removeUserPhoto();
+                    } else {
+                        // Chama webhook de nova foto
+                        fotoSuccess = await updateUserPhoto(tempUploadedFile);
+                    }
+
+                    const [nomeSuccess] = await Promise.all([
+                        updateUserName(newUserName)
+                    ]);
+
+                    if (nomeSuccess) successCount++;
+                    if (fotoSuccess) successCount++;
+
+                } else if (nomeAlterado) {
+                    // Só o nome foi alterado
+                    totalOperations = 1;
+                    console.log('📝 Apenas nome alterado - chamando webhook de nome');
+
+                    if (await updateUserName(newUserName)) {
+                        successCount++;
+                    }
+
+                } else if (fotoAlterada) {
+                    // Só a foto foi alterada
+                    totalOperations = 1;
+
+                    if (fotoRemovida) {
+                        console.log('🗑️ Apenas foto removida - chamando webhook de remoção');
+                        if (await removeUserPhoto()) {
+                            successCount++;
+                        }
+                    } else {
+                        console.log('📸 Apenas foto alterada - chamando webhook de foto');
+                        if (await updateUserPhoto(tempUploadedFile)) {
+                            successCount++;
+                        }
+                    }
+                }
+
+                // Verifica o resultado
+                if (successCount === totalOperations) {
+                    // Sucesso total
+                    loadUserInfo(); // Atualiza interface
+                    tempUploadedFile = null; // Limpa arquivo temporário
+                    closeModal('settingsModal'); // Fecha modal
+
+                    if (totalOperations === 1) {
+                        showCustomPopup('Configuração atualizada com sucesso!', 'success');
+                    } else {
+                        showCustomPopup('Configurações atualizadas com sucesso!', 'success');
+                    }
+                } else {
+                    // Erro parcial ou total
+                    showCustomPopup('Erro ao salvar algumas configurações. Tente novamente.', 'error');
+                }
+
+            } catch (error) {
+                console.error('❌ Erro geral ao salvar:', error);
+                showCustomPopup('Erro ao salvar configurações. Verifique sua conexão.', 'error');
+            } finally {
+                document.getElementById('uploadProgress').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

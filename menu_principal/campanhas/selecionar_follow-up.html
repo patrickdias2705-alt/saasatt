@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="https://imagens-zipline.hgabnb.easypanel.host/u/2FsJTY.png">
+   <link rel="shortcut icon" type="image/png" href="https://imagens-zipline.hgabnb.easypanel.host/u/2FsJTY.png">
+   <link rel="apple-touch-icon" href="https://imagens-zipline.hgabnb.easypanel.host/u/2FsJTY.png">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selecionar Follow-up</title>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        body {
+            background: #0a0420;
+            min-height: 100vh;
+            color: #ffffff;
+            padding: 0;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 50%, rgba(165, 148, 255, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(102, 126, 234, 0.06) 0%, transparent 50%);
+            animation: backgroundFloat 20s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes backgroundFloat {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(3%, 3%); }
+        }
+
+        .container {
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem 2rem;
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            animation: fadeInDown 0.6s ease;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #ffffff, #A594FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 400;
+        }
+
+        .selection-info {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            animation: fadeInUp 0.6s ease 0.1s both;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .selection-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .selection-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .selection-item {
+            text-align: center;
+        }
+
+        .selection-label {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .selection-value {
+            font-size: 0.95rem;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .section-header {
+            margin-bottom: 2rem;
+            text-align: center;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-subtitle {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .optional-badge {
+            display: inline-block;
+            background: rgba(34, 197, 94, 0.15);
+            color: #22C55E;
+            border: 1px solid rgba(34, 197, 94, 0.4);
+            padding: 0.3rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .followup-type-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            letter-spacing: 0.3px;
+            backdrop-filter: blur(10px);
+        }
+
+        .followup-type-badge.outbound {
+            background: rgba(165, 148, 255, 0.15);
+            color: #A594FF;
+            border: 1px solid rgba(165, 148, 255, 0.4);
+        }
+
+        .followup-type-badge.inbound {
+            background: rgba(34, 197, 94, 0.15);
+            color: #22C55E;
+            border: 1px solid rgba(34, 197, 94, 0.4);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 4rem;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .error {
+            text-align: center;
+            padding: 3rem;
+            color: #EF4444;
+            font-size: 1.1rem;
+        }
+
+        .followups-grid, .instances-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .followup-card, .instance-card {
+            background: rgba(30, 25, 60, 0.8);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(165, 148, 255, 0.25);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease both;
+        }
+
+        .followup-card:nth-child(1), .instance-card:nth-child(1) { animation-delay: 0.1s; }
+        .followup-card:nth-child(2), .instance-card:nth-child(2) { animation-delay: 0.2s; }
+        .followup-card:nth-child(3), .instance-card:nth-child(3) { animation-delay: 0.3s; }
+        .followup-card:nth-child(4), .instance-card:nth-child(4) { animation-delay: 0.4s; }
+
+        .followup-card::before, .instance-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #A594FF, transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .followup-card:hover, .instance-card:hover {
+            border-color: rgba(165, 148, 255, 0.5);
+            background: rgba(40, 32, 75, 0.85);
+        }
+
+        .followup-card:hover::before, .instance-card:hover::before {
+            opacity: 1;
+        }
+
+        .followup-card.selected, .instance-card.selected {
+            border-color: #A594FF;
+            background: rgba(50, 40, 90, 0.9);
+        }
+
+        .followup-card.selected::before, .instance-card.selected::before {
+            opacity: 1;
+        }
+
+        .followup-header, .instance-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .followup-name, .instance-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.3;
+        }
+
+        .followup-stats, .instance-info {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .instance-phone {
+            color: #A594FF;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+            font-family: 'SF Mono', 'Monaco', monospace;
+            letter-spacing: 0.5px;
+        }
+
+        .instance-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(34, 197, 94, 0.15);
+            color: #22C55E;
+            border: 1px solid rgba(34, 197, 94, 0.4);
+            padding: 0.35rem 0.8rem;
+            border-radius: 1.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .followup-actions, .instance-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 0.875rem 1rem;
+            border: none;
+            border-radius: 0.875rem;
+            font-family: 'Raleway', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #A594FF, #764ba2);
+            color: white;
+            box-shadow: 0 4px 16px rgba(165, 148, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(165, 148, 255, 0.4);
+            background: linear-gradient(135deg, #B5A4FF, #8B6BC2);
+        }
+
+        .btn-primary.selected {
+            background: linear-gradient(135deg, #22C55E, #16A34A);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.08);
+            color: #e2e8f0;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 1rem 0;
+        }
+
+        .empty-state p {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .create-first-btn {
+            background: linear-gradient(135deg, #A594FF, #764ba2);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 1rem;
+            font-family: 'Raleway', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(165, 148, 255, 0.4);
+        }
+
+        .create-first-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(165, 148, 255, 0.5);
+        }
+
+        .continue-button {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #A594FF, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 1rem;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(165, 148, 255, 0.4);
+            display: none;
+            z-index: 10001;
+        }
+
+        .continue-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(165, 148, 255, 0.5);
+            background: linear-gradient(135deg, #B5A4FF, #8B6BC2);
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding: 0 1rem;
+        }
+
+        .nav-btn {
+            padding: 0.875rem 1.5rem;
+            border: none;
+            border-radius: 0.875rem;
+            font-family: 'Raleway', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn-secondary {
+            background: rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .nav-btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+        }
+
+        #continueHint {
+            color: rgba(255, 255, 255, 0.55);
+            font-size: 0.85rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 99999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, rgba(30, 25, 60, 0.98), rgba(25, 20, 55, 0.98));
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(165, 148, 255, 0.3);
+            margin: 3% auto;
+            padding: 2.5rem;
+            width: 90%;
+            max-width: 800px;
+            border-radius: 1.5rem;
+            color: white;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1rem;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .close {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 32px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+            line-height: 1;
+        }
+
+        .close:hover {
+            color: white;
+        }
+
+        .followup-timeline {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .timeline-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+        }
+
+        .timeline-day {
+            font-weight: 700;
+            color: #A594FF;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .timeline-action {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .action-icon {
+            font-size: 1.2rem;
+        }
+
+        .timeline-message {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-top: 0.5rem;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.85);
+            border-left: 3px solid #A594FF;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem 1rem;
+            }
+
+            .title {
+                font-size: 1.8rem;
+            }
+
+            .followups-grid, .instances-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .selection-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .continue-button {
+                bottom: 1rem;
+                right: 1rem;
+                left: 1rem;
+                width: calc(100% - 2rem);
+            }
+
+            .navigation-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-btn {
+                width: 100%;
+            }
+
+            .modal-content {
+                width: 95%;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">Selecionar Follow-up e Instância</h1>
+            <p class="subtitle">Escolha a Estratégia de Follow-up e a Instância WhatsApp (opcional)</p>
+        </div>
+
+        <div class="selection-info" id="selectionInfo" style="display: none;">
+            <div class="selection-title">Configuração Atual</div>
+            <div class="selection-grid">
+                <div class="selection-item">
+                    <div class="selection-label">Assistente</div>
+                    <div class="selection-value" id="selectedAssistant">-</div>
+                </div>
+                <div class="selection-item">
+                    <div class="selection-label">Número</div>
+                    <div class="selection-value" id="selectedNumber">-</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <h2 class="section-title">📋 Follow-ups Disponíveis</h2>
+            <p class="section-subtitle">Selecione a estratégia de follow-up para sua campanha</p>
+        </div>
+
+        <div id="loadingState" class="loading">
+            Carregando follow-ups disponíveis...
+        </div>
+
+        <div id="errorState" class="error" style="display: none;"></div>
+
+        <div id="emptyState" class="empty-state" style="display: none;">
+            <h3>Nenhum Follow-up Encontrado</h3>
+            <p>Você ainda não criou nenhum follow-up.<br>É necessário criar pelo menos um follow-up antes de iniciar uma campanha.</p>
+            <button class="create-first-btn" onclick="window.location.href='follow-up.html'">
+                Criar Primeiro Follow-up
+            </button>
+        </div>
+
+        <div id="followupsGrid" class="followups-grid" style="display: none;"></div>
+
+        <div id="instancesSection" style="display: none;">
+            <div class="section-header">
+                <h2 class="section-title">
+                    📱 Instâncias WhatsApp
+                    <span class="optional-badge">OPCIONAL</span>
+                </h2>
+                <p class="section-subtitle">Selecione uma instância para disparos via WhatsApp (apenas instâncias conectadas)</p>
+            </div>
+
+            <div id="instancesLoading" class="loading">
+                Carregando instâncias...
+            </div>
+
+            <div id="instancesError" class="error" style="display: none;"></div>
+
+            <div id="instancesEmpty" class="empty-state" style="display: none;">
+                <h3>Nenhuma Instância Conectada</h3>
+                <p>Não há instâncias do WhatsApp conectadas no momento.<br>Esta seleção é opcional - você pode prosseguir sem selecionar.</p>
+            </div>
+
+            <div id="instancesGrid" class="instances-grid" style="display: none;"></div>
+        </div>
+
+        <div class="navigation-buttons">
+            <button class="nav-btn nav-btn-secondary" onclick="window.location.href='seleciona-assistente.html'">
+                ← Voltar para Seleção
+            </button>
+            <div id="continueHint">
+                Selecione um follow-up para continuar
+            </div>
+        </div>
+
+        <button class="continue-button" id="continueButton" onclick="goToPlanilha()">
+            Continuar para Upload →
+        </button>
+    </div>
+
+    <div id="followupModal" class="modal" onclick="closeModalOnBackground(event)">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Detalhes do Follow-up</h2>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <div id="followupDetails" class="followup-timeline"></div>
+        </div>
+    </div>
+
+    <script>
+        let followupsData = [];
+        let instancesData = [];
+        let selectedFollowup = null;
+        let selectedInstance = null;
+        let finalSelections = null;
+
+        function generateUUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+
+        function fixEncoding(text) {
+            if (!text || typeof text !== 'string') return text;
+            const fixes = {
+                'ÃƒÂ§ÃƒÂ£o': 'ção', 'ÃƒÂ§': 'ç', 'ÃƒÂ£': 'ã', 'ÃƒÂ©': 'é', 'ÃƒÂ¡': 'á',
+                'ÃƒÂª': 'ê', 'ÃƒÂ­': 'í', 'ÃƒÂ³': 'ó', 'ÃƒÂº': 'ú', 'Ãƒ': 'à', 'ÃƒÂ´': 'ô'
+            };
+            let fixed = text;
+            for (const [wrong, right] of Object.entries(fixes)) {
+                fixed = fixed.replace(new RegExp(wrong, 'g'), right);
+            }
+            return fixed;
+        }
+
+        function formatPhoneNumber(phoneNumber) {
+            console.log('🔍 formatPhoneNumber - Input original:', phoneNumber);
+            console.log('🔍 formatPhoneNumber - Tipo:', typeof phoneNumber);
+
+            if (!phoneNumber) return 'Número não informado';
+
+            // Se já está formatado (começa com +), retornar como está
+            const phoneStr = phoneNumber.toString().trim();
+            console.log('🔍 formatPhoneNumber - String limpa:', phoneStr);
+            console.log('🔍 formatPhoneNumber - Começa com +?', phoneStr.startsWith('+'));
+
+            if (phoneStr.startsWith('+')) {
+                console.log('✅ formatPhoneNumber - Retornando como está:', phoneStr);
+                return phoneStr;
+            }
+
+            // Remover caracteres não numéricos para processar
+            const phone = phoneStr.replace(/\D/g, '');
+            console.log('🔍 formatPhoneNumber - Apenas números:', phone);
+
+            // Formatar número brasileiro com 9 dígitos (celular)
+            if (phone.length === 13 && phone.startsWith('55')) {
+                const area = phone.substring(2, 4);
+                const number = phone.substring(4);
+                const formatted = `+55 (${area}) ${number.substring(0, 5)}-${number.substring(5)}`;
+                console.log('✅ formatPhoneNumber - Formatado (celular):', formatted);
+                return formatted;
+            }
+            // Formatar número brasileiro com 8 dígitos (fixo)
+            else if (phone.length === 12 && phone.startsWith('55')) {
+                const area = phone.substring(2, 4);
+                const number = phone.substring(4);
+                const formatted = `+55 (${area}) ${number.substring(0, 4)}-${number.substring(4)}`;
+                console.log('✅ formatPhoneNumber - Formatado (fixo):', formatted);
+                return formatted;
+            }
+
+            // Fallback: retornar com + se não estiver formatado
+            const formatted = `+${phone}`;
+            console.log('✅ formatPhoneNumber - Fallback:', formatted);
+            return formatted;
+        }
+
+        function loadPreviousSelections() {
+            try {
+                const stored = localStorage.getItem('finalSelections');
+                if (!stored) {
+                    showError('Dados não encontrados. Retorne à página anterior.');
+                    return false;
+                }
+
+                finalSelections = JSON.parse(stored);
+                
+                if (!finalSelections?.userData?.user?.tenant_id) {
+                    showError('Dados incompletos. Faça login novamente.');
+                    return false;
+                }
+                
+                if (finalSelections.assistant && finalSelections.number) {
+                    document.getElementById('selectedAssistant').textContent = finalSelections.assistant.name;
+                    document.getElementById('selectedNumber').textContent = finalSelections.number.number;
+                    document.getElementById('selectionInfo').style.display = 'block';
+                }
+                
+                return true;
+            } catch (error) {
+                console.error('Erro ao carregar seleções:', error);
+                showError('Erro ao carregar dados.');
+                return false;
+            }
+        }
+
+        async function loadAllData() {
+            try {
+                const tenantId = finalSelections.userData.user.tenant_id;
+
+                console.log('🔍 Iniciando carregamento de dados...');
+                console.log('📋 Tenant ID:', tenantId);
+
+                // Carregar follow-ups
+                console.log('📞 Chamando webhook de follow-ups...');
+                console.log('📞 URL completa:', 'https://sdr.salesdever.io/webhook/saas-buscar-follows-');
+                console.log('📞 Body que será enviado:', JSON.stringify({ tenant_id: tenantId }));
+
+                let followupsResponse;
+                try {
+                    followupsResponse = await fetch('https://sdr.salesdever.io/webhook/saas-buscar-follows-', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({ tenant_id: tenantId }),
+                        mode: 'cors'
+                    });
+                } catch (fetchError) {
+                    console.error('❌ ERRO NO FETCH de follow-ups:', fetchError);
+                    console.error('❌ Nome do erro:', fetchError.name);
+                    console.error('❌ Mensagem:', fetchError.message);
+                    console.error('❌ Stack:', fetchError.stack);
+                    throw new Error(`Falha ao conectar com servidor de follow-ups: ${fetchError.message}`);
+                }
+
+                console.log('✅ Resposta follow-ups:', followupsResponse.status, followupsResponse.ok);
+
+                if (!followupsResponse.ok) {
+                    throw new Error(`Erro ao carregar follow-ups: ${followupsResponse.status}`);
+                }
+
+                const followupsData_raw = await followupsResponse.json();
+                console.log('📦 Follow-ups recebidos:', followupsData_raw);
+
+                const dataArray = Array.isArray(followupsData_raw) ? followupsData_raw : [followupsData_raw];
+
+                // Get campaign type from localStorage
+                const campaignType = localStorage.getItem('campaign_type');
+                console.log('🎯 Tipo de campanha:', campaignType);
+
+                // Filter follow-ups by campaign type
+                const filteredByType = campaignType
+                    ? dataArray.filter(f => f.follow_up_type === campaignType)
+                    : dataArray;
+
+                console.log('🔍 Follow-ups antes do filtro:', dataArray.length);
+                console.log('✅ Follow-ups após filtro por tipo:', filteredByType.length);
+
+                followupsData = filteredByType.map((f, index) => {
+                    const uuid = f.follow_up_id || generateUUID();
+                    return {
+                        ...f,
+                        _uuid: uuid,
+                        _originalId: f.follow_up_id,
+                        _index: index
+                    };
+                });
+
+                console.log('✅ Follow-ups processados:', followupsData.length);
+
+                // Carregar instâncias
+                console.log('📞 Chamando webhook de instâncias...');
+                console.log('📞 URL:', 'https://sdr.salesdever.io/webhook/saas-buscar-instancias-');
+                console.log('📞 Body:', JSON.stringify({ tenant_id: tenantId }));
+
+                let instancesResponse;
+                try {
+                    console.log('🔄 Iniciando fetch de instâncias...');
+                    instancesResponse = await fetch('https://sdr.salesdever.io/webhook/saas-buscar-instancias-', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({ tenant_id: tenantId }),
+                        mode: 'cors'
+                    });
+                    console.log('✅ Fetch de instâncias completado!');
+                } catch (fetchError) {
+                    console.error('❌❌❌ ERRO NO FETCH de instâncias ❌❌❌');
+                    console.error('❌ Tipo do erro:', typeof fetchError);
+                    console.error('❌ Erro completo:', fetchError);
+                    console.error('❌ Nome do erro:', fetchError.name);
+                    console.error('❌ Mensagem:', fetchError.message);
+                    console.error('❌ Stack:', fetchError.stack);
+                    console.error('❌ É TypeError?:', fetchError instanceof TypeError);
+                    console.error('❌ É NetworkError?:', fetchError.message?.includes('Failed to fetch'));
+
+                    // Não vamos lançar erro aqui, instâncias são opcionais
+                    instancesResponse = null;
+                    console.warn('⚠️ Fetch falhou, instancesResponse = null');
+                }
+
+                console.log('✅ Resposta instâncias STATUS:', instancesResponse?.status);
+                console.log('✅ Resposta instâncias OK:', instancesResponse?.ok);
+                console.log('✅ Resposta instâncias Headers:', instancesResponse?.headers);
+                console.log('✅ instancesResponse é null?:', instancesResponse === null);
+
+                if (instancesResponse && instancesResponse.ok) {
+                    const responseText = await instancesResponse.text();
+                    console.log('📦 Resposta RAW (text):', responseText);
+                    console.log('📦 Tipo da resposta:', typeof responseText);
+                    console.log('📦 Tamanho da resposta:', responseText.length);
+
+                    let instancesData_raw;
+                    try {
+                        instancesData_raw = JSON.parse(responseText);
+                        console.log('📦 Instâncias parseadas:', instancesData_raw);
+                        console.log('📦 É array?', Array.isArray(instancesData_raw));
+                        console.log('📦 Tipo:', typeof instancesData_raw);
+                    } catch (parseError) {
+                        console.error('❌ Erro ao parsear JSON:', parseError);
+                        console.error('❌ Texto que falhou:', responseText);
+                        instancesData = [];
+                        showInstancesEmpty();
+                        return;
+                    }
+
+                    const allInstances = Array.isArray(instancesData_raw) ? instancesData_raw : [instancesData_raw];
+                    console.log('📱 Total de instâncias após conversão:', allInstances.length);
+                    console.log('📱 Instâncias completas:', JSON.stringify(allInstances, null, 2));
+
+                    // MODO DEBUG: Mostrar TODAS as instâncias primeiro (comentar depois)
+                    const DEBUG_MODE = true; // Mude para false para filtrar por status
+
+                    if (DEBUG_MODE) {
+                        console.log('⚠️ MODO DEBUG ATIVADO - Mostrando TODAS as instâncias do tenant');
+                        // Filtrar apenas por tenant_id, ignorar status
+                        instancesData = allInstances.filter(inst => {
+                            console.log('🔍 Analisando instância:', inst);
+                            console.log('🔍 tenant_id da instância:', inst.tenant_id);
+                            console.log('🔍 tenant_id esperado:', tenantId);
+                            console.log('🔍 status da instância:', inst.status);
+
+                            const isSameTenant = inst.tenant_id === tenantId;
+
+                            console.log(`📱 Instância ${inst.instance_name}:`, {
+                                id: inst.id,
+                                tenant_id: inst.tenant_id,
+                                tenant_match: isSameTenant,
+                                status: inst.status,
+                                included: isSameTenant
+                            });
+
+                            return isSameTenant;
+                        });
+                    } else {
+                        // Filtrar instâncias do tenant correto e com status válido
+                        instancesData = allInstances.filter(inst => {
+                            console.log('🔍 Analisando instância:', inst);
+                            console.log('🔍 tenant_id da instância:', inst.tenant_id);
+                            console.log('🔍 tenant_id esperado:', tenantId);
+                            console.log('🔍 status da instância:', inst.status);
+
+                            const isSameTenant = inst.tenant_id === tenantId;
+                            const isValidStatus = inst.status === 'open' ||
+                                                inst.status === 'connected' ||
+                                                inst.status === 'qrReadSuccess' ||
+                                                inst.status === 'conectada'; // Adicionado status em português
+
+                            console.log(`📱 Instância ${inst.instance_name}:`, {
+                                id: inst.id,
+                                tenant_id: inst.tenant_id,
+                                tenant_match: isSameTenant,
+                                status: inst.status,
+                                valid_status: isValidStatus,
+                                included: isSameTenant && isValidStatus
+                            });
+
+                            return isSameTenant && isValidStatus;
+                        });
+                    }
+
+                    console.log('✅ Instâncias filtradas (array final):', instancesData);
+                    console.log('✅ Quantidade de instâncias filtradas:', instancesData.length);
+                } else {
+                    console.warn('⚠️ Erro ao carregar instâncias - Status:', instancesResponse?.status);
+                    console.warn('⚠️ Status Text:', instancesResponse?.statusText);
+                    instancesData = [];
+                }
+
+                document.getElementById('loadingState').style.display = 'none';
+
+                if (followupsData && followupsData.length > 0) {
+                    console.log('🎨 Renderizando follow-ups...');
+                    showFollowups();
+
+                    console.log('🔍 Verificando instancesData...');
+                    console.log('🔍 instancesData:', instancesData);
+                    console.log('🔍 instancesData.length:', instancesData.length);
+                    console.log('🔍 typeof instancesData:', typeof instancesData);
+
+                    if (instancesData && instancesData.length > 0) {
+                        console.log('🎨 Renderizando instâncias...');
+                        showInstances();
+                    } else {
+                        console.log('ℹ️ Nenhuma instância disponível - mostrando empty state');
+                        console.log('ℹ️ Motivo: instancesData =', instancesData);
+                        showInstancesEmpty();
+                    }
+                } else {
+                    console.log('ℹ️ Nenhum follow-up disponível');
+                    showEmptyState();
+                }
+
+            } catch (error) {
+                console.error('❌ Erro ao carregar dados:', error);
+                showError(`Erro ao carregar dados: ${error.message}`);
+            }
+        }
+
+        function showFollowups() {
+            const grid = document.getElementById('followupsGrid');
+            grid.style.display = 'grid';
+            grid.innerHTML = '';
+            
+            followupsData.forEach((followup) => {
+                const card = createFollowupCard(followup);
+                grid.appendChild(card);
+                
+                const uuid = followup._uuid;
+                const selectBtn = document.getElementById(`btn-select-${uuid}`);
+                const viewBtn = document.getElementById(`btn-view-${uuid}`);
+                
+                if (selectBtn) {
+                    selectBtn.onclick = function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        selectFollowup(uuid);
+                    };
+                }
+                
+                if (viewBtn) {
+                    viewBtn.onclick = function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        viewFollowup(uuid);
+                    };
+                }
+            });
+        }
+
+        function showInstances() {
+            document.getElementById('instancesSection').style.display = 'block';
+            document.getElementById('instancesLoading').style.display = 'none';
+            const grid = document.getElementById('instancesGrid');
+            grid.style.display = 'grid';
+            grid.innerHTML = '';
+            
+            instancesData.forEach(instance => {
+                const card = createInstanceCard(instance);
+                grid.appendChild(card);
+                
+                const instanceId = instance.id || generateUUID();
+                const selectBtn = document.getElementById(`btn-select-instance-${instanceId}`);
+                
+                if (selectBtn) {
+                    selectBtn.onclick = function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        selectInstance(instanceId);
+                    };
+                }
+            });
+        }
+
+        function createFollowupCard(followup) {
+            const card = document.createElement('div');
+            card.className = 'followup-card';
+            const uuid = followup._uuid;
+            card.id = `card-${uuid}`;
+
+            const date = new Date(followup.created_at).toLocaleDateString('pt-BR');
+            const steps = countSteps(followup);
+
+            // Determine follow-up type badge
+            const followupType = followup.follow_up_type || '';
+            const isOutbound = followupType === 'outbound';
+            const isInbound = followupType === 'inbound';
+
+            const badgeClass = isOutbound ? 'outbound' : (isInbound ? 'inbound' : '');
+            const badgeIcon = isOutbound ? '📤' : (isInbound ? '📥' : '🔄');
+            const badgeText = isOutbound ? 'Outbound' : (isInbound ? 'Inbound' : followupType);
+
+            card.innerHTML = `
+                ${badgeClass ? `<div class="followup-type-badge ${badgeClass}">
+                    <span>${badgeIcon}</span>
+                    <span>${badgeText}</span>
+                </div>` : ''}
+
+                <div class="followup-header">
+                    <div class="followup-name">${fixEncoding(followup.strategy_name)}</div>
+                </div>
+
+                <div class="followup-stats">
+                    Criado em ${date} - ${steps} etapas configuradas
+                </div>
+
+                <div class="followup-actions">
+                    <button id="btn-select-${uuid}" class="action-btn btn-primary">
+                        Selecionar
+                    </button>
+                    <button id="btn-view-${uuid}" class="action-btn btn-secondary">
+                        Visualizar
+                    </button>
+                </div>
+            `;
+
+            return card;
+        }
+
+        function createInstanceCard(instance) {
+            const card = document.createElement('div');
+            card.className = 'instance-card';
+            const instanceId = instance.id || generateUUID();
+            card.id = `instance-card-${instanceId}`;
+
+            const name = instance.instance_name || 'Sem nome';
+            const phone = formatPhoneNumber(instance.phone_number);
+
+            // Determinar status de exibição
+            let statusText = 'Conectada';
+            let statusClass = 'instance-status';
+            let statusStyle = '';
+
+            if (instance.status === 'disconnected' || instance.status === 'desconectada') {
+                statusText = 'Desconectada';
+                statusStyle = 'background: rgba(239, 68, 68, 0.15); color: #EF4444; border-color: rgba(239, 68, 68, 0.4);';
+            } else if (instance.status === 'connected' || instance.status === 'conectada' || instance.status === 'open' || instance.status === 'qrReadSuccess') {
+                statusText = 'Conectada';
+                statusStyle = 'background: rgba(34, 197, 94, 0.15); color: #22C55E; border-color: rgba(34, 197, 94, 0.4);';
+            } else {
+                statusText = instance.status || 'Desconhecido';
+                statusStyle = 'background: rgba(255, 187, 0, 0.15); color: #FFBB00; border-color: rgba(255, 187, 0, 0.4);';
+            }
+
+            card.innerHTML = `
+                <div class="instance-header">
+                    <div class="instance-name">${name}</div>
+                </div>
+
+                <div class="instance-info">
+                    <div class="instance-phone">${phone}</div>
+                    <span class="${statusClass}" style="${statusStyle}">● ${statusText}</span>
+                </div>
+
+                <div class="instance-actions">
+                    <button id="btn-select-instance-${instanceId}" class="action-btn btn-primary">
+                        Selecionar
+                    </button>
+                </div>
+            `;
+
+            return card;
+        }
+
+        function countSteps(followup) {
+            const fields = ['d1_9_00', 'd1_12_30', 'd1_19_00', 'd3_8_00', 'd3_12_30', 'd3_20_00', 
+                           'd5_9_00', 'd5_11_00', 'd5_16_00', 'd7_11_00', 'd7_17_00', 'd7_20_00', 'd10_16_00'];
+            return fields.filter(f => followup[f] && followup[f] !== 'null' && followup[f] !== '').length;
+        }
+
+        function selectFollowup(uuid) {
+            if (selectedFollowup) {
+                const prevCard = document.getElementById(`card-${selectedFollowup}`);
+                const prevBtn = document.getElementById(`btn-select-${selectedFollowup}`);
+                if (prevCard) prevCard.classList.remove('selected');
+                if (prevBtn) {
+                    prevBtn.classList.remove('selected');
+                    prevBtn.textContent = 'Selecionar';
+                }
+            }
+
+            const card = document.getElementById(`card-${uuid}`);
+            const button = document.getElementById(`btn-select-${uuid}`);
+            
+            if (selectedFollowup === uuid) {
+                selectedFollowup = null;
+                card.classList.remove('selected');
+                button.classList.remove('selected');
+                button.textContent = 'Selecionar';
+            } else {
+                selectedFollowup = uuid;
+                card.classList.add('selected');
+                button.classList.add('selected');
+                button.textContent = 'Selecionado ✓';
+            }
+
+            updateContinueButton();
+            saveSelection();
+        }
+
+        function selectInstance(instanceId) {
+            if (selectedInstance) {
+                const prevCard = document.getElementById(`instance-card-${selectedInstance}`);
+                const prevBtn = document.getElementById(`btn-select-instance-${selectedInstance}`);
+                if (prevCard) prevCard.classList.remove('selected');
+                if (prevBtn) {
+                    prevBtn.classList.remove('selected');
+                    prevBtn.textContent = 'Selecionar';
+                }
+            }
+
+            const card = document.getElementById(`instance-card-${instanceId}`);
+            const button = document.getElementById(`btn-select-instance-${instanceId}`);
+            
+            if (selectedInstance === instanceId) {
+                selectedInstance = null;
+                card.classList.remove('selected');
+                button.classList.remove('selected');
+                button.textContent = 'Selecionar';
+            } else {
+                selectedInstance = instanceId;
+                card.classList.add('selected');
+                button.classList.add('selected');
+                button.textContent = 'Selecionado ✓';
+            }
+
+            saveSelection();
+        }
+
+        function updateContinueButton() {
+            const btn = document.getElementById('continueButton');
+            const hint = document.getElementById('continueHint');
+            
+            if (selectedFollowup) {
+                btn.style.display = 'block';
+                if (hint) hint.style.display = 'none';
+            } else {
+                btn.style.display = 'none';
+                if (hint) hint.style.display = 'block';
+            }
+        }
+
+        function saveSelection() {
+            if (selectedFollowup) {
+                const data = followupsData.find(f => f._uuid === selectedFollowup);
+                if (data) {
+                    finalSelections.followup = data;
+                }
+            }
+
+            if (selectedInstance) {
+                const instanceData = instancesData.find(i => (i.id || generateUUID()) === selectedInstance);
+                if (instanceData) {
+                    finalSelections.instance = instanceData;
+                }
+            } else {
+                delete finalSelections.instance;
+            }
+
+            localStorage.setItem('finalSelections', JSON.stringify(finalSelections));
+        }
+
+        function viewFollowup(uuid) {
+            const followupData = followupsData.find(f => f._uuid === uuid);
+            
+            if (!followupData) {
+                alert('Follow-up não encontrado!');
+                return;
+            }
+            
+            const container = document.getElementById('followupDetails');
+            document.getElementById('modalTitle').textContent = fixEncoding(followupData.strategy_name) + ' - Detalhes';
+            document.getElementById('followupModal').style.display = 'block';
+            
+            try {
+                const followup = followupData;
+                container.innerHTML = '';
+                
+                const fields = [
+                    { key: 'd1_9_00', day: '1', time: '09:00' },
+                    { key: 'd1_12_30', day: '1', time: '12:30' },
+                    { key: 'd1_19_00', day: '1', time: '19:00' },
+                    { key: 'd3_8_00', day: '3', time: '08:00' },
+                    { key: 'd3_12_30', day: '3', time: '12:30' },
+                    { key: 'd3_20_00', day: '3', time: '20:00' },
+                    { key: 'd5_9_00', day: '5', time: '09:00' },
+                    { key: 'd5_11_00', day: '5', time: '11:00' },
+                    { key: 'd5_16_00', day: '5', time: '16:00' },
+                    { key: 'd7_11_00', day: '7', time: '11:00' },
+                    { key: 'd7_17_00', day: '7', time: '17:00' },
+                    { key: 'd7_20_00', day: '7', time: '20:00' },
+                    { key: 'd10_16_00', day: '10', time: '16:00' }
+                ];
+
+                const byDay = {};
+                fields.forEach(f => {
+                    if (followup[f.key] && followup[f.key] !== 'null' && followup[f.key] !== '') {
+                        try {
+                            const data = JSON.parse(followup[f.key]);
+                            if (!byDay[f.day]) byDay[f.day] = [];
+                            byDay[f.day].push({ time: f.time, ...data });
+                        } catch (e) {
+                            console.error('Erro ao parsear:', f.key, e);
+                        }
+                    }
+                });
+                
+                if (Object.keys(byDay).length === 0) {
+                    container.innerHTML = '<p style="text-align: center; padding: 2rem;">Nenhuma etapa configurada</p>';
+                } else {
+                    Object.entries(byDay).sort(([a], [b]) => parseInt(a) - parseInt(b)).forEach(([day, steps]) => {
+                        const item = document.createElement('div');
+                        item.className = 'timeline-item';
+                        
+                        const dayTitle = document.createElement('div');
+                        dayTitle.className = 'timeline-day';
+                        dayTitle.textContent = `Dia ${day}`;
+                        item.appendChild(dayTitle);
+                        
+                        steps.sort((a, b) => a.time.localeCompare(b.time)).forEach(step => {
+                            const action = document.createElement('div');
+                            action.className = 'timeline-action';
+                            
+                            const isMsg = step.tipo_envio === 'Mensagem';
+                            const icon = document.createElement('span');
+                            icon.className = 'action-icon';
+                            icon.textContent = isMsg ? '💬' : '📞';
+                            
+                            const text = document.createElement('span');
+                            text.textContent = `${step.time} - ${fixEncoding(step.tipo_envio || 'Ação')}`;
+                            
+                            action.appendChild(icon);
+                            action.appendChild(text);
+                            item.appendChild(action);
+                            
+                            if (step.mensagem_referencia) {
+                                const msg = document.createElement('div');
+                                msg.className = 'timeline-message';
+                                msg.textContent = `"${fixEncoding(step.mensagem_referencia)}"`;
+                                item.appendChild(msg);
+                            }
+                        });
+                        
+                        container.appendChild(item);
+                    });
+                }
+            } catch (error) {
+                console.error('Erro ao visualizar:', error);
+                container.innerHTML = `<p style="text-align: center; padding: 2rem; color: #ff6b6b;">Erro ao processar dados: ${error.message}</p>`;
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('followupModal').style.display = 'none';
+        }
+
+        function closeModalOnBackground(event) {
+            if (event.target.id === 'followupModal') {
+                closeModal();
+            }
+        }
+
+        function goToPlanilha() {
+            if (!selectedFollowup) {
+                alert('Selecione um follow-up para continuar');
+                return;
+            }
+            window.location.href = 'planilha.html';
+        }
+
+        function showEmptyState() {
+            document.getElementById('loadingState').style.display = 'none';
+            document.getElementById('emptyState').style.display = 'block';
+        }
+
+        function showError(message) {
+            document.getElementById('loadingState').style.display = 'none';
+            const error = document.getElementById('errorState');
+            error.textContent = message;
+            error.style.display = 'block';
+        }
+
+        function showInstancesEmpty() {
+            document.getElementById('instancesSection').style.display = 'block';
+            document.getElementById('instancesLoading').style.display = 'none';
+            document.getElementById('instancesEmpty').style.display = 'block';
+        }
+
+        window.addEventListener('load', () => {
+            if (loadPreviousSelections()) {
+                loadAllData();
+            } else {
+                setTimeout(() => {
+                    window.location.href = 'pagina_inicial.html';
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setup Tenant - VAPI Tools</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0a0420 0%, #1a1040 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: rgba(30, 25, 60, 0.8);
+            border: 1px solid rgba(165, 148, 255, 0.25);
+            border-radius: 16px;
+            padding: 3rem;
+            max-width: 600px;
+            width: 100%;
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #A594FF 0%, #7C6FFF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        p {
+            margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(165, 148, 255, 0.25);
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 0.95rem;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #A594FF;
+            box-shadow: 0 0 0 3px rgba(165, 148, 255, 0.15);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #A594FF 0%, #7C6FFF 100%);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(165, 148, 255, 0.4);
+        }
+
+        .info-box {
+            background: rgba(165, 148, 255, 0.15);
+            border: 1px solid rgba(165, 148, 255, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
+
+        .info-box h3 {
+            color: #A594FF;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .info-box p {
+            font-size: 0.85rem;
+            margin-bottom: 0;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .success {
+            background: rgba(34, 197, 94, 0.15);
+            border-color: rgba(34, 197, 94, 0.3);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .success.show {
+            display: block;
+        }
+
+        .success h3 {
+            color: #22C55E;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            margin-top: 1rem;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Setup Tenant ID</h1>
+        <p>Configure o Tenant ID no localStorage para acessar o sistema de gerenciamento de tools.</p>
+
+        <div class="form-group">
+            <label for="tenantId">Tenant ID (UUID)</label>
+            <input type="text" id="tenantId" placeholder="00000000-0000-0000-0000-000000000000">
+        </div>
+
+        <button class="btn" onclick="setTenantId()">Salvar Tenant ID</button>
+
+        <button class="btn btn-secondary" onclick="generateNewId()">Gerar Novo UUID</button>
+
+        <div class="success" id="successMessage">
+            <h3>✅ Sucesso!</h3>
+            <p>Tenant ID salvo no localStorage. Redirecionando...</p>
+        </div>
+
+        <div class="info-box">
+            <h3>ℹ️ Informações</h3>
+            <p>
+                O Tenant ID é usado para identificar o cliente no sistema.
+                Normalmente este valor vem do login, mas para testes locais
+                você pode usar qualquer UUID válido.
+            </p>
+        </div>
+
+        <div class="info-box" style="margin-top: 1rem;">
+            <h3>🧪 Para Desenvolvimento</h3>
+            <p>
+                Você pode usar o mesmo UUID para múltiplos testes, ou gerar
+                um novo a cada vez. Os dados ficarão associados ao UUID escolhido.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Gerar UUID v4
+        function generateUUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                const r = Math.random() * 16 | 0;
+                const v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+
+        // Gerar novo ID e preencher campo
+        function generateNewId() {
+            const newId = generateUUID();
+            document.getElementById('tenantId').value = newId;
+        }
+
+        // Salvar tenant_id no localStorage
+        function setTenantId() {
+            const tenantId = document.getElementById('tenantId').value.trim();
+
+            // Validar UUID
+            const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+            if (!tenantId) {
+                alert('Por favor, digite um Tenant ID');
+                return;
+            }
+
+            if (!uuidRegex.test(tenantId)) {
+                alert('UUID inválido. Use o formato: 00000000-0000-0000-0000-000000000000');
+                return;
+            }
+
+            // Salvar no localStorage
+            localStorage.setItem('tenant_id', tenantId);
+
+            // Redirecionar (ajustado para o path local desta integração)
+            window.location.href = './gerenciar-tools.html';
+        }
+
+        // Verificar se já tem tenant_id salvo
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTenantId = localStorage.getItem('tenant_id');
+
+            if (savedTenantId) {
+                document.getElementById('tenantId').value = savedTenantId;
+            } else {
+                // Gerar um UUID inicial
+                generateNewId();
+            }
+        });
+
+        // Permitir salvar com Enter
+        document.getElementById('tenantId').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                setTenantId();
+            }
+        });
+    </script>
+</body>
+</html>
+
